@@ -61,12 +61,12 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_3_0"
+                android:id="@+id/button_0_1"
                 android:layout_column="2"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_6_0"
+                android:id="@+id/button_0_2"
                 android:layout_column="3"/>
         </TableRow>
 
@@ -77,17 +77,17 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_1_0"
+                android:id="@+id/button_0_3"
                 android:layout_column="1"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_4_0"
+                android:id="@+id/button_0_4"
                 android:layout_column="2"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_7_0"
+                android:id="@+id/button_0_5"
                 android:layout_column="3"/>
         </TableRow>
 
@@ -98,17 +98,17 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_2_0"
+                android:id="@+id/button_0_6"
                 android:layout_column="1"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_5_0"
+                android:id="@+id/button_0_7"
                 android:layout_column="2"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button_8_0"
+                android:id="@+id/button_0_8"
                 android:layout_column="3"/>
         </TableRow>
     </TableLayout>
@@ -116,7 +116,7 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_1"
+        android:id="@+id/game_board_3"
         android:showDividers="middle|beginning|end"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -129,21 +129,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button"
+                android:id="@+id/button_3_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button2"
+                android:id="@+id/button_3_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button3"
+                android:id="@+id/button_3_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -156,21 +156,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button4"
+                android:id="@+id/button_3_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button5"
+                android:id="@+id/button_3_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button6"
+                android:id="@+id/button_3_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -183,21 +183,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button7"
+                android:id="@+id/button_3_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button8"
+                android:id="@+id/button_3_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button9"
+                android:id="@+id/button_3_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -207,9 +207,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_2"
+        android:id="@+id/game_board_6"
         android:showDividers="middle|beginning|end"
-        android:layout_below="@+id/game_board_1"
+        android:layout_below="@+id/game_board_3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="42dp">
@@ -221,21 +221,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button10"
+                android:id="@+id/button_6_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button11"
+                android:id="@+id/button_6_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button12"
+                android:id="@+id/button_6_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -248,21 +248,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button13"
+                android:id="@+id/button_6_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button14"
+                android:id="@+id/button_6_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button15"
+                android:id="@+id/button_6_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -275,21 +275,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button16"
+                android:id="@+id/button_6_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button17"
+                android:id="@+id/button_6_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button18"
+                android:id="@+id/button_6_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -299,10 +299,11 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_4"
+        android:id="@+id/game_board_1"
         android:showDividers="middle|beginning|end"
         android:layout_below="@+id/new_game_button"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:focusableInTouchMode="true">
 
         <TableRow
             android:layout_width="wrap_content"
@@ -311,21 +312,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button19"
+                android:id="@+id/button_1_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button20"
+                android:id="@+id/button_1_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button21"
+                android:id="@+id/button_1_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -338,21 +339,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button22"
+                android:id="@+id/button_1_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button23"
+                android:id="@+id/button_1_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button24"
+                android:id="@+id/button_1_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -365,21 +366,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button25"
+                android:id="@+id/button_1_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button26"
+                android:id="@+id/button_1_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button27"
+                android:id="@+id/button_1_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -389,9 +390,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_5"
+        android:id="@+id/game_board_4"
         android:showDividers="middle|beginning|end"
-        android:layout_alignTop="@+id/game_board_1"
+        android:layout_alignTop="@+id/game_board_3"
         android:layout_centerHorizontal="true">
 
         <TableRow
@@ -401,21 +402,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button28"
+                android:id="@+id/button_4_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button29"
+                android:id="@+id/button_4_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button30"
+                android:id="@+id/button_4_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -428,21 +429,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button31"
+                android:id="@+id/button_4_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button32"
+                android:id="@+id/button_4_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button33"
+                android:id="@+id/button_4_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -455,21 +456,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button34"
+                android:id="@+id/button_4_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button35"
+                android:id="@+id/button_4_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button36"
+                android:id="@+id/button_4_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -479,9 +480,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_6"
+        android:id="@+id/game_board_7"
         android:showDividers="middle|beginning|end"
-        android:layout_alignTop="@+id/game_board_2"
+        android:layout_alignTop="@+id/game_board_6"
         android:layout_centerHorizontal="true">
 
         <TableRow
@@ -491,21 +492,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button37"
+                android:id="@+id/button_7_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button38"
+                android:id="@+id/button_7_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button39"
+                android:id="@+id/button_7_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -518,21 +519,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button40"
+                android:id="@+id/button_7_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button41"
+                android:id="@+id/button_7_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button42"
+                android:id="@+id/button_7_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -545,21 +546,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button43"
+                android:id="@+id/button_7_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button44"
+                android:id="@+id/button_7_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button45"
+                android:id="@+id/button_7_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -569,7 +570,7 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_7"
+        android:id="@+id/game_board_2"
         android:showDividers="middle|beginning|end"
         android:layout_below="@+id/new_game_button"
         android:layout_alignParentRight="true"
@@ -582,21 +583,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button46"
+                android:id="@+id/button_2_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button47"
+                android:id="@+id/button_2_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button48"
+                android:id="@+id/button_2_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -609,21 +610,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button49"
+                android:id="@+id/button_2_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button50"
+                android:id="@+id/button_2_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button51"
+                android:id="@+id/button_2_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -636,21 +637,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button52"
+                android:id="@+id/button_2_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button53"
+                android:id="@+id/button_2_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button54"
+                android:id="@+id/button_2_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -660,9 +661,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_8"
+        android:id="@+id/game_board_5"
         android:showDividers="middle|beginning|end"
-        android:layout_alignTop="@+id/game_board_5"
+        android:layout_alignTop="@+id/game_board_4"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 
@@ -673,21 +674,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button55"
+                android:id="@+id/button_5_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button56"
+                android:id="@+id/button_5_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button57"
+                android:id="@+id/button_5_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -700,21 +701,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button58"
+                android:id="@+id/button_5_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button59"
+                android:id="@+id/button_5_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button60"
+                android:id="@+id/button_5_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -727,21 +728,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button61"
+                android:id="@+id/button_5_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button62"
+                android:id="@+id/button_5_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button63"
+                android:id="@+id/button_5_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -751,9 +752,9 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/game_board_9"
+        android:id="@+id/game_board_8"
         android:showDividers="middle|beginning|end"
-        android:layout_alignTop="@+id/game_board_6"
+        android:layout_alignTop="@+id/game_board_7"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 
@@ -764,21 +765,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button64"
+                android:id="@+id/button_8_0"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button65"
+                android:id="@+id/button_8_1"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button66"
+                android:id="@+id/button_8_2"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -791,21 +792,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button67"
+                android:id="@+id/button_8_3"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button68"
+                android:id="@+id/button_8_4"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button69"
+                android:id="@+id/button_8_5"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -818,21 +819,21 @@
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button70"
+                android:id="@+id/button_8_6"
                 android:layout_column="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button71"
+                android:id="@+id/button_8_7"
                 android:layout_column="2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <Button
                 style="@style/TinyButtons"
-                android:id="@+id/button72"
+                android:id="@+id/button_8_8"
                 android:layout_column="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
