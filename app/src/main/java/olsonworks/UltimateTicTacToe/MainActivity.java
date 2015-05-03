@@ -114,20 +114,32 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    // This should reset the board eventually.   Right now it will just reset ONE game board.
-    // Now, I could very clumsily make this do all of the boards, but need an auto way.
-    // You'd think I'd know how since the below gets a whole game board, but I stole this code.
+    // This is one hell of a nested for loop, and you should be impressed, Peter.
+    // This clears the board.   Right now I only have one onClickListener set up, so it's not
+    // super obvious, but it should be resetting it all.
 
     private void resetButtons() {
-        TableLayout T = (TableLayout) findViewById(R.id.game_board_0);
-        for (int y = 0; y < T.getChildCount(); y++) {
-            if (T.getChildAt(y) instanceof TableRow) {
-                TableRow R = (TableRow) T.getChildAt(y);
-                for (int x = 0; x < R.getChildCount(); x++) {
-                    if (R.getChildAt(x) instanceof Button) {
-                        Button B = (Button) R.getChildAt(x);
-                        B.setText("");
-                        B.setEnabled(true);
+
+        // Grab the board
+        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+        for (int zz = 0; zz < T.getChildCount(); zz++) {
+            if (T.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) T.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    if (R2.getChildAt(x) instanceof Button) {
+                                        Button B = (Button) R2.getChildAt(x);
+                                        B.setText("");
+                                        B.setEnabled(true);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
