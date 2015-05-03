@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
-    Board gameBoard;
-    Boolean gameOver;
+    public Board gameBoard;
+    public Boolean gameOver;
+    private boolean whoTurn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
 
         final Button newGame = (Button) findViewById(R.id.new_game_button);
         final TextView moveCounter = (TextView) findViewById(R.id.move_counter);
-        final Button xy00 = (Button) findViewById(R.id.button_0_0);
+
 
         // Testing out essentially a "New Game" button w/ a fresh board
 
@@ -40,18 +41,10 @@ public class MainActivity extends ActionBarActivity {
 
         newGame.setOnClickListener(listener);
 
-        View.OnClickListener playOnClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                xy00.setText("X");
-
-            }
-        };
-
         // Testing out a VERY rudimentary onClickListener for when a button is pressed.
         // Need to find a genius way to automatically set up 64(!!!) of these
 
-        xy00.setOnClickListener(playOnClick);
+        setupOnClickListeners();
 
     }
 
@@ -144,8 +137,59 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-
     }
+
+
+    // Set up these onClickListeners
+
+    private void setupOnClickListeners() {
+        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+        for (int zz = 0; zz < T.getChildCount(); zz++) {
+            if (T.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) T.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    View V = R2.getChildAt(x);
+                                    V.setOnClickListener(new playOnClick(x, y, z));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private class playOnClick implements View.OnClickListener {
+
+        private int x = 0;
+        private int y = 0;
+        private int z = 0;
+
+        public playOnClick(int x, int y, int z) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            if (view instanceof Button) {
+                Button B = (Button) view;
+                B.setText(whoTurn ? "O": "X");
+                B.setEnabled(false);
+                whoTurn = !whoTurn;
+
+            }
+        }
+    }
+
 
 }
 
