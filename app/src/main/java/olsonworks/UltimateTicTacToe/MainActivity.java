@@ -39,15 +39,11 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
+        // This sets up the New Game button
         newGame.setOnClickListener(listener);
-
-        // Testing out a VERY rudimentary onClickListener for when a button is pressed.
-        // Need to find a genius way to automatically set up 64(!!!) of these
-
+        // This sets up the rest.   Can they be merged?
         setupOnClickListeners();
-
     }
-
 
 
      /*   while (!gameOver)
@@ -56,11 +52,8 @@ public class MainActivity extends ActionBarActivity {
             logBoard(gameBoard);
             gameOver = gameBoard.checkWin();
         }
-
         Log.d("GAME MOVE:", "game over");
         */
-
-
 
     //get random board move
     public void makeRandomMove(Board gameBoard) {
@@ -73,7 +66,6 @@ public class MainActivity extends ActionBarActivity {
             gameBoard.makeMove(gameBoard.getNextGame(), (int) (Math.random() * 9), gameBoard.getCurrentPlayer());
         }
     }
-
 
     public void logBoard(Board board) {
 
@@ -107,9 +99,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    // This is one hell of a nested for loop, and you should be impressed, Peter.
-    // This clears the board.   Right now I only have one onClickListener set up, so it's not
-    // super obvious, but it should be resetting it all.
+    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
+    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
 
     private void resetButtons() {
 
@@ -140,7 +131,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    // Set up these onClickListeners
+    // Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
+    // Going TableLayout (whole game) -> TableRow (row of subgames)
+    // -> TableLayout (subgame) -> Table Row (row of buttons) -> Button
 
     private void setupOnClickListeners() {
         TableLayout T = (TableLayout) findViewById(R.id.totalboard);
@@ -155,7 +148,7 @@ public class MainActivity extends ActionBarActivity {
                                 TableRow R2 = (TableRow) T2.getChildAt(y);
                                 for (int x = 0; x < R2.getChildCount(); x++) {
                                     View V = R2.getChildAt(x);
-                                    V.setOnClickListener(new playOnClick(x, y, z));
+                                    V.setOnClickListener(new playOnClick(x, y, z, zz));
                                 }
                             }
                         }
@@ -170,12 +163,23 @@ public class MainActivity extends ActionBarActivity {
         private int x = 0;
         private int y = 0;
         private int z = 0;
+        private int zz = 0;
 
-        public playOnClick(int x, int y, int z) {
+        // This is declared twice.   Bad WET coding.
+        TextView moveCounter = (TextView) findViewById(R.id.move_counter);
+
+        // This grabs the coordinates.   Need to refactor above to x1 y1 x2 y2.
+
+        public playOnClick(int x, int y, int z, int zz) {
             this.x = x;
             this.y = y;
             this.z = z;
+            this.zz = zz;
         }
+
+        // This puts the X and O on the button and displays the coordinates of the move.
+        // It changes the display to X or O depending on whose turn.   Also locks out the button.
+        // Finally, switches whose turn it is.
 
         @Override
         public void onClick(View view) {
@@ -184,6 +188,7 @@ public class MainActivity extends ActionBarActivity {
                 Button B = (Button) view;
                 B.setText(whoTurn ? "O": "X");
                 B.setEnabled(false);
+                moveCounter.setText(x + "," + y + "," + z + "," + zz);
                 whoTurn = !whoTurn;
 
             }
