@@ -25,7 +25,7 @@
         android:text="@string/game_title"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:textColor="#ff390806"/>
+        android:textColor="#88000000"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -37,6 +37,36 @@
         android:gravity="center_horizontal"
         android:textSize="20dp"
         android:singleLine="false"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/new_game_button"
+        android:layout_above="@id/move_counter"
+        android:id="@+id/totalboard"
+        android:showDividers="middle|beginning|end"
+        >
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_game_row_0"
+            >
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_game_row_1"
+            >
+        </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_game_row_2"
+            >
+        </TableRow>
+
+    </TableLayout>
 
     <TableLayout
         android:layout_width="wrap_content"
