@@ -50,7 +50,6 @@ public class Board {
                 nextGame = location;
             }
         }
-
         return nextGame;
     }
 
@@ -72,12 +71,10 @@ public class Board {
                 }
             }
         }
-
         return stateSpace;
     }
 
     public boolean checkWin(){
-
 
         //check rows
         if(games[0].isWon()&& games[0].getWinner() == games[1].getWinner() && games[1].getWinner() == games[2].getWinner()) {return true;}

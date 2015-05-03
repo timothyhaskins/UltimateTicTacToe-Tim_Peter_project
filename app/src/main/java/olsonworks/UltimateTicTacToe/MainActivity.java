@@ -14,7 +14,7 @@ public class MainActivity extends ActionBarActivity {
 
     public Board gameBoard;
     public Boolean gameOver;
-    private boolean whoTurn = false;
+    private boolean player2Turn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class MainActivity extends ActionBarActivity {
                 moveCounter.setText("HERE WE GOOOOOO!");
                 gameBoard = new Board();
                 gameOver = false;
+                player2Turn = false;
                 resetButtons();
             }
         };
@@ -131,24 +132,24 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    // Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
+    /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
     // Going TableLayout (whole game) -> TableRow (row of subgames)
-    // -> TableLayout (subgame) -> Table Row (row of buttons) -> Button
+     -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
 
     private void setupOnClickListeners() {
         TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-        for (int zz = 0; zz < T.getChildCount(); zz++) {
-            if (T.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) T.getChildAt(zz);
-                for (int z = 0; z < R1.getChildCount(); z++) {
-                    if (R1.getChildAt(z) instanceof TableLayout) {
-                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                        for (int y = 0; y < T2.getChildCount(); y++) {
-                            if (T2.getChildAt(y) instanceof TableRow) {
-                                TableRow R2 = (TableRow) T2.getChildAt(y);
-                                for (int x = 0; x < R2.getChildCount(); x++) {
-                                    View V = R2.getChildAt(x);
-                                    V.setOnClickListener(new playOnClick(x, y, z, zz));
+        for (int y2 = 0; y2 < T.getChildCount(); y2++) {
+            if (T.getChildAt(y2) instanceof TableRow) {
+                TableRow R1 = (TableRow) T.getChildAt(y2);
+                for (int x2 = 0; x2 < R1.getChildCount(); x2++) {
+                    if (R1.getChildAt(x2) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(x2);
+                        for (int y1 = 0; y1 < T2.getChildCount(); y1++) {
+                            if (T2.getChildAt(y1) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y1);
+                                for (int x1 = 0; x1 < R2.getChildCount(); x1++) {
+                                    View V = R2.getChildAt(x1);
+                                    V.setOnClickListener(new playOnClick(x1, y1, x2, y2));
                                 }
                             }
                         }
@@ -160,36 +161,37 @@ public class MainActivity extends ActionBarActivity {
 
     private class playOnClick implements View.OnClickListener {
 
-        private int x = 0;
-        private int y = 0;
-        private int z = 0;
-        private int zz = 0;
+        private int x1 = 0;
+        private int y1 = 0;
+        private int x2 = 0;
+        private int y2 = 0;
 
         // This is declared twice.   Bad WET coding.
         TextView moveCounter = (TextView) findViewById(R.id.move_counter);
 
-        // This grabs the coordinates.   Need to refactor above to x1 y1 x2 y2.
+        // This grabs the coordinates.
 
-        public playOnClick(int x, int y, int z, int zz) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-            this.zz = zz;
+        public playOnClick(int x1, int y1, int x2, int y2) {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
         }
 
-        // This puts the X and O on the button and displays the coordinates of the move.
-        // It changes the display to X or O depending on whose turn.   Also locks out the button.
-        // Finally, switches whose turn it is.
+        /* This puts the X and O on the button and displays the coordinates of the move.
+         It changes the display to X or O depending on whose turn.   Also locks out the button.
+        Finally, switches whose turn it is.   Of course, at some point it needs to lock out
+         every table but the table currently being played in. */
 
         @Override
         public void onClick(View view) {
 
             if (view instanceof Button) {
                 Button B = (Button) view;
-                B.setText(whoTurn ? "O": "X");
+                B.setText(player2Turn ? "O": "X");
                 B.setEnabled(false);
-                moveCounter.setText(x + "," + y + "," + z + "," + zz);
-                whoTurn = !whoTurn;
+                moveCounter.setText(x1 + "," + y1 + "," + x2 + "," + y2);
+                player2Turn = !player2Turn;
 
             }
         }
