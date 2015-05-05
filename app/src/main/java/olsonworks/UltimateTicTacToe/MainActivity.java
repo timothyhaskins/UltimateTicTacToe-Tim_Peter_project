@@ -119,10 +119,10 @@ public class MainActivity extends ActionBarActivity {
                 for (int z = 0; z < R1.getChildCount(); z++) {
                     if (R1.getChildAt(z) instanceof TableLayout) {
                         TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                        for (int y = 0; y < T2.getChildCount(); y++) {
+                          for (int y = 0; y < T2.getChildCount(); y++) {
                             if (T2.getChildAt(y) instanceof TableRow) {
                                 TableRow R2 = (TableRow) T2.getChildAt(y);
-                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                  for (int x = 0; x < R2.getChildCount(); x++) {
                                     if (R2.getChildAt(x) instanceof Button) {
                                         Button B = (Button) R2.getChildAt(x);
                                         B.setText("");

@@ -35,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:singleLine="false"/>
 
     <TableLayout
@@ -54,12 +54,10 @@
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/new_game_button"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:id="@+id/game_board_0"
                 android:showDividers="middle|beginning|end"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                >
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -130,10 +128,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_1"
                 android:showDividers="middle|beginning|end"
-                android:layout_below="@+id/new_game_button"
-                android:layout_centerHorizontal="true"
                 android:focusableInTouchMode="true"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                >
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -221,9 +218,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_2"
                 android:showDividers="middle|beginning|end"
-                android:layout_below="@+id/new_game_button"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 >
 
                 <TableRow
@@ -318,9 +312,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_3"
                 android:showDividers="middle|beginning|end"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_weight="1">
 
                 <TableRow
@@ -409,8 +400,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_4"
                 android:showDividers="middle|beginning|end"
-                android:layout_alignTop="@+id/game_board_3"
-                android:layout_centerHorizontal="true"
                 android:layout_weight="1">
 
                 <TableRow
@@ -499,9 +488,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_5"
                 android:showDividers="middle|beginning|end"
-                android:layout_alignTop="@+id/game_board_4"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+                >
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -595,9 +582,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_6"
                 android:showDividers="middle|beginning|end"
-                android:layout_below="@+id/game_board_3"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="0dp"
                 android:layout_weight="1">
 
@@ -687,8 +671,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_7"
                 android:showDividers="middle|beginning|end"
-                android:layout_alignTop="@+id/game_board_6"
-                android:layout_centerHorizontal="true"
                 android:layout_weight="1">
 
                 <TableRow
@@ -777,9 +759,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_8"
                 android:showDividers="middle|beginning|end"
-                android:layout_alignTop="@+id/game_board_7"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
+                >
 
                 <TableRow
                     android:layout_width="wrap_content"
