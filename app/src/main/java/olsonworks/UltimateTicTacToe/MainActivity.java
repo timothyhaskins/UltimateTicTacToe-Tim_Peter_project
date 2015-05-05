@@ -15,6 +15,11 @@ public class MainActivity extends ActionBarActivity {
     public Board gameBoard;
     public Boolean gameOver;
     private boolean player2Turn = false;
+    private String buttonText;
+
+    // Temp variable for board
+    public int[] gameMove = new int[4];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
                 gameBoard = new Board();
                 gameOver = false;
                 player2Turn = false;
-                resetButtons();
+                resetAllButtons();
             }
         };
 
@@ -103,8 +108,9 @@ public class MainActivity extends ActionBarActivity {
     // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
     // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
 
-    private void resetButtons() {
 
+
+    private void resetAllButtons() {
         // Grab the board
         TableLayout T = (TableLayout) findViewById(R.id.totalboard);
         for (int zz = 0; zz < T.getChildCount(); zz++) {
@@ -165,9 +171,8 @@ public class MainActivity extends ActionBarActivity {
         private int y1 = 0;
         private int x2 = 0;
         private int y2 = 0;
+        private TextView moveCounter = (TextView) findViewById(R.id.move_counter);
 
-        // This is declared twice.   Bad WET coding.
-        TextView moveCounter = (TextView) findViewById(R.id.move_counter);
 
         // This grabs the coordinates.
 
@@ -178,6 +183,7 @@ public class MainActivity extends ActionBarActivity {
             this.y2 = y2;
         }
 
+
         /* This puts the X and O on the button and displays the coordinates of the move.
          It changes the display to X or O depending on whose turn.   Also locks out the button.
         Finally, switches whose turn it is.   Of course, at some point it needs to lock out
@@ -187,15 +193,44 @@ public class MainActivity extends ActionBarActivity {
         public void onClick(View view) {
 
             if (view instanceof Button) {
+                gameMove[0] = x1;
+                gameMove[1] = y1;
+                gameMove[2] = x2;
+                gameMove[3] = y2;
                 Button B = (Button) view;
-                B.setText(player2Turn ? "O": "X");
+                B.setText(player2Turn ? "O" : "X");
                 B.setEnabled(false);
                 moveCounter.setText(x1 + "," + y1 + "," + x2 + "," + y2);
                 player2Turn = !player2Turn;
-
+                enableNewSubgame();
             }
         }
     }
+
+
+  public void enableNewSubgame() {
+        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+        TableRow R1 = (TableRow) T.getChildAt(gameMove[1]);
+        TableLayout T2 = (TableLayout) R1.getChildAt(gameMove[0]);
+        for (int y = 0; y < T2.getChildCount(); y++) {
+            if (T2.getChildAt(y) instanceof TableRow) {
+                TableRow R2 = (TableRow) T2.getChildAt(y);
+                for (int x = 0; x < R2.getChildCount(); x++) {
+                    if (R2.getChildAt(x) instanceof Button) {
+                        Button B = (Button) R2.getChildAt(x);
+                        buttonText = B.getText().toString();
+                        if (buttonText.equals("X") || buttonText.equals("O")) {
+                            B.setEnabled(false);
+                        } else {
+                            B.setEnabled(true);
+                            B.setText("N");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 
 }
