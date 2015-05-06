@@ -15,6 +15,8 @@ public class MainActivity extends ActionBarActivity {
     public Board gameBoard;
     public Boolean gameOver;
     private boolean player2Turn = false;
+    private boolean firstMove = true;
+    private boolean isAny = false;
     private String buttonText;
 
     // Temp variable for board
@@ -41,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
                 gameBoard = new Board();
                 gameOver = false;
                 player2Turn = false;
+                firstMove = true;
                 resetAllButtons();
             }
         };
@@ -105,37 +108,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
-    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
-
-
-
-    private void resetAllButtons() {
-        // Grab the board
-        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-        for (int zz = 0; zz < T.getChildCount(); zz++) {
-            if (T.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) T.getChildAt(zz);
-                for (int z = 0; z < R1.getChildCount(); z++) {
-                    if (R1.getChildAt(z) instanceof TableLayout) {
-                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                          for (int y = 0; y < T2.getChildCount(); y++) {
-                            if (T2.getChildAt(y) instanceof TableRow) {
-                                TableRow R2 = (TableRow) T2.getChildAt(y);
-                                  for (int x = 0; x < R2.getChildCount(); x++) {
-                                    if (R2.getChildAt(x) instanceof Button) {
-                                        Button B = (Button) R2.getChildAt(x);
-                                        B.setText("");
-                                        B.setEnabled(true);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -156,6 +128,47 @@ public class MainActivity extends ActionBarActivity {
                                 for (int x1 = 0; x1 < R2.getChildCount(); x1++) {
                                     View V = R2.getChildAt(x1);
                                     V.setOnClickListener(new playOnClick(x1, y1, x2, y2));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
+    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
+
+    private void resetAllButtons() {
+        // Grab the board
+        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+        for (int zz = 0; zz < T.getChildCount(); zz++) {
+            if (T.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) T.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    if (R2.getChildAt(x) instanceof Button) {
+                                        Button B = (Button) R2.getChildAt(x);
+                                        if (!isAny) {
+                                            B.setText("");
+                                            B.setEnabled(true);
+                                        }
+                                        else {
+                                            buttonText = B.getText().toString();
+                                            if (buttonText.equals("X") || buttonText.equals("O")) {
+                                                B.setEnabled(false);
+                                            } else {
+                                                B.setEnabled(true);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -202,37 +215,89 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
                 moveCounter.setText(x1 + "," + y1 + "," + x2 + "," + y2);
                 player2Turn = !player2Turn;
+
+                if (firstMove) {
+                    disableBoardAfterAny();
+                    firstMove = false;
+                }
+                disableOldSubgame();
+                if (isAny) {
+                    resetAllButtons();
+                    firstMove = false;
+                    isAny = false;
+                }
                 enableNewSubgame();
             }
         }
-    }
 
 
-  public void enableNewSubgame() {
-        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-        TableRow R1 = (TableRow) T.getChildAt(gameMove[1]);
-        TableLayout T2 = (TableLayout) R1.getChildAt(gameMove[0]);
-        for (int y = 0; y < T2.getChildCount(); y++) {
-            if (T2.getChildAt(y) instanceof TableRow) {
-                TableRow R2 = (TableRow) T2.getChildAt(y);
-                for (int x = 0; x < R2.getChildCount(); x++) {
-                    if (R2.getChildAt(x) instanceof Button) {
-                        Button B = (Button) R2.getChildAt(x);
-                        buttonText = B.getText().toString();
-                        if (buttonText.equals("X") || buttonText.equals("O")) {
+
+
+        public void disableOldSubgame() {
+            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+            TableRow R1 = (TableRow) T.getChildAt(gameMove[3]);
+            TableLayout T2 = (TableLayout) R1.getChildAt(gameMove[2]);
+            for (int y = 0; y < T2.getChildCount(); y++) {
+                if (T2.getChildAt(y) instanceof TableRow) {
+                    TableRow R2 = (TableRow) T2.getChildAt(y);
+                    for (int x = 0; x < R2.getChildCount(); x++) {
+                        if (R2.getChildAt(x) instanceof Button) {
+                            Button B = (Button) R2.getChildAt(x);
                             B.setEnabled(false);
-                        } else {
-                            B.setEnabled(true);
-                            B.setText("N");
+                        }
+                    }
+                }
+            }
+        }
+
+        public void enableNewSubgame() {
+            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+            TableRow R1 = (TableRow) T.getChildAt(gameMove[1]);
+            TableLayout T2 = (TableLayout) R1.getChildAt(gameMove[0]);
+            for (int y = 0; y < T2.getChildCount(); y++) {
+                if (T2.getChildAt(y) instanceof TableRow) {
+                    TableRow R2 = (TableRow) T2.getChildAt(y);
+                    for (int x = 0; x < R2.getChildCount(); x++) {
+                        if (R2.getChildAt(x) instanceof Button) {
+                            Button B = (Button) R2.getChildAt(x);
+                            buttonText = B.getText().toString();
+                            if (buttonText.equals("X") || buttonText.equals("O")) {
+                                B.setEnabled(false);
+                            } else {
+                                B.setEnabled(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void disableBoardAfterAny() {
+            // Grab the board
+            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
+            for (int zz = 0; zz < T.getChildCount(); zz++) {
+                if (T.getChildAt(zz) instanceof TableRow) {
+                    TableRow R1 = (TableRow) T.getChildAt(zz);
+                    for (int z = 0; z < R1.getChildCount(); z++) {
+                        if (R1.getChildAt(z) instanceof TableLayout) {
+                            TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                            for (int y = 0; y < T2.getChildCount(); y++) {
+                                if (T2.getChildAt(y) instanceof TableRow) {
+                                    TableRow R2 = (TableRow) T2.getChildAt(y);
+                                    for (int x = 0; x < R2.getChildCount(); x++) {
+                                        if (R2.getChildAt(x) instanceof Button) {
+                                            Button B = (Button) R2.getChildAt(x);
+                                            B.setEnabled(false);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
-
-
-
 }
 
 
