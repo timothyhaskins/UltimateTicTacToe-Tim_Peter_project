@@ -69,8 +69,7 @@
                     <Button
                         style="@style/TinyButtons"
                         android:id="@+id/button_0_0"
-                        android:layout_column="1"
-                        android:layout_width="wrap_content"/>
+                        android:layout_column="1"/>
 
                     <Button
                         style="@style/TinyButtons"
@@ -849,9 +848,5 @@
 
 
     </TableLayout>
-
-
-
-
 
 </RelativeLayout>

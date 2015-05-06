@@ -55,11 +55,11 @@ public class MainActivity extends ActionBarActivity {
         };
 
         // This sets up the New Game button
-        newGame.setOnClickListener(listener);
+        // newGame.setOnClickListener(listener);
         // This sets up the rest.   Can they be merged?
         setupOnClickListeners();
+        newGame.setOnClickListener(listener);
     }
-
 
 
 
@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
         Log.d("GAME MOVE:", "game over");
         */
 
-    //get random board move
+    /* get random board move
     public void makeRandomMove(Board gameBoard) {
         //do i get to go anywhere?
 
@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity {
             //or just in a specific game?
             gameBoard.makeMove(gameBoard.getNextGame(), (int) (Math.random() * 9), gameBoard.getCurrentPlayer());
         }
-    }
+    } */
 
     public void logBoard(Board board) {
 
@@ -115,7 +115,6 @@ public class MainActivity extends ActionBarActivity {
             Log.d("GAME MOVE:", "-------------");
         }
     }
-
 
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -222,7 +221,10 @@ public class MainActivity extends ActionBarActivity {
                 gameMove[3] = y2;
                 Button B = (Button) view;
                 B.setText(player2Turn ? "O" : "X");
+                // Two different ways to animate - old:
                 B.startAnimation(animScale);
+                // New:
+                B.animate().rotationYBy(180).setDuration(300);
                 B.setEnabled(false);
                 moveCounter.setText(x1 + "," + y1 + "," + x2 + "," + y2);
                 player2Turn = !player2Turn;
