@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -29,17 +31,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Make official gameBoard
-
         final Button newGame = (Button) findViewById(R.id.new_game_button);
         final TextView moveCounter = (TextView) findViewById(R.id.move_counter);
-
 
         // Testing out essentially a "New Game" button w/ a fresh board
 
         View.OnClickListener listener = new View.OnClickListener() {
+
+            final Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
+            final Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
+
             @Override
             public void onClick(View v) {
                 moveCounter.setText("HERE WE GOOOOOO!");
+                newGame.startAnimation(animTranslate);
+                moveCounter.startAnimation(animAlpha);
                 gameBoard = new Board();
                 gameOver = false;
                 player2Turn = false;
@@ -53,6 +59,8 @@ public class MainActivity extends ActionBarActivity {
         // This sets up the rest.   Can they be merged?
         setupOnClickListeners();
     }
+
+
 
 
      /*   while (!gameOver)
@@ -78,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void logBoard(Board board) {
 
-        String output = "";
+        String output;
         int[][][][] boardSpace = board.indexBoard();
 
         Log.d("GAME MOVE:", "new move");
@@ -205,6 +213,8 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onClick(View view) {
 
+            final Animation animScale = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale);
+
             if (view instanceof Button) {
                 gameMove[0] = x1;
                 gameMove[1] = y1;
@@ -212,6 +222,7 @@ public class MainActivity extends ActionBarActivity {
                 gameMove[3] = y2;
                 Button B = (Button) view;
                 B.setText(player2Turn ? "O" : "X");
+                B.startAnimation(animScale);
                 B.setEnabled(false);
                 moveCounter.setText(x1 + "," + y1 + "," + x2 + "," + y2);
                 player2Turn = !player2Turn;
