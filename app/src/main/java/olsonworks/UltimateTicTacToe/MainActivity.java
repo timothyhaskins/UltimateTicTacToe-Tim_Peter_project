@@ -12,6 +12,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -23,6 +26,10 @@ public class MainActivity extends ActionBarActivity {
     private String buttonText;
     public Move move = new Move();
 
+    // Butterknife
+    @InjectView(R.id.totalboard) TableLayout mGameTable;
+    @InjectView(R.id.move_counter) TextView mMoveCounter;
+
 
     // Temp variable for board
     public int[] tempGameMove = new int[4];
@@ -32,13 +39,13 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.inject(this);
 
         //Make official gameBoard
         final Button newGame = (Button) findViewById(R.id.new_game_button);
-        final TextView moveCounter = (TextView) findViewById(R.id.move_counter);
+
 
         // Make a new move
-
 
         // Testing out essentially a "New Game" button w/ a fresh board
 
@@ -47,11 +54,12 @@ public class MainActivity extends ActionBarActivity {
             final Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
             final Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
 
+
             @Override
             public void onClick(View v) {
-                moveCounter.setText("HERE WE GOOOOOO!");
+                mMoveCounter.setText("HERE WE GOOOOOO!");
                 newGame.startAnimation(animTranslate);
-                moveCounter.startAnimation(animAlpha);
+                mMoveCounter.startAnimation(animAlpha);
                 gameBoard = new Board();
                 gameOver = false;
                 player1Turn = false;
@@ -59,6 +67,9 @@ public class MainActivity extends ActionBarActivity {
                 resetAllButtons();
             }
         };
+
+
+
 
         // This sets up the New Game button
         // newGame.setOnClickListener(listener);
@@ -74,10 +85,9 @@ public class MainActivity extends ActionBarActivity {
      -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
 
     private void setupOnClickListeners() {
-        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-        for (int tileY = 0; tileY < T.getChildCount(); tileY++) {
-            if (T.getChildAt(tileY) instanceof TableRow) {
-                TableRow R1 = (TableRow) T.getChildAt(tileY);
+        for (int tileY = 0; tileY < mGameTable.getChildCount(); tileY++) {
+            if (mGameTable.getChildAt(tileY) instanceof TableRow) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(tileY);
                 for (int tileX = 0; tileX < R1.getChildCount(); tileX++) {
                     if (R1.getChildAt(tileX) instanceof TableLayout) {
                         TableLayout T2 = (TableLayout) R1.getChildAt(tileX);
@@ -102,10 +112,9 @@ public class MainActivity extends ActionBarActivity {
 
     private void resetAllButtons() {
         // Grab the board
-        TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-        for (int zz = 0; zz < T.getChildCount(); zz++) {
-            if (T.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) T.getChildAt(zz);
+        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+            if (mGameTable.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
                 for (int z = 0; z < R1.getChildCount(); z++) {
                     if (R1.getChildAt(z) instanceof TableLayout) {
                         TableLayout T2 = (TableLayout) R1.getChildAt(z);
@@ -143,7 +152,6 @@ public class MainActivity extends ActionBarActivity {
         private int tileY = 0;
         private int gameX = 0;
         private int gameY = 0;
-        private TextView moveCounter = (TextView) findViewById(R.id.move_counter);
 
 
         // This grabs the coordinates.
@@ -193,7 +201,7 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                moveCounter.setText(move.mTileX + "," + move.mTileY + "," + move.mGameX + "," + move.mGameY);
+                mMoveCounter.setText(move.mTileX + "," + move.mTileY + "," + move.mGameX + "," + move.mGameY);
 
                 // Reverse the player
                 player1Turn = !player1Turn;
@@ -222,11 +230,8 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-
-
         public void disableOldSubgame() {
-            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-            TableRow R1 = (TableRow) T.getChildAt(move.getGameY());
+            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
             TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
             for (int y = 0; y < T2.getChildCount(); y++) {
                 if (T2.getChildAt(y) instanceof TableRow) {
@@ -242,8 +247,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         public void enableNewSubgame() {
-            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-            TableRow R1 = (TableRow) T.getChildAt(move.getTileY());
+            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getTileY());
             TableLayout T2 = (TableLayout) R1.getChildAt(move.getTileX());
             for (int y = 0; y < T2.getChildCount(); y++) {
                 if (T2.getChildAt(y) instanceof TableRow) {
@@ -265,10 +269,9 @@ public class MainActivity extends ActionBarActivity {
 
         private void disableBoardAfterAny() {
             // Grab the board
-            TableLayout T = (TableLayout) findViewById(R.id.totalboard);
-            for (int zz = 0; zz < T.getChildCount(); zz++) {
-                if (T.getChildAt(zz) instanceof TableRow) {
-                    TableRow R1 = (TableRow) T.getChildAt(zz);
+            for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+                if (mGameTable.getChildAt(zz) instanceof TableRow) {
+                    TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
                     for (int z = 0; z < R1.getChildCount(); z++) {
                         if (R1.getChildAt(z) instanceof TableLayout) {
                             TableLayout T2 = (TableLayout) R1.getChildAt(z);

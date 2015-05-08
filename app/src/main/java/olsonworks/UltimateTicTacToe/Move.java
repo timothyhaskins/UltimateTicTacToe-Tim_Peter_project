@@ -16,7 +16,7 @@ public class Move {
     public Move(){}
 
     //creates a new move from XY coordinates'
-    public Move(int tileX, int tileY, int gameX, int gameY, boolean player1Turn){
+    private Move(int tileX, int tileY, int gameX, int gameY, boolean player1Turn){
         mTileX = tileX;
         mTileY = tileY;
         mGameX = gameX;
