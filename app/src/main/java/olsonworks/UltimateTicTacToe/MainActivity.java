@@ -18,8 +18,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    public Board gameBoard;
-    public Boolean gameOver;
+    TTTGame mainGame = new TTTGame();
     private boolean player1Turn = true;
     private boolean firstMove = true;
     private boolean isAny = false;
@@ -60,8 +59,6 @@ public class MainActivity extends ActionBarActivity {
                 mMoveCounter.setText("HERE WE GOOOOOO!");
                 newGame.startAnimation(animTranslate);
                 mMoveCounter.startAnimation(animAlpha);
-                gameBoard = new Board();
-                gameOver = false;
                 player1Turn = false;
                 firstMove = true;
                 resetAllButtons();

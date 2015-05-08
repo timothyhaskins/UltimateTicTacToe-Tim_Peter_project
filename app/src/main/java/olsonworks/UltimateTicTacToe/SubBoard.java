@@ -1,12 +1,16 @@
 package olsonworks.UltimateTicTacToe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Peter Olson on 4/29/2015.
  *
  * This class is the container for all information of any subgame of tic tac toe in the larger game.
  */
-public class SubGame {
+public class SubBoard {
 
+    //declaration of variables
     /*first are the 9  moves on the board stored as an array.
      * 0 1 2
      * 3 4 5
@@ -17,14 +21,12 @@ public class SubGame {
      *Next is the state of the game, either completed or not (might just change this to a get later, but for now this might be a better solution
      *Lastly is the record of who won this sub game (see above)
      */
-
-    // Variables
     private int[] tiles = new int[9];
     private boolean won;
     private int winner;
 
-    //What to do when a new SubGame is created with no inputs (blank)
-    public SubGame(){
+    //What to do when a new SubBoard is created with no inputs (blank)
+    public SubBoard(){
 
         //turn each of the members of the array to state 0, and set there to be no winner
         for (int i = 0; i < tiles.length; i++) {
@@ -33,10 +35,10 @@ public class SubGame {
         won = false;
     }
 
-    // create a new SubGame by copying a different SubGame.
-    // Called just as normally making a new instance, but just with an argument of the SubGame to be copied.
-    // I can see this coming in handy if the AI wants to make dummy games to think through its moves.
-    public SubGame(SubGame reference){
+    //create a new SubBoard by copying a different SubBoard.
+    // Called just as normally making a new instance, but just with an argument of the SubBoard to be copied.
+    // I can see this coming in handy if the AI wants to make dummy games to think through it's moves.
+    public SubBoard(SubBoard reference){
         tiles = reference.getTiles();
         won = reference.isWon();
         winner = reference.getWinner();
@@ -59,7 +61,7 @@ public class SubGame {
 
     //Double checks to make sure move is legal
     public boolean isLegalMove(int location){
-        if(tiles[location] != 0 || won) return false;
+        if(won || tiles[location] != 0) return false;
         return true;
     }
 
@@ -81,8 +83,14 @@ public class SubGame {
     }
 
     //will return a list of all available moves, but I have to remember how lists are implemented first...
-    public int[] listAvailableMoves(){
-        int[] moves = new int[1];
+    public List listAvailableMoves(){
+        List moves = new ArrayList();
+
+        for (int i = 0; i < 9; i++) {
+            if (isLegalMove(i)){
+                moves.add(i);
+            }
+        }
 
         return moves;
     }
