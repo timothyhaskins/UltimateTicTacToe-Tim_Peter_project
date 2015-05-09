@@ -39,7 +39,8 @@
         android:layout_above="@+id/totalboard"
         android:layout_alignRight="@+id/totalboard"
         android:layout_alignEnd="@+id/totalboard"
-        android:width="150dp"/>
+        android:width="150dp"
+        android:onClick="undoMove"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -67,7 +68,8 @@
             android:id="@+id/total_game_row_0"
             android:layout_weight="1"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="3">
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -327,7 +329,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/total_game_row_1"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="3">
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -596,7 +599,8 @@
             android:id="@+id/total_game_row_2"
             android:layout_weight="1"
             android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:weightSum="3">
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

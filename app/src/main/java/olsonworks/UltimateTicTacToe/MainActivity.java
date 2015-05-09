@@ -54,6 +54,10 @@ public class MainActivity extends ActionBarActivity {
         resetAllButtons();
     }
 
+    public void undoMove (View view) {
+
+    }
+
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
     // Going TableLayout (whole game) -> TableRow (row of subgames)
      -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
@@ -169,7 +173,7 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                mMoveCounter.setText(move.mTileX + "," + move.mTileY + "," + move.mGameX + "," + move.mGameY);
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX());
 
                 // Reverse the player
                 move.setPlayer1Turn(!move.mPlayer1Turn);
@@ -178,13 +182,13 @@ public class MainActivity extends ActionBarActivity {
                     disableBoardAfterAny();
                     firstMove = false;
                 }
-                disableOldSubgame();
+                disableOldSubgame(move.getGameX(), move.getGameY());
                 if (isAny) {
                     resetAllButtons();
                     firstMove = false;
                     isAny = false;
                 }
-                enableNewSubgame();
+                enableNewSubgame(move.getTileX(), move.getTileY());
             }
         }
     }
@@ -198,9 +202,9 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-        public void disableOldSubgame() {
-            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
-            TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
+        public void disableOldSubgame(int gameX, int gameY) {
+            TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
+            TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
             for (int y = 0; y < T2.getChildCount(); y++) {
                 if (T2.getChildAt(y) instanceof TableRow) {
                     TableRow R2 = (TableRow) T2.getChildAt(y);
@@ -214,9 +218,9 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        public void enableNewSubgame() {
-            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getTileY());
-            TableLayout T2 = (TableLayout) R1.getChildAt(move.getTileX());
+        public void enableNewSubgame(int tileX, int tileY) {
+            TableRow R1 = (TableRow) mGameTable.getChildAt(tileY);
+            TableLayout T2 = (TableLayout) R1.getChildAt(tileX);
             for (int y = 0; y < T2.getChildCount(); y++) {
                 if (T2.getChildAt(y) instanceof TableRow) {
                     TableRow R2 = (TableRow) T2.getChildAt(y);
