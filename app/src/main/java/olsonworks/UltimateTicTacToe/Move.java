@@ -11,7 +11,7 @@ public class Move {
     public int mGameX;
     public int mGameY;
     public boolean mPlayer1Turn = true;
-    public int[] mMoveSeries = new int[4];
+
 
     //creates new empty move
     public Move(){}
@@ -23,18 +23,6 @@ public class Move {
         mGameX = gameX;
         mGameY = gameY;
         mPlayer1Turn = player1Turn;
-        mMoveSeries[0] = mTileX;
-        mMoveSeries[1] = mTileY;
-        mMoveSeries[2] = mGameX;
-        mMoveSeries[3] = mGameY;
-    }
-
-    public int[] getMoveSeries() {
-        return mMoveSeries;
-    }
-
-    public void setMoveSeries(int[] moveSeries) {
-        mMoveSeries = moveSeries;
     }
 
     public int getTileX() {

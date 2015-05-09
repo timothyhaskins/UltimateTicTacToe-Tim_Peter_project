@@ -155,9 +155,6 @@ public class MainActivity extends ActionBarActivity {
                 move.getPlayer1Turn();
 
 
-                // Starting to try to use an intent to pass the move to the game - not actually used yet
-                // playGame(move);
-
                 // Grab the button and set it to O or X
                 Button B = (Button) view;
                 B.setText(move.mPlayer1Turn ? "X" : "O");
