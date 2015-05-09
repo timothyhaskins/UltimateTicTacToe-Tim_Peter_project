@@ -14,7 +14,7 @@ public class UpdateDisplay extends ActionBarActivity {
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game_board_display);
+        setContentView(R.layout.activity_main);
 
 
 

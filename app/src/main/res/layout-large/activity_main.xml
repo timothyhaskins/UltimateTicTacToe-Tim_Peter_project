@@ -9,7 +9,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/new_game"
+        android:text="NEW GAME"
         android:id="@+id/new_game_button"
         android:clickable="true"
         android:layout_below="@+id/textView"

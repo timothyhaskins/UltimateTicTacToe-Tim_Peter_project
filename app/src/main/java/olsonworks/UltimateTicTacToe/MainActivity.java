@@ -193,7 +193,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    // This would pass the move to the game via an intent.   Doesn't work.
+    // This would pass the move to the  via an intent.   Doesn't work.
 
     private void playGame(Move newMove) {
         Intent intent = new Intent(MainActivity.this, Move.class);
