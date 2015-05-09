@@ -8,21 +8,25 @@ import java.util.List;
  * Created by Peter Olson on 5/3/2015.
  */
 public class AIPlayer {
-    private int playerNumber;
-    private int AIType; //0=random
+    private boolean mIsPlayer1;
+    private int mPlayerNumber;
+    private int mAIType; //0=random
 
-    public AIPlayer(int player, int type){
-        playerNumber = player;
-        AIType = type;
+    public AIPlayer(boolean isPlayer1, int type){
+        mIsPlayer1 = isPlayer1;
+        mPlayerNumber = (mIsPlayer1 ? 1 : 2);
+        mAIType = type;
     }
 
-    public void makeMove(Board gameBoard){
-        List moves = gameBoard.listAvailableMoves();
-        int move = (int)moves.get((int)(Math.random()*moves.size()));
-        int moveGame = (int)(move/10);
-        int moveTile = (move % 10);
-        Log.d("GAME MOVE:", "making move at " + moveGame + " " + moveTile);
-        gameBoard.makeMove(moveGame,moveTile,playerNumber);
+    public Move getMove (Board gameBoard){
+        return getRandomMove(gameBoard);
+    }
+
+    private Move getRandomMove(Board gameBoard){
+        List<Move> moves = gameBoard.listAvailableMoves();
+        Move move = moves.get((int) (Math.random() * moves.size()));
+        move.setPlayer1Turn(mIsPlayer1);
+        return moves.get((int) (Math.random() * moves.size()));
     }
 
 }

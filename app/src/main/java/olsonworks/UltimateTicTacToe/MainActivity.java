@@ -18,7 +18,8 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    /// TTTGame mainGame = new TTTGame();
+    GameController mainGame = new GameController();
+    private boolean player1Turn = true;
     private boolean firstMove = true;
     private boolean isAny = false;
     private String buttonText;
@@ -52,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
         move.getPlayer1Turn();
         firstMove = true;
         resetAllButtons();
+        mainGame = new GameController();
     }
 
     public void undoMove (View view) {
@@ -161,7 +163,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // Grab the button and set it to O or X
                 Button B = (Button) view;
-                B.setText(move.mPlayer1Turn ? "X" : "O");
+                B.setText(move.mIsPlayer1Turn ? "X" : "O");
 
                 // Two different ways to animate - old:
                 B.startAnimation(animScale);
@@ -176,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX());
 
                 // Reverse the player
-                move.setPlayer1Turn(!move.mPlayer1Turn);
+                move.setPlayer1Turn(!move.mIsPlayer1Turn);
 
                 if (firstMove) {
                     disableBoardAfterAny();

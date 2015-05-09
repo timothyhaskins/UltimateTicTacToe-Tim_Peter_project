@@ -12,48 +12,56 @@ import java.util.List;
 public class Board {
 
 
-    private SubBoard[] games;
+    private SubBoard[][] mGames;
     //Which subGame you must play in next, -1 if any
-    private int nextGame;
+    private int mNextGameX;
+    private int mNextGameY;
 
     //Create new blank Board
     public Board(){
-        games = new SubBoard[9];
-        nextGame = -1;
+        mGames = new SubBoard[3][3];
+        mNextGameX = -1;
+        mNextGameY = -1;
 
-        for (int i = 0; i < games.length; i++) {
-            games[i] = new SubBoard();
+        for (int i = 0; i < mGames.length; i++) {
+            for (int j = 0; j < mGames[0].length; i++) {
+                mGames[i][j] = new SubBoard();
+            }
         }
     }
 
     //Create new board as copy of incoming Board
     public Board(Board template){
         setGames(template.getGames());
+        mNextGameX = template.getNextGameX();
+        mNextGameY = template.getNextGameY();
     }
 
-    //This makes the actual moves, and returns the next SubBoard that must be played in. Returns -1 for "Freemove"
-    public int makeMove(int subGame,int location, int player){
-        if (isLegalMove(location,player)){
+    //This makes the actual moves, and returns the next SubBoard that must be played in as a 2d array(x,y). Returns -1.-1 for "Freemove"
+    public int[] makeMove(Move move){
+        if (isLegalMove(move)){
             //Makes move
-            games[subGame].makeMove(location, player);
+            mGames[move.getGameX()][move.getGameY()].makeMove(move);
 
 
             //Checks if this makes a "Freemove", and sets where the next move will be
-            if(games[location].isWon()){
-                nextGame = -1;
+            if(mGames[move.getGameX()][move.getGameY()].isWon()){
+                mNextGameX = -1;
+                mNextGameY = -1;
             }else{
-                nextGame = location;
+                mNextGameX = move.getTileX();
+                mNextGameY = move.getTileY();
             }
         }else{
             Log.d("GAME MOVE:","Illegal move");
         }
 
-        return nextGame;
+        return new int[]{mNextGameX, mNextGameY};
     }
 
     //Make sure it is a legal move
-    public boolean isLegalMove(int subGame,int location){
-        return games[subGame].isLegalMove(location);
+    public boolean isLegalMove(Move move){
+        return mGames[move.getGameX()][move.getGameY()].isLegalMove(move);
     }
 
     //will return a list of all available moves, but I have to remember how lists are implemented first...
@@ -61,14 +69,19 @@ public class Board {
         List moves = new ArrayList();
 
         //iterates through possible moves and adds them to list if legal move
-        for (int i = 0; i < 9; i++) {
-            //checks to see if this game is the allowed game, or you have an any move
-            if (nextGame == i || nextGame == -1) {
-                for (int j = 0; j < 9; j++) {
-                    //it the move legal?
-                    if (games[i].isLegalMove(j)) {
-                        //add to list of available moves, with the first digit as game, second digit as tile
-                        moves.add((i * 10) + j);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                //checks to see if this game is the allowed game, or you have an any move
+                if ((mNextGameX == i && mNextGameY ==j) || mNextGameX == -1) {
+                    for (int x = 0; x < 9; x++) {
+                        for (int y = 0; y < 9; y++) {
+                            //it the move legal?
+                            Move newMove = new Move(i, j, x, y, true);
+                            if (mGames[i][j].isLegalMove(newMove)) {
+                                //add to list of available moves, with the first digit as game, second digit as tile
+                                moves.add(newMove);
+                            }
+                        }
                     }
                 }
             }
@@ -84,7 +97,7 @@ public class Board {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
                     for (int l = 0; l < 3; l++) {
-                        stateSpace[i][j][k][l] = games[(j*3)+i].getTile((l*3)+k);
+                        stateSpace[i][j][k][l] = mGames[i][j].getTile(k,l);
                     }
                 }
             }
@@ -95,37 +108,44 @@ public class Board {
 
     public boolean checkWin(){
         //check rows
-        if(games[0].isWon()&& games[0].getWinner() == games[1].getWinner() && games[1].getWinner() == games[2].getWinner()) {return true;}
-        if(games[3].isWon() && games[3].getWinner() == games[4].getWinner() && games[4].getWinner() == games[5].getWinner()) {return true;}
-        if(games[6].isWon() && games[6].getWinner() == games[7].getWinner() && games[7].getWinner() == games[8].getWinner()) {return true;}
+        for (int y = 0; y < 3; y++) {
+            if(mGames[0][y].isWon() && mGames[0][y].getWinner() == mGames[1][y].getWinner() && mGames[0][y].getWinner() == mGames[2][y].getWinner()) {return true;}
+        }
         //check columns
-        if(games[0].isWon() && games[0].getWinner() == games[3].getWinner() && games[3].getWinner() == games[6].getWinner()) {return true;}
-        if(games[1].isWon() && games[1].getWinner() == games[4].getWinner() && games[4].getWinner() == games[7].getWinner()) {return true;}
-        if(games[2].isWon() && games[2].getWinner() == games[5].getWinner() && games[5].getWinner() == games[8].getWinner()) {return true;}
+        for (int x = 0; x < 3; x++) {
+            if(mGames[x][0].isWon() && mGames[x][0].getWinner() == mGames[x][1].getWinner() && mGames[x][0].getWinner() == mGames[x][2].getWinner()) {return true;}
+        }
         //check diagonals
-        if(games[0].isWon() && games[0].getWinner() == games[4].getWinner() && games[4].getWinner() == games[8].getWinner()) {return true;}
-        if(games[2].isWon() && games[2].getWinner() == games[4].getWinner() && games[4].getWinner() == games[6].getWinner()) {return true;}
+        if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) {return true;}
+        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[2][0].getWinner()) {return true;}
 
         return false;
     }
 
     //Getters and setters
-    public SubBoard[] getGames() {
-        return games;
+    public SubBoard[][] getGames() {
+        return mGames;
     }
 
-    public void setGames(SubBoard[] games) {
+    public void setGames(SubBoard[][] games) {
         for (int i = 0; i < games.length; i++) {
-            this.games[i] = new SubBoard(games[i]);
+            for (int j = 0; j < games.length; j++) {
+                this.mGames[i][j] = new SubBoard(games[i][j]);
+            }
         }
     }
 
-    public int getNextGame() {
-        return nextGame;
+    public int getNextGameX() {
+        return mNextGameX;
     }
 
-    public void setNextGame(int nextGame) {
-        this.nextGame = nextGame;
+    public int getNextGameY() {
+        return mNextGameY;
+    }
+
+    public void setNextGame(int nextGameX, int nextGameY) {
+        this.mNextGameX = nextGameX;
+        this.mNextGameX = nextGameX;
     }
 }
 

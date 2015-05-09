@@ -11,73 +11,71 @@ import java.util.List;
 public class SubBoard {
 
     //declaration of variables
-    /*first are the 9  moves on the board stored as an array.
-     * 0 1 2
-     * 3 4 5
-     * 6 7 8
-     * 0 = no move played here
-     * 1 = player 1
-     * 2 = player 2
-     *Next is the state of the game, either completed or not (might just change this to a get later, but for now this might be a better solution
-     *Lastly is the record of who won this sub game (see above)
-     */
-    private int[] tiles = new int[9];
-    private boolean won;
+    private int[][] mTiles = new int[3][3];
+    private boolean mIsWon;
     private int winner;
 
     //What to do when a new SubBoard is created with no inputs (blank)
     public SubBoard(){
 
         //turn each of the members of the array to state 0, and set there to be no winner
-        for (int i = 0; i < tiles.length; i++) {
-            tiles[i]=0;
+        for (int i = 0; i < mTiles.length; i++) {
+            for (int j = 0; i < mTiles[0].length; i++) {
+                mTiles[i][j] = 0;
+            }
         }
-        won = false;
+        mIsWon = false;
     }
 
     //create a new SubBoard by copying a different SubBoard.
     // Called just as normally making a new instance, but just with an argument of the SubBoard to be copied.
     // I can see this coming in handy if the AI wants to make dummy games to think through it's moves.
     public SubBoard(SubBoard reference){
-        tiles = reference.getTiles();
-        won = reference.isWon();
+        mTiles = reference.getTiles();
+        mIsWon = reference.isWon();
         winner = reference.getWinner();
     }
 
     //The only thing it should really have to do (returns false if that is an illegal move):
-    public boolean makeMove(int location, int player){
+    public boolean makeMove(Move move){
         //Make sure it is a legal move
-        if(! isLegalMove(location)) return false;
+        if(! isLegalMove(move)) return false;
 
         //Make the intended move
-        tiles[location] = player;
+        mTiles[move.getTileX()][move.getTileY()] = (move.getPlayer1Turn() ? 1 : 2);
 
-        //check for win. This might not be easy to make elegant. There really must be a mathy way to do this
-        won = checkWin();
-        if (won) winner = player;
+        //check for win.
+        mIsWon = checkWin();
+        if (mIsWon) winner = (move.getPlayer1Turn() ? 1 : 2);
 
         return true;
     }
 
     //Double checks to make sure move is legal
-    public boolean isLegalMove(int location){
-        if(won || tiles[location] != 0) return false;
+    public boolean isLegalMove(Move move){
+        if(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0) return false;
+        return true;
+    }
+
+    //Double checks to make sure move is legal
+    public boolean isLegalMove(int tileX, int tileY){
+        if(mIsWon || mTiles[tileX][tileY] != 0) return false;
         return true;
     }
 
     //check for win. This might not be easy to make elegant. There really must be a mathy way to do this
     public boolean checkWin(){
         //check rows
-        if(tiles[0] != 0 && tiles[0] == tiles[1] && tiles[1] == tiles[2]) {return true;}
-        if(tiles[3] != 0 && tiles[3] == tiles[4] && tiles[4] == tiles[5]) {return true;}
-        if(tiles[6] != 0 && tiles[6] == tiles[7] && tiles[7] == tiles[8]) {return true;}
+        for (int y = 0; y < 3; y++) {
+            if(mTiles[0][y] !=0 && mTiles[0][y] == mTiles[1][y] && mTiles[0][y] == mTiles[2][y]) {return true;}
+        }
         //check columns
-        if(tiles[0] != 0 && tiles[0] == tiles[3] && tiles[3] == tiles[6]) {return true;}
-        if(tiles[1] != 0 && tiles[1] == tiles[4] && tiles[4] == tiles[7]) {return true;}
-        if(tiles[2] != 0 && tiles[2] == tiles[5] && tiles[5] == tiles[8]) {return true;}
+        for (int x = 0; x < 3; x++) {
+            if(mTiles[x][0] !=0 && mTiles[x][0] == mTiles[x][1] && mTiles[x][0] == mTiles[x][2]) {return true;}
+        }
         //check diagonals
-        if(tiles[0] != 0 && tiles[0] == tiles[4] && tiles[4] == tiles[8]) {return true;}
-        if(tiles[2] != 0 && tiles[2] == tiles[4] && tiles[4] == tiles[6]) {return true;}
+        if(mTiles[0][0] !=0 && mTiles[0][0] == mTiles[1][1] && mTiles[0][0] == mTiles[2][2]) {return true;}
+        if(mTiles[2][0] !=0 && mTiles[2][0] == mTiles[1][1] && mTiles[2][0] == mTiles[2][0]) {return true;}
 
         return false;
     }
@@ -86,35 +84,40 @@ public class SubBoard {
     public List listAvailableMoves(){
         List moves = new ArrayList();
 
-        for (int i = 0; i < 9; i++) {
-            if (isLegalMove(i)){
-                moves.add(i);
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (isLegalMove(x,y)) {
+                    moves.add(new int[]{x,y});
+                }
             }
         }
 
         return moves;
     }
 
-
     //getters and setters for local variables
-    public int[] getTiles() {
-        return tiles;
+    public int[][] getTiles() {
+        return mTiles;
     }
 
-    public int getTile(int location) {return tiles[location];}
+    public int getTile(int tileX, int tileY) {
+        return mTiles[tileX][tileY];
+    }
 
-    public void setTiles(int[] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
-            this.tiles[i] = tiles[i];
+    public void setTiles(int[][] mTiles) {
+        for (int i = 0; i < mTiles.length; i++) {
+            for (int j = 0; j < mTiles[0].length; j++) {
+                this.mTiles[i][j] = mTiles[i][j];
+            }
         }
     }
 
     public boolean isWon() {
-        return won;
+        return mIsWon;
     }
 
     public void setWon(boolean won) {
-        this.won = won;
+        this.mIsWon = won;
     }
 
     public int getWinner() {
