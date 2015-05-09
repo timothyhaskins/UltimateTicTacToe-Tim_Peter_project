@@ -18,8 +18,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    TTTGame mainGame = new TTTGame();
-    private boolean player1Turn = true;
+    /// TTTGame mainGame = new TTTGame();
     private boolean firstMove = true;
     private boolean isAny = false;
     private String buttonText;
@@ -28,10 +27,8 @@ public class MainActivity extends ActionBarActivity {
     // Butterknife
     @InjectView(R.id.totalboard) TableLayout mGameTable;
     @InjectView(R.id.move_counter) TextView mMoveCounter;
+    @InjectView(R.id.new_game_button) Button mNewGameButton;
 
-
-    // Temp variable for board
-    public int[] tempGameMove = new int[4];
 
 
     @Override
@@ -39,49 +36,29 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-
-        //Make official gameBoard
-        final Button newGame = (Button) findViewById(R.id.new_game_button);
-
-
-        // Make a new move
-
-        // Testing out essentially a "New Game" button w/ a fresh board
-
-        View.OnClickListener listener = new View.OnClickListener() {
-
-            final Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
-            final Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
-
-
-            @Override
-            public void onClick(View v) {
-                mMoveCounter.setText("HERE WE GOOOOOO!");
-                newGame.startAnimation(animTranslate);
-                mMoveCounter.startAnimation(animAlpha);
-                player1Turn = false;
-                firstMove = true;
-                resetAllButtons();
-            }
-        };
-
-
-
-
-        // This sets up the New Game button
-        // newGame.setOnClickListener(listener);
-        // This sets up the rest.   Can they be merged?
-        setupOnClickListeners();
-        newGame.setOnClickListener(listener);
+        setUpButtons();
     }
 
+    // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
 
+    public void newGame(View view) {
+        Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
+        Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
+
+        mMoveCounter.setText("HERE WE GOOOOOO!");
+        mNewGameButton.startAnimation(animTranslate);
+        mMoveCounter.startAnimation(animAlpha);
+        move.setPlayer1Turn(true);
+        move.getPlayer1Turn();
+        firstMove = true;
+        resetAllButtons();
+    }
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
     // Going TableLayout (whole game) -> TableRow (row of subgames)
      -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
 
-    private void setupOnClickListeners() {
+    private void setUpButtons() {
         for (int tileY = 0; tileY < mGameTable.getChildCount(); tileY++) {
             if (mGameTable.getChildAt(tileY) instanceof TableRow) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(tileY);
@@ -93,7 +70,7 @@ public class MainActivity extends ActionBarActivity {
                                 TableRow R2 = (TableRow) T2.getChildAt(gameY);
                                 for (int gameX = 0; gameX < R2.getChildCount(); gameX++) {
                                     View V = R2.getChildAt(gameX);
-                                    V.setOnClickListener(new playOnClick(gameX, gameY, tileX, tileY));
+                                    V.setOnClickListener(new makeMove(gameX, gameY, tileX, tileY));
                                 }
                             }
                         }
@@ -143,7 +120,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private class playOnClick implements View.OnClickListener {
+
+    private class makeMove implements View.OnClickListener {
 
         private int tileX = 0;
         private int tileY = 0;
@@ -153,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
 
         // This grabs the coordinates.
 
-        public playOnClick(int tileX, int tileY, int gameX, int gameY) {
+        public makeMove(int tileX, int tileY, int gameX, int gameY) {
             this.tileX = tileX;
             this.tileY = tileY;
             this.gameX = gameX;
@@ -162,8 +140,7 @@ public class MainActivity extends ActionBarActivity {
 
         /* This puts the X and O on the button and displays the coordinates of the move.
          It changes the display to X or O depending on whose turn.   Also locks out the button.
-        Finally, switches whose turn it is.   Of course, at some point it needs to lock out
-         every table but the table currently being played in. */
+        Finally, switches whose turn it is.   */
 
         @Override
         public void onClick(View view) {
@@ -171,26 +148,23 @@ public class MainActivity extends ActionBarActivity {
             final Animation animScale = AnimationUtils.loadAnimation(MainActivity.this, R.anim.scale);
 
             if (view instanceof Button) {
-                tempGameMove[0] = tileX;
-                tempGameMove[1] = tileY;
-                tempGameMove[2] = gameX;
-                tempGameMove[3] = gameY;
                 move.setTileX(tileX);
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
-                move.setPlayer1Turn(player1Turn);
+                move.getPlayer1Turn();
+
 
                 // Starting to try to use an intent to pass the move to the game - not actually used yet
                 // playGame(move);
 
                 // Grab the button and set it to O or X
-
                 Button B = (Button) view;
-                B.setText(move.getPlayer1Turn() ? "O" : "X");
+                B.setText(move.mPlayer1Turn ? "X" : "O");
 
                 // Two different ways to animate - old:
                 B.startAnimation(animScale);
+
                 // New:
                 B.animate().rotationYBy(180).setDuration(300);
 
@@ -201,7 +175,7 @@ public class MainActivity extends ActionBarActivity {
                 mMoveCounter.setText(move.mTileX + "," + move.mTileY + "," + move.mGameX + "," + move.mGameY);
 
                 // Reverse the player
-                player1Turn = !player1Turn;
+                move.setPlayer1Turn(!move.mPlayer1Turn);
 
                 if (firstMove) {
                     disableBoardAfterAny();
