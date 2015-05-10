@@ -18,6 +18,7 @@ public class GameController {
     private AIPlayer mAIPlayer2;
     private List<Move> mMoveHistory;
 
+
     public GameController() {
         //set up game
         mGameBoard = new Board();
@@ -57,7 +58,6 @@ public class GameController {
                     mGameBoard.makeMove(move);
                     mMoveHistory.add(0, move);
                     mIsGameOver = mGameBoard.checkWin();
-                    //Changes current Player
                     mIsPlayer1Turn = !mIsPlayer1Turn;
                 } else {
                     Log.d("GAME MOVE:", "invalid move");
@@ -65,17 +65,10 @@ public class GameController {
             } else {
                 Log.d("GAME MOVE:", "game over");
             }
-            logBoard(mGameBoard);
+            // logBoard(mGameBoard);
         }
     }
 
-    //get random board move
-    public void makeRandomMove(){
-        List<Move> moves = mGameBoard.listAvailableMoves();
-        Move move = moves.get((int) (Math.random() * moves.size()));
-
-        takeTurn(move);
-    }
 
 
     public Move getLastMove() {
@@ -86,36 +79,6 @@ public class GameController {
 
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);
-    }
-
-    public void logBoard(Board board){
-        String output = "";
-        int[][][][] boardSpace = board.indexBoard();
-        Log.d("GAME MOVE:", "new move");
-        Log.d("GAME MOVE:", "-------------");
-        for (int iGameY = 0; iGameY < 3; iGameY++) {
-            for (int iTileY = 0; iTileY < 3; iTileY++) {
-                output = "|";
-                for (int iGameX = 0; iGameX < 3; iGameX++) {
-                    for (int iTileX = 0; iTileX < 3; iTileX++) {
-                        switch (boardSpace[iGameX][iGameY][iTileX][iTileY]){
-                            case 1:
-                                output += "X";
-                                break;
-                            case 2:
-                                output += "O";
-                                break;
-                            default:
-                                output += "*";
-                                break;
-                        }
-                    }
-                    output +="|";
-                }
-                Log.d("GAME MOVE:",output);
-            }
-            Log.d("GAME MOVE:", "-------------");
-        }
     }
 
     public Board getGameBoard() {
@@ -146,5 +109,46 @@ public class GameController {
     public void setGameType(int gameType) {
         this.mGameType = gameType;
     }
+
+
+    /*
+    public void makeRandomMove(){
+        List<Move> moves = mGameBoard.listAvailableMoves();
+        Move move = moves.get((int) (Math.random() * moves.size()));
+        takeTurn(move);
+    }
+
+
+    public void logBoard(Board board){
+        String output = "";
+        int[][][][] boardSpace = board.indexBoard();
+        Log.d("GAME MOVE:", "new move");
+        Log.d("GAME MOVE:", "-------------");
+        for (int iGameY = 0; iGameY < 3; iGameY++) {
+            for (int iTileY = 0; iTileY < 3; iTileY++) {
+                output = "|";
+                for (int iGameX = 0; iGameX < 3; iGameX++) {
+                    for (int iTileX = 0; iTileX < 3; iTileX++) {
+                        switch (boardSpace[iGameX][iGameY][iTileX][iTileY]){
+                            case 1:
+                                output += "X";
+                                break;
+                            case 2:
+                                output += "O";
+                                break;
+                            default:
+                                output += "*";
+                                break;
+                        }
+                    }
+                    output +="|";
+                }
+                Log.d("GAME MOVE:",output);
+            }
+            Log.d("GAME MOVE:", "-------------");
+        }
+    }
+    */
+
 }
 

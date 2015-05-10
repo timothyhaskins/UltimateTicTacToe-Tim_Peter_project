@@ -29,7 +29,7 @@ public class Move {
         mTileY = reference.getTileY();
         mGameX = reference.getGameX();
         mGameY = reference.getGameY();
-        mIsPlayer1Turn = reference.getPlayer1Turn();
+        mIsPlayer1Turn = reference.isPlayer1Turn();
     }
 
     public int getTileX() {
@@ -64,7 +64,7 @@ public class Move {
         mGameY = gameY;
     }
 
-    public boolean getPlayer1Turn() {
+    public boolean isPlayer1Turn() {
         return mIsPlayer1Turn;
     }
 

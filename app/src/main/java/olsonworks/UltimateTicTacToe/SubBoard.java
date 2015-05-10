@@ -15,9 +15,10 @@ public class SubBoard {
     private boolean mIsWon;
     private int winner;
 
+
+
     //What to do when a new SubBoard is created with no inputs (blank)
     public SubBoard(){
-
         //turn each of the members of the array to state 0, and set there to be no winner
         for (int i = 0; i < mTiles.length; i++) {
             for (int j = 0; i < mTiles[0].length; i++) {
@@ -39,15 +40,17 @@ public class SubBoard {
     //The only thing it should really have to do (returns false if that is an illegal move):
     public boolean makeMove(Move move){
         //Make sure it is a legal move
-        if(! isLegalMove(move)) return false;
+        if(!isLegalMove(move)) return false;
 
         //Make the intended move
-        mTiles[move.getTileX()][move.getTileY()] = (move.getPlayer1Turn() ? 1 : 2);
+        mTiles[move.getTileX()][move.getTileY()] = (move.isPlayer1Turn() ? 1 : 2);
 
         //check for win.
         mIsWon = checkWin();
-        if (mIsWon) winner = (move.getPlayer1Turn() ? 1 : 2);
+        if (mIsWon) {
+            winner = (move.isPlayer1Turn() ? 1 : 2);
 
+        }
         return true;
     }
 
@@ -91,7 +94,6 @@ public class SubBoard {
                 }
             }
         }
-
         return moves;
     }
 
@@ -127,4 +129,6 @@ public class SubBoard {
     public void setWinner(int winner) {
         this.winner = winner;
     }
+
+
 }

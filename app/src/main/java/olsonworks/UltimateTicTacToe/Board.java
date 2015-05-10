@@ -11,11 +11,12 @@ import java.util.List;
  */
 public class Board {
 
-
     private SubBoard[][] mGames;
     //Which subGame you must play in next, -1 if any
     private int mNextGameX;
     private int mNextGameY;
+    private int[] mWonGames = new int[3];
+    private ArrayList mWonGamesList = new ArrayList();
 
     //Create new blank Board
     public Board(){
@@ -42,7 +43,6 @@ public class Board {
         if (isLegalMove(move)){
             //Makes move
             mGames[move.getGameX()][move.getGameY()].makeMove(move);
-
 
             //Checks if this makes a "Freemove", and sets where the next move will be
             if(mGames[move.getGameX()][move.getGameY()].isWon()){
@@ -147,5 +147,16 @@ public class Board {
         this.mNextGameX = nextGameX;
         this.mNextGameX = nextGameX;
     }
+
+    /* Need a list of won games
+     public addWonGame()
+
+    {
+        mWonGames[0] = move.getTileX();
+        mWonGames[1] = move.getTileY();
+        mWonGames[2] = winner;
+        mWonGamesList.add(0, mWonGames);
+    }
+    */
 }
 

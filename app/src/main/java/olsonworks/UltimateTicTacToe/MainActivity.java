@@ -19,8 +19,8 @@ import butterknife.InjectView;
 public class MainActivity extends ActionBarActivity {
 
     private boolean firstMove = true;
-    private boolean isAny = false;
     private boolean mIsUndo = false;
+    private boolean isAny = false;
     private String buttonText;
     public Move move = new Move();
     public GameController mainGame = new GameController();
@@ -48,9 +48,9 @@ public class MainActivity extends ActionBarActivity {
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
-        resetAllButtons();
-        mainGame = new GameController();
+        mainGame = new GameController(0);
         move = new Move();
+        resetAllButtons();
     }
 
     // This will undo 1 move right now
@@ -66,7 +66,7 @@ public class MainActivity extends ActionBarActivity {
         disableOldSubgame(move.getTileX(), move.getTileY());
         enableNewSubgame(move.getGameX(), move.getGameY());
         move = mainGame.getLastMove();
-        mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
+        mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
     }
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -113,11 +113,34 @@ public class MainActivity extends ActionBarActivity {
                                 for (int x = 0; x < R2.getChildCount(); x++) {
                                     if (R2.getChildAt(x) instanceof Button) {
                                         Button B = (Button) R2.getChildAt(x);
-                                        if (!isAny) {
                                             B.setText("");
                                             B.setEnabled(true);
+                                            }
                                         }
-                                        else {
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+    private void setButtonsforAny() {
+        // Grab the board
+        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+            if (mGameTable.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    if (R2.getChildAt(x) instanceof Button) {
+                                        Button B = (Button) R2.getChildAt(x);
+                                        // Something weird going on here, gonna separate it.
+                                        if (mainGame.isNextMoveAnyMove()) {
                                             buttonText = B.getText().toString();
                                             if (buttonText.equals("X") || buttonText.equals("O")) {
                                                 B.setEnabled(false);
@@ -134,7 +157,6 @@ public class MainActivity extends ActionBarActivity {
             }
         }
     }
-
 
     private class makeMove implements View.OnClickListener {
 
@@ -167,35 +189,40 @@ public class MainActivity extends ActionBarActivity {
                 move.setGameY(gameY);
 
                 // Grab the button and set it to O or X
-                Button B = (Button) view;
-                B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
 
-                // Two different ways to animate - old:
-                B.startAnimation(animScale);
-                // New:
-                B.animate().rotationYBy(180).setDuration(300);
+                    Button B = (Button) view;
+                    B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
 
-                // Disable the button
-                B.setEnabled(false);
+                    // Two different ways to animate - old:
+                    B.startAnimation(animScale);
+                    // New:
+                    B.animate().rotationYBy(180).setDuration(300);
 
-                // Display the move
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
-                mainGame.takeTurn(new Move(move));
+                    // Disable the button
+                    B.setEnabled(false);
 
-                if (firstMove) {
-                    disableBoardAfterAny();
-                    firstMove = false;
+                    // Display the move
+                    mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + mainGame.isPlayer1Turn());
+                    mainGame.takeTurn(new Move(move));
+
+                    if (firstMove) {
+                        disableBoard();
+                        firstMove = false;
+                    }
+                    disableOldSubgame(move.getGameX(), move.getGameY());
+                    if (mainGame.isNextMoveAnyMove()) {
+                        setButtonsforAny();
+                        disableOldSubgame(move.getGameX(), move.getGameY());
+                    }
+                    if (mainGame.getIsGameOver()) {
+                        disableBoard();
+                        mMoveCounter.setText("GAME IS WON");
+                    } else {
+                        enableNewSubgame(move.getTileX(), move.getTileY());
+                    }
                 }
-                disableOldSubgame(move.getGameX(), move.getGameY());
-                if (isAny) {
-                    resetAllButtons();
-                    firstMove = false;
-                    isAny = false;
-                }
-                enableNewSubgame(move.getTileX(), move.getTileY());
             }
         }
-    }
 
 
     // This would pass the move to the  via an intent.   Doesn't work.
@@ -206,8 +233,7 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-        public void disableOldSubgame(int gameX, int gameY) {
-
+     public void disableOldSubgame(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
             TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
             for (int y = 0; y < T2.getChildCount(); y++) {
@@ -244,7 +270,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        private void disableBoardAfterAny() {
+        private void disableBoard() {
             for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
                 if (mGameTable.getChildAt(zz) instanceof TableRow) {
                     TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
