@@ -55,7 +55,7 @@ public class GameController {
             if (mGameBoard.isLegalMove(move)) {
                 if (!mIsGameOver) {
                     mGameBoard.makeMove(move);
-                    mMoveHistory.add(move);
+                    mMoveHistory.add(0, move);
                     mIsGameOver = mGameBoard.checkWin();
                     //Changes current Player
                     mIsPlayer1Turn = !mIsPlayer1Turn;
@@ -126,7 +126,12 @@ public class GameController {
         this.mGameBoard = gameBoard;
     }
 
+    public boolean isPlayer1Turn() {
+        return mIsPlayer1Turn;
+    }
+
     public Boolean getIsGameOver() {
+
         return mIsGameOver;
     }
 

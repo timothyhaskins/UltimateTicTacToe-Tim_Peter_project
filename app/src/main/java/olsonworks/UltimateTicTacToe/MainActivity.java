@@ -18,20 +18,17 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    private boolean player1Turn = true;
     private boolean firstMove = true;
     private boolean isAny = false;
     private boolean mIsUndo = false;
     private String buttonText;
     public Move move = new Move();
-    public GameController mainGame;
+    public GameController mainGame = new GameController();
 
     // Butterknife
     @InjectView(R.id.totalboard) TableLayout mGameTable;
     @InjectView(R.id.move_counter) TextView mMoveCounter;
     @InjectView(R.id.new_game_button) Button mNewGameButton;
-    @InjectView(R.id.undo_button) Button mUndoButton;
-
 
 
     @Override
@@ -40,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         setUpButtons();
-        mainGame = new GameController(0);
     }
 
     // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
@@ -48,13 +44,13 @@ public class MainActivity extends ActionBarActivity {
     public void newGame(View view) {
         Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
         Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
-
         mMoveCounter.setText("HERE WE GOOOOOO!");
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
         resetAllButtons();
-        mainGame = new GameController(0);
+        mainGame = new GameController();
+        move = new Move();
     }
 
     // This will undo 1 move right now
@@ -69,7 +65,8 @@ public class MainActivity extends ActionBarActivity {
         B.animate().rotationYBy(180).setDuration(300);
         disableOldSubgame(move.getTileX(), move.getTileY());
         enableNewSubgame(move.getGameX(), move.getGameY());
-        // move = mainGame.getLastMove();
+        move = mainGame.getLastMove();
+        mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
     }
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -168,11 +165,10 @@ public class MainActivity extends ActionBarActivity {
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
-                move.setPlayer1Turn(player1Turn);
 
                 // Grab the button and set it to O or X
                 Button B = (Button) view;
-                B.setText(move.mIsPlayer1Turn ? "X" : "O");
+                B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
 
                 // Two different ways to animate - old:
                 B.startAnimation(animScale);
@@ -185,9 +181,6 @@ public class MainActivity extends ActionBarActivity {
                 // Display the move
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
                 mainGame.takeTurn(new Move(move));
-
-                // Reverse the player
-                move.setPlayer1Turn(!move.mIsPlayer1Turn);
 
                 if (firstMove) {
                     disableBoardAfterAny();
