@@ -12,7 +12,6 @@ public class Move {
     public int mGameY;
     public boolean mIsPlayer1Turn;
 
-
     //creates new empty move
     public Move(){}
 
@@ -23,13 +22,6 @@ public class Move {
         mGameX = gameX;
         mGameY = gameY;
         mIsPlayer1Turn = player1Turn;
-    }
-
-    public Move(int tileX, int tileY, int gameX, int gameY){
-        mTileX = tileX;
-        mTileY = tileY;
-        mGameX = gameX;
-        mGameY = gameY;
     }
 
     public int getTileX() {

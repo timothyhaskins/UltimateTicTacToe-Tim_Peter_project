@@ -18,17 +18,19 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    GameController mainGame = new GameController();
     private boolean player1Turn = true;
     private boolean firstMove = true;
     private boolean isAny = false;
+    private boolean mIsUndo = false;
     private String buttonText;
     public Move move = new Move();
+    public GameController mainGame = new GameController();
 
     // Butterknife
     @InjectView(R.id.totalboard) TableLayout mGameTable;
     @InjectView(R.id.move_counter) TextView mMoveCounter;
     @InjectView(R.id.new_game_button) Button mNewGameButton;
+    @InjectView(R.id.undo_button) Button mUndoButton;
 
 
 
@@ -49,15 +51,24 @@ public class MainActivity extends ActionBarActivity {
         mMoveCounter.setText("HERE WE GOOOOOO!");
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
-        move.setPlayer1Turn(true);
-        move.getPlayer1Turn();
         firstMove = true;
         resetAllButtons();
         mainGame = new GameController();
     }
 
-    public void undoMove (View view) {
+    // This will undo 1 move right now
 
+    public void undoMove (View view) {
+        TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+        TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
+        TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
+        Button B = (Button) R2.getChildAt(move.getTileX());
+        B.setText("");
+        B.setEnabled(false);
+        B.animate().rotationYBy(180).setDuration(300);
+        disableOldSubgame(move.getTileX(), move.getTileY());
+        enableNewSubgame(move.getGameX(), move.getGameY());
+        // move = mainGame.getLastMove();
     }
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -134,9 +145,7 @@ public class MainActivity extends ActionBarActivity {
         private int gameX = 0;
         private int gameY = 0;
 
-
         // This grabs the coordinates.
-
         public makeMove(int tileX, int tileY, int gameX, int gameY) {
             this.tileX = tileX;
             this.tileY = tileY;
@@ -160,14 +169,12 @@ public class MainActivity extends ActionBarActivity {
                 move.setGameY(gameY);
                 move.getPlayer1Turn();
 
-
                 // Grab the button and set it to O or X
                 Button B = (Button) view;
                 B.setText(move.mIsPlayer1Turn ? "X" : "O");
 
                 // Two different ways to animate - old:
                 B.startAnimation(animScale);
-
                 // New:
                 B.animate().rotationYBy(180).setDuration(300);
 
@@ -175,7 +182,8 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX());
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
+                // mainGame.takeTurn(move);
 
                 // Reverse the player
                 move.setPlayer1Turn(!move.mIsPlayer1Turn);
@@ -205,6 +213,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
         public void disableOldSubgame(int gameX, int gameY) {
+
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
             TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
             for (int y = 0; y < T2.getChildCount(); y++) {
@@ -213,7 +222,7 @@ public class MainActivity extends ActionBarActivity {
                     for (int x = 0; x < R2.getChildCount(); x++) {
                         if (R2.getChildAt(x) instanceof Button) {
                             Button B = (Button) R2.getChildAt(x);
-                            B.setEnabled(false);
+                                B.setEnabled(false);
                         }
                     }
                 }
@@ -242,7 +251,6 @@ public class MainActivity extends ActionBarActivity {
         }
 
         private void disableBoardAfterAny() {
-            // Grab the board
             for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
                 if (mGameTable.getChildAt(zz) instanceof TableRow) {
                     TableRow R1 = (TableRow) mGameTable.getChildAt(zz);

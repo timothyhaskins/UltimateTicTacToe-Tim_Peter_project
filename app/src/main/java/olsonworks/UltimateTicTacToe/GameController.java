@@ -13,6 +13,7 @@ public class GameController {
     private Board mGameBoard;
     private Boolean mIsGameOver;
     private int mGameType; //0=PvP, 1=PvE, 2=EvE
+    private Move mUndoMove;
     private boolean mIsPlayer1Turn;
     private AIPlayer mAIPlayer1;
     private AIPlayer mAIPlayer2;
@@ -58,24 +59,22 @@ public class GameController {
 
     public void takeTurn(Move move){
         //same as above, but with given inputs
-        move.setPlayer1Turn(mIsPlayer1Turn);
-        if (!mIsGameOver){
-            if(mGameBoard.isLegalMove(move)) {
-                mGameBoard.makeMove(move);
-                mMoveHistory.add(move);
-                mIsGameOver = mGameBoard.checkWin();
-
-                //Changes current Player
-                mIsPlayer1Turn = !mIsPlayer1Turn;
-            }else{
-                Log.d("GAME MOVE:", "invalid move");
+        if (!mIsGameOver) {
+            if (mGameBoard.isLegalMove(move)) {
+                if (!mIsGameOver) {
+                    mGameBoard.makeMove(move);
+                    mMoveHistory.add(move);
+                    mIsGameOver = mGameBoard.checkWin();
+                    //Changes current Player
+                    mIsPlayer1Turn = !mIsPlayer1Turn;
+                } else {
+                    Log.d("GAME MOVE:", "invalid move");
+                }
+            } else {
+                Log.d("GAME MOVE:", "game over");
             }
-
-        }else {
-            Log.d("GAME MOVE:", "game over");
+            logBoard(mGameBoard);
         }
-
-        logBoard(mGameBoard);
     }
 
     //get random board move
@@ -86,10 +85,12 @@ public class GameController {
         takeTurn(move);
     }
 
-    public void undoMove(){
-        mMoveHistory.remove(mMoveHistory.size());
-    }
 
+    public Move getLastMove() {
+        mMoveHistory.remove(0);
+        mUndoMove = mMoveHistory.get(0);
+        return mUndoMove;
+    }
 
     public void logBoard(Board board){
         String output = "";
