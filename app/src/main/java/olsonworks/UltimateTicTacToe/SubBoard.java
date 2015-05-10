@@ -85,7 +85,6 @@ public class SubBoard {
     //will return a list of all available moves, but I have to remember how lists are implemented first...
     public List listAvailableMoves(){
         List moves = new ArrayList();
-
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 if (isLegalMove(x,y)) {
