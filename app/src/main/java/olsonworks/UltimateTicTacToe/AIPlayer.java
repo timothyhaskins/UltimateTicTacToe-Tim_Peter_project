@@ -1,5 +1,7 @@
 package olsonworks.UltimateTicTacToe;
 
+import java.util.List;
+
 /**
  * Created by Peter Olson on 5/3/2015.
  */
@@ -12,6 +14,14 @@ public class AIPlayer {
         mIsPlayer1 = isPlayer1;
         mPlayerNumber = (mIsPlayer1 ? 1 : 2);
         mAIType = type;
+    }
+
+    //get random board move
+    public Move makeRandomMove(Board gameBoard){
+        List<Move> moves = gameBoard.listAvailableMoves();
+        Move move = moves.get((int) (Math.random() * moves.size()));
+
+        return move;
     }
 
 }

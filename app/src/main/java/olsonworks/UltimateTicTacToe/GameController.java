@@ -18,7 +18,6 @@ public class GameController {
     private AIPlayer mAIPlayer2;
     private List<Move> mMoveHistory;
 
-
     public GameController() {
         //set up game
         mGameBoard = new Board();
@@ -65,11 +64,9 @@ public class GameController {
             } else {
                 Log.d("GAME MOVE:", "game over");
             }
-            // logBoard(mGameBoard);
+            logBoard(mGameBoard);
         }
     }
-
-
 
     public Move getLastMove() {
         mMoveHistory.remove(0);
@@ -80,44 +77,6 @@ public class GameController {
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);
     }
-
-    public Board getGameBoard() {
-        return mGameBoard;
-    }
-
-    public void setGameBoard(Board gameBoard) {
-        this.mGameBoard = gameBoard;
-    }
-
-    public boolean isPlayer1Turn() {
-        return mIsPlayer1Turn;
-    }
-
-    public Boolean getIsGameOver() {
-
-        return mIsGameOver;
-    }
-
-    public void setIsGameOver(Boolean isGameOver) {
-        this.mIsGameOver = isGameOver;
-    }
-
-    public int getGameType() {
-        return mGameType;
-    }
-
-    public void setGameType(int gameType) {
-        this.mGameType = gameType;
-    }
-
-
-    /*
-    public void makeRandomMove(){
-        List<Move> moves = mGameBoard.listAvailableMoves();
-        Move move = moves.get((int) (Math.random() * moves.size()));
-        takeTurn(move);
-    }
-
 
     public void logBoard(Board board){
         String output = "";
@@ -148,7 +107,34 @@ public class GameController {
             Log.d("GAME MOVE:", "-------------");
         }
     }
-    */
 
+    public Board getGameBoard() {
+        return mGameBoard;
+    }
+
+    public void setGameBoard(Board gameBoard) {
+        this.mGameBoard = gameBoard;
+    }
+
+    public boolean isPlayer1Turn() {
+        return mIsPlayer1Turn;
+    }
+
+    public Boolean getIsGameOver() {
+
+        return mIsGameOver;
+    }
+
+    public void setIsGameOver(Boolean isGameOver) {
+        this.mIsGameOver = isGameOver;
+    }
+
+    public int getGameType() {
+        return mGameType;
+    }
+
+    public void setGameType(int gameType) {
+        this.mGameType = gameType;
+    }
 }
 
