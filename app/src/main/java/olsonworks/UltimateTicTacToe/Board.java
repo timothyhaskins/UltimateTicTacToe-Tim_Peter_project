@@ -45,7 +45,7 @@ public class Board {
             mGames[move.getGameX()][move.getGameY()].makeMove(move);
 
             //Checks if this makes a "Freemove", and sets where the next move will be
-            if(mGames[move.getGameX()][move.getGameY()].isWon()){
+            if(mGames[move.getTileX()][move.getTileY()].isWon()){
                 mNextGameX = -1;
                 mNextGameY = -1;
             }else{
