@@ -168,7 +168,7 @@ public class MainActivity extends ActionBarActivity {
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
-                move.getPlayer1Turn();
+                move.setPlayer1Turn(player1Turn);
 
                 // Grab the button and set it to O or X
                 Button B = (Button) view;

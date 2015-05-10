@@ -13,7 +13,6 @@ public class GameController {
     private Board mGameBoard;
     private Boolean mIsGameOver;
     private int mGameType; //0=PvP, 1=PvE, 2=EvE
-    private Move mUndoMove;
     private boolean mIsPlayer1Turn;
     private AIPlayer mAIPlayer1;
     private AIPlayer mAIPlayer2;
@@ -81,8 +80,12 @@ public class GameController {
 
     public Move getLastMove() {
         mMoveHistory.remove(0);
-        mUndoMove = mMoveHistory.get(0);
+        Move mUndoMove = mMoveHistory.get(0);
         return mUndoMove;
+    }
+
+    public boolean isNextMoveAnyMove(){
+        return (mGameBoard.getNextGameX() == -1);
     }
 
     public void logBoard(Board board){
