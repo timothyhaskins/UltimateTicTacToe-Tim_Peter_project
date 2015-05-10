@@ -69,15 +69,6 @@ public class GameController {
         }
     }
 
-    //get random board move
-    public void makeRandomMove(){
-        List<Move> moves = mGameBoard.listAvailableMoves();
-        Move move = moves.get((int) (Math.random() * moves.size()));
-
-        takeTurn(move);
-    }
-
-
     public Move getLastMove() {
         mMoveHistory.remove(0);
         Move mUndoMove = mMoveHistory.get(0);
