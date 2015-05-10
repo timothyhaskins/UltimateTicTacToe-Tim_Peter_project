@@ -19,7 +19,7 @@ public class GameController {
     private AIPlayer mAIPlayer2;
     private List<Move> mMoveHistory;
 
-    public void GameController() {
+    public GameController() {
         //set up game
         mGameBoard = new Board();
         mIsGameOver = false;
@@ -28,21 +28,14 @@ public class GameController {
         //Setup game characteristics
         mGameType = 0;
         mIsPlayer1Turn = true;
-
-        //make any AIs that are needed
-        if (mGameType > 0){
-            mAIPlayer1 = new AIPlayer(true,0);
-            if (mGameType == 2){
-                mAIPlayer2 = new AIPlayer(false,0);
-            }
-        }
     }
 
 
-    public void GameController(int type) {
+    public GameController(int type) {
         //set up game
         mGameBoard = new Board();
         mIsGameOver = false;
+        mMoveHistory = new ArrayList<Move>();
 
         //Setup game characteristics
         mGameType = type;

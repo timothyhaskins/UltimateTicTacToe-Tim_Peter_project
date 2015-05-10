@@ -24,6 +24,14 @@ public class Move {
         mIsPlayer1Turn = player1Turn;
     }
 
+    public Move(Move reference){
+        mTileX = reference.getTileX();
+        mTileY = reference.getTileY();
+        mGameX = reference.getGameX();
+        mGameY = reference.getGameY();
+        mIsPlayer1Turn = reference.getPlayer1Turn();
+    }
+
     public int getTileX() {
         return mTileX;
     }

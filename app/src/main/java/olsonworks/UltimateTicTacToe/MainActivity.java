@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
     private boolean mIsUndo = false;
     private String buttonText;
     public Move move = new Move();
-    public GameController mainGame = new GameController();
+    public GameController mainGame;
 
     // Butterknife
     @InjectView(R.id.totalboard) TableLayout mGameTable;
@@ -40,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         setUpButtons();
+        mainGame = new GameController(0);
     }
 
     // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
@@ -53,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
         resetAllButtons();
-        mainGame = new GameController();
+        mainGame = new GameController(0);
     }
 
     // This will undo 1 move right now
@@ -183,7 +184,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // Display the move
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.getPlayer1Turn());
-                // mainGame.takeTurn(move);
+                mainGame.takeTurn(new Move(move));
 
                 // Reverse the player
                 move.setPlayer1Turn(!move.mIsPlayer1Turn);

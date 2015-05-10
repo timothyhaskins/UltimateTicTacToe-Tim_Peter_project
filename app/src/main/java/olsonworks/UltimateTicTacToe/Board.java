@@ -23,8 +23,8 @@ public class Board {
         mNextGameX = -1;
         mNextGameY = -1;
 
-        for (int i = 0; i < mGames.length; i++) {
-            for (int j = 0; j < mGames[0].length; i++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 mGames[i][j] = new SubBoard();
             }
         }
