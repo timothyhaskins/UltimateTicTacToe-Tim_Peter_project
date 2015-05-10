@@ -1,8 +1,6 @@
 package olsonworks.UltimateTicTacToe;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -100,7 +98,6 @@ public class MainActivity extends ActionBarActivity {
     // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
 
     private void resetAllButtons() {
-        // Grab the board
         for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
             if (mGameTable.getChildAt(zz) instanceof TableRow) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
@@ -126,7 +123,6 @@ public class MainActivity extends ActionBarActivity {
             }
 
     private void setButtonsforAny() {
-        // Grab the board
         for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
             if (mGameTable.getChildAt(zz) instanceof TableRow) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
@@ -139,16 +135,13 @@ public class MainActivity extends ActionBarActivity {
                                 for (int x = 0; x < R2.getChildCount(); x++) {
                                     if (R2.getChildAt(x) instanceof Button) {
                                         Button B = (Button) R2.getChildAt(x);
-                                        // Something weird going on here, gonna separate it.
-                                        if (mainGame.isNextMoveAnyMove()) {
                                             buttonText = B.getText().toString();
                                             if (buttonText.equals("X") || buttonText.equals("O")) {
                                                 B.setEnabled(false);
                                             } else {
                                                 B.setEnabled(true);
                                             }
-                                        }
-                                    }
+                                        }                                    }
                                 }
                             }
                         }
@@ -156,7 +149,6 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
-    }
 
     private class makeMove implements View.OnClickListener {
 
@@ -192,13 +184,8 @@ public class MainActivity extends ActionBarActivity {
 
                     Button B = (Button) view;
                     B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
-
-                    // Two different ways to animate - old:
                     B.startAnimation(animScale);
-                    // New:
                     B.animate().rotationYBy(180).setDuration(300);
-
-                    // Disable the button
                     B.setEnabled(false);
 
                     // Display the move
@@ -208,8 +195,9 @@ public class MainActivity extends ActionBarActivity {
                     if (firstMove) {
                         disableBoard();
                         firstMove = false;
+                        enableNewSubgame(move.getTileX(), move.getTileY());
                     }
-                    disableOldSubgame(move.getGameX(), move.getGameY());
+
                     if (mainGame.isNextMoveAnyMove()) {
                         setButtonsforAny();
                         disableOldSubgame(move.getGameX(), move.getGameY());
@@ -218,20 +206,13 @@ public class MainActivity extends ActionBarActivity {
                         disableBoard();
                         mMoveCounter.setText("GAME IS WON");
                     } else {
+                        disableOldSubgame(move.getGameX(), move.getGameY());
                         enableNewSubgame(move.getTileX(), move.getTileY());
                     }
                 }
             }
         }
 
-
-    // This would pass the move to the  via an intent.   Doesn't work.
-
-    private void playGame(Move newMove) {
-        Intent intent = new Intent(MainActivity.this, Move.class);
-        intent.putExtra("newMove", (Parcelable) newMove);
-        startActivity(intent);
-    }
 
      public void disableOldSubgame(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
