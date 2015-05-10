@@ -64,6 +64,8 @@ public class Board {
         return mGames[move.getGameX()][move.getGameY()].isLegalMove(move);
     }
 
+
+
     //will return a list of all available moves, but I have to remember how lists are implemented first...
     public List listAvailableMoves(){
         List moves = new ArrayList();
@@ -92,7 +94,6 @@ public class Board {
     //Returns a 3x3x3x3 array of integers that represents the board state
     public int[][][][] indexBoard(){
         int[][][][] stateSpace = new int[3][3][3][3];
-
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 for (int k = 0; k < 3; k++) {
@@ -121,6 +122,13 @@ public class Board {
 
         return false;
     }
+     /* public addWonGame() {
+        mWonGames[0] = move.getTileX();
+        mWonGames[1] = move.getTileY();
+        mWonGames[2] = winner;
+        mWonGamesList.add(0, mWonGames);
+    }
+    */
 
     //Getters and setters
     public SubBoard[][] getGames() {
@@ -148,15 +156,6 @@ public class Board {
         this.mNextGameX = nextGameX;
     }
 
-    /* Need a list of won games
-     public addWonGame()
 
-    {
-        mWonGames[0] = move.getTileX();
-        mWonGames[1] = move.getTileY();
-        mWonGames[2] = winner;
-        mWonGamesList.add(0, mWonGames);
-    }
-    */
 }
 

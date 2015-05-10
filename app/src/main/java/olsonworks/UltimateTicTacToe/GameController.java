@@ -55,7 +55,7 @@ public class GameController {
             if (mGameBoard.isLegalMove(move)) {
                 if (!mIsGameOver) {
                     mGameBoard.makeMove(move);
-                    mMoveHistory.add(0, move);
+                    mMoveHistory.add(move);
                     mIsGameOver = mGameBoard.checkWin();
                     mIsPlayer1Turn = !mIsPlayer1Turn;
                 } else {
@@ -69,10 +69,11 @@ public class GameController {
     }
 
     public Move getLastMove() {
-        mMoveHistory.remove(0);
-        Move mUndoMove = mMoveHistory.get(0);
+        mMoveHistory.remove(mMoveHistory.size() - 1);
+        Move mUndoMove = mMoveHistory.get(mMoveHistory.size() - 1);
         return mUndoMove;
     }
+
 
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);
@@ -121,7 +122,6 @@ public class GameController {
     }
 
     public Boolean getIsGameOver() {
-
         return mIsGameOver;
     }
 

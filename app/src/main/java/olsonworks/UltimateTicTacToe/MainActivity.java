@@ -54,6 +54,7 @@ public class MainActivity extends ActionBarActivity {
     // This will undo 1 move right now
 
     public void undoMove (View view) {
+        // if mainGame.mMoveHistory
         TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
         TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
         TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
@@ -179,6 +180,7 @@ public class MainActivity extends ActionBarActivity {
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
+                move.setPlayer1Turn(mainGame.isPlayer1Turn());
 
                 // Grab the button and set it to O or X
 
@@ -204,7 +206,8 @@ public class MainActivity extends ActionBarActivity {
                     }
                     if (mainGame.getIsGameOver()) {
                         disableBoard();
-                        mMoveCounter.setText("GAME IS WON");
+                        String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
+                        mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
                     } else {
                         disableOldSubgame(move.getGameX(), move.getGameY());
                         enableNewSubgame(move.getTileX(), move.getTileY());
