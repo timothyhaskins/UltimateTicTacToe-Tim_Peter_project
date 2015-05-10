@@ -49,7 +49,6 @@ public class SubBoard {
         mIsWon = checkWin();
         if (mIsWon) {
             winner = (move.isPlayer1Turn() ? 1 : 2);
-
         }
         return true;
     }
