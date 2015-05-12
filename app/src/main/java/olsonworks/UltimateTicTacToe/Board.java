@@ -41,7 +41,7 @@ public class Board {
     //This makes the actual moves, and returns the next SubBoard that must be played in as a 2d array(x,y). Returns -1.-1 for "Freemove"
     public int[] makeMove(Move move){
         //Makes move, logs if it tries an illegal move
-        if (!mGames[move.getGameX()][move.getGameY()].makeMove(move)){
+        if (mGames[move.getGameX()][move.getGameY()].makeMove(move)){
             //Checks if this makes a "Freemove", or sets where the next move will be
             if(mGames[move.getTileX()][move.getTileY()].isWon()){
                 mNextGameX = -1;
