@@ -37,7 +37,7 @@ public class SubBoard {
 
     //The only thing it should really have to do (returns false if that is an illegal move):
     public boolean makeMove(Move move){
-        //Make sure it is a legal move
+        //Make sure it is a legal move, and about with false return if illegal
         if(!isLegalMove(move)) return false;
 
         //Make the intended move

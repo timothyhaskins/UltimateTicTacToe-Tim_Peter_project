@@ -49,25 +49,37 @@ public class GameController {
         }
     }
 
-    public void takeTurn(Move move){
-        //same as above, but with given inputs
+    public int[] takeTurn(Move move){
+        int[] nextMove = new int[2];
+        //Verifies the game isn't over, and the move is legal
         if (!mIsGameOver) {
             if (mGameBoard.isLegalMove(move)) {
-                if (!mIsGameOver) {
-                    mGameBoard.makeMove(move);
-                    mMoveHistory.add(move);
-                    mIsGameOver = mGameBoard.checkWin();
-                    mIsPlayer1Turn = !mIsPlayer1Turn;
-                } else {
-                    Log.d("GAME MOVE:", "invalid move");
-                }
-            } else {
-                Log.d("GAME MOVE:", "game over");
+                //make the move
+                nextMove = mGameBoard.makeMove(move);
+
+                //adds the move to the list of moves
+                mMoveHistory.add(move);
+
+                //checks to see if this won the game
+                mIsGameOver = mGameBoard.checkWin();
+
+                //switches the active player
+                mIsPlayer1Turn = !mIsPlayer1Turn;
+            }else {
+                Log.d("GAME MOVE:", "invalid move");
             }
+            //outputs game board to the console
             logBoard(mGameBoard);
+        }else {
+            nextMove[0] = mGameBoard.getNextGameX();
+            nextMove[1] = mGameBoard.getNextGameY();
+            Log.d("GAME MOVE:", "game over");
         }
+
+        return nextMove;
     }
 
+    //should we change this to undoLastMove() so that we know it isn't just a getter, but actually undoes the move too?
     public Move getLastMove() {
         mMoveHistory.remove(mMoveHistory.size() - 1);
         Move mUndoMove = mMoveHistory.get(mMoveHistory.size() - 1);
