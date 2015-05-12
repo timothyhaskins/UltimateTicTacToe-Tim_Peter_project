@@ -10,6 +10,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -143,16 +145,13 @@ public class MainActivity extends ActionBarActivity {
                         disableBoard();
                         firstMove = false;
                         enableNewSubgame(move.getTileX(), move.getTileY());
-                    }
-
-                    if (mainGame.isNextMoveAnyMove()) {
-                        setButtonsforAny();
-                        disableOldSubgame(move.getGameX(), move.getGameY());
-                    }
-                    if (mainGame.getIsGameOver()) {
-                        setAllButtons(true);
+                    } else if (mainGame.getIsGameOver()) {
+                            setAllButtons(true);
                         String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                         mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+                    } else if (mainGame.isNextMoveAnyMove()) {
+                        setButtonsforAny();
+                        disableOldSubgame(move.getGameX(), move.getGameY());
                     } else {
                         disableOldSubgame(move.getGameX(), move.getGameY());
                         enableNewSubgame(move.getTileX(), move.getTileY());
@@ -194,32 +193,38 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setButtonsforAny() {
-        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
-            if (mGameTable.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
-                for (int z = 0; z < R1.getChildCount(); z++) {
-                    if (R1.getChildAt(z) instanceof TableLayout) {
-                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                        for (int y = 0; y < T2.getChildCount(); y++) {
-                            if (T2.getChildAt(y) instanceof TableRow) {
-                                TableRow R2 = (TableRow) T2.getChildAt(y);
-                                for (int x = 0; x < R2.getChildCount(); x++) {
-                                    if (R2.getChildAt(x) instanceof Button) {
-                                        Button B = (Button) R2.getChildAt(x);
-                                        buttonText = B.getText().toString();
-                                        if (buttonText.equals("X") || buttonText.equals("O")) {
-                                            B.setEnabled(false);
-                                        } else {
-                                            B.setEnabled(true);
+        List mAvailableGames = mainGame.getAvailableGames();
+        int[] mGame;
+        for (int i = 0; i < mAvailableGames.size(); i++) {
+            mGame = (int[]) mAvailableGames.get(i);
+            // for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+                if (mGameTable.getChildAt(mGame[1]) instanceof TableRow) {
+                    TableRow R1 = (TableRow) mGameTable.getChildAt(mGame[1]);
+                    // for (int z = 0; z < R1.getChildCount(); z++) {
+                        if (R1.getChildAt(mGame[0]) instanceof TableLayout) {
+                            TableLayout T2 = (TableLayout) R1.getChildAt(mGame[0]);
+                            for (int y = 0; y < T2.getChildCount(); y++) {
+                                if (T2.getChildAt(y) instanceof TableRow) {
+                                    TableRow R2 = (TableRow) T2.getChildAt(y);
+                                    for (int x = 0; x < R2.getChildCount(); x++) {
+                                        if (R2.getChildAt(x) instanceof Button) {
+                                            Button B = (Button) R2.getChildAt(x);
+                                            buttonText = B.getText().toString();
+                                            if (buttonText.equals("X") || buttonText.equals("O")) {
+                                                B.setEnabled(false);
+                                            } else {
+                                                B.setEnabled(true);
+                                            }
                                         }
-                                    }                                    }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    }
+
+
 
      public void disableOldSubgame(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
