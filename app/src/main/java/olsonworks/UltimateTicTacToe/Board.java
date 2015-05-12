@@ -64,6 +64,24 @@ public class Board {
         return mGames[move.getGameX()][move.getGameY()].isLegalMove(move);
     }
 
+    //Returns a list of arrays that contain the X and Y coordinates for each game that has yet to be won
+    public List<int[]> getAvailableGames(){
+        //Makes the array so that it will only hold int[]s
+        List<int[]> availableGames = new ArrayList<int[]>();
+
+        //Iterate through the 9 subgames to check if it's been won
+        for (int i = 0; i < mGames.length; i++) {
+            for (int j = 0; j < mGames[i].length; j++) {
+                //If the game has not been won, then add an int to the array with it's X and Y coordinates
+                if (!mGames[i][j].isWon()){
+                    //this is a nice way to make a new array and fill it with the values in the same line( with the curly brackets)
+                    availableGames.add(new int[]{i, j});
+                }
+            }
+        }
+        //send back the filled list
+        return availableGames;
+    }
 
 
     //will return a list of all available moves, but I have to remember how lists are implemented first...

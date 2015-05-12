@@ -74,6 +74,11 @@ public class GameController {
         return mUndoMove;
     }
 
+    //Passes the request on to the Board, as it is what can actually answer the question
+    public List<int[]> getAvailableGames(){
+        return mGameBoard.getAvailableGames();
+    }
+
 
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);
