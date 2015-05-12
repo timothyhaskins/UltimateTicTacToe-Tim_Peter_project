@@ -15,8 +15,6 @@ public class SubBoard {
     private boolean mIsWon;
     private int winner;
 
-
-
     //What to do when a new SubBoard is created with no inputs (blank)
     public SubBoard(){
         //turn each of the members of the array to state 0, and set there to be no winner

@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        setUpButtons();
+        setUpButtonsForOnClick();
     }
 
     // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
@@ -48,7 +48,8 @@ public class MainActivity extends ActionBarActivity {
         firstMove = true;
         mainGame = new GameController(0);
         move = new Move();
-        resetAllButtons();
+        setAllButtons(false);
+        setUpButtonsForOnClick();
     }
 
     // This will undo 1 move right now
@@ -72,7 +73,7 @@ public class MainActivity extends ActionBarActivity {
     // Going TableLayout (whole game) -> TableRow (row of subgames)
      -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
 
-    private void setUpButtons() {
+    private void setUpButtonsForOnClick() {
         for (int tileY = 0; tileY < mGameTable.getChildCount(); tileY++) {
             if (mGameTable.getChildAt(tileY) instanceof TableRow) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(tileY);
@@ -94,62 +95,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
-    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
-
-    private void resetAllButtons() {
-        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
-            if (mGameTable.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
-                for (int z = 0; z < R1.getChildCount(); z++) {
-                    if (R1.getChildAt(z) instanceof TableLayout) {
-                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                        for (int y = 0; y < T2.getChildCount(); y++) {
-                            if (T2.getChildAt(y) instanceof TableRow) {
-                                TableRow R2 = (TableRow) T2.getChildAt(y);
-                                for (int x = 0; x < R2.getChildCount(); x++) {
-                                    if (R2.getChildAt(x) instanceof Button) {
-                                        Button B = (Button) R2.getChildAt(x);
-                                            B.setText("");
-                                            B.setEnabled(true);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-    private void setButtonsforAny() {
-        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
-            if (mGameTable.getChildAt(zz) instanceof TableRow) {
-                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
-                for (int z = 0; z < R1.getChildCount(); z++) {
-                    if (R1.getChildAt(z) instanceof TableLayout) {
-                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
-                        for (int y = 0; y < T2.getChildCount(); y++) {
-                            if (T2.getChildAt(y) instanceof TableRow) {
-                                TableRow R2 = (TableRow) T2.getChildAt(y);
-                                for (int x = 0; x < R2.getChildCount(); x++) {
-                                    if (R2.getChildAt(x) instanceof Button) {
-                                        Button B = (Button) R2.getChildAt(x);
-                                            buttonText = B.getText().toString();
-                                            if (buttonText.equals("X") || buttonText.equals("O")) {
-                                                B.setEnabled(false);
-                                            } else {
-                                                B.setEnabled(true);
-                                            }
-                                        }                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
     private class makeMove implements View.OnClickListener {
 
@@ -205,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
                         disableOldSubgame(move.getGameX(), move.getGameY());
                     }
                     if (mainGame.getIsGameOver()) {
-                        disableBoard();
+                        setAllButtons(true);
                         String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                         mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
                     } else {
@@ -216,6 +161,65 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
+    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
+    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
+
+    private void setAllButtons(boolean wonGame) {
+        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+            if (mGameTable.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    if (R2.getChildAt(x) instanceof Button) {
+                                        Button B = (Button) R2.getChildAt(x);
+                                        if (wonGame) {
+                                            B.setEnabled(false);
+                                        } else {
+                                            B.setText("");
+                                            B.setEnabled(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void setButtonsforAny() {
+        for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
+            if (mGameTable.getChildAt(zz) instanceof TableRow) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
+                for (int z = 0; z < R1.getChildCount(); z++) {
+                    if (R1.getChildAt(z) instanceof TableLayout) {
+                        TableLayout T2 = (TableLayout) R1.getChildAt(z);
+                        for (int y = 0; y < T2.getChildCount(); y++) {
+                            if (T2.getChildAt(y) instanceof TableRow) {
+                                TableRow R2 = (TableRow) T2.getChildAt(y);
+                                for (int x = 0; x < R2.getChildCount(); x++) {
+                                    if (R2.getChildAt(x) instanceof Button) {
+                                        Button B = (Button) R2.getChildAt(x);
+                                        buttonText = B.getText().toString();
+                                        if (buttonText.equals("X") || buttonText.equals("O")) {
+                                            B.setEnabled(false);
+                                        } else {
+                                            B.setEnabled(true);
+                                        }
+                                    }                                    }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
      public void disableOldSubgame(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
