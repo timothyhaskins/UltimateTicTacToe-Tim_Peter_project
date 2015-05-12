@@ -86,9 +86,20 @@ public class GameController {
         return mUndoMove;
     }
 
+    //Passes an array of int[] coordinates that direct to all games
+    public List<int []> listAvailableGames(){
+        if(mGameBoard.getNextGameY()==-1){
+            return  listNotWonGames();
+        }else {
+            List<int[]> availableMoves = new ArrayList<int[]>();
+            availableMoves.add(new int[]{mGameBoard.getNextGameX(),getGameBoard().getNextGameY()});
+            return (availableMoves);
+        }
+    }
+
     //Passes the request on to the Board, as it is what can actually answer the question
-    public List<int[]> getAvailableGames(){
-        return mGameBoard.getAvailableGames();
+    public List<int[]> listNotWonGames(){
+        return mGameBoard.listNotWonGames();
     }
 
 

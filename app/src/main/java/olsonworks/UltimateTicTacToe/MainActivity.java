@@ -193,7 +193,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setButtonsforAny() {
-        List mAvailableGames = mainGame.getAvailableGames();
+        List mAvailableGames = mainGame.listAvailableGames();
         int[] mGame;
         for (int i = 0; i < mAvailableGames.size(); i++) {
             mGame = (int[]) mAvailableGames.get(i);

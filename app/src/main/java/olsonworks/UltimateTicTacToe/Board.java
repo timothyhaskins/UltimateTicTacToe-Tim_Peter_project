@@ -67,7 +67,7 @@ public class Board {
     }
 
     //Returns a list of arrays that contain the X and Y coordinates for each game that has yet to be won
-    public List<int[]> getAvailableGames(){
+    public List<int[]> listNotWonGames(){
         //Makes the array so that it will only hold int[]s
         List<int[]> availableGames = new ArrayList<int[]>();
 
