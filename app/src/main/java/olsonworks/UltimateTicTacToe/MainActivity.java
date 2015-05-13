@@ -18,7 +18,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    private boolean firstMove = true;
+    private boolean firstMoveOrAny = true;
     private boolean mIsUndo = false;
     private boolean isAny = false;
     private String buttonText;
@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         mMoveCounter.setText("HERE WE GOOOOOO!");
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
-        firstMove = true;
+        firstMoveOrAny = true;
         mainGame = new GameController(0);
         move = new Move();
         setAllButtons(false);
@@ -141,15 +141,16 @@ public class MainActivity extends ActionBarActivity {
                     mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + mainGame.isPlayer1Turn());
                     mainGame.takeTurn(new Move(move));
 
-                    if (firstMove) {
+                    if (firstMoveOrAny) {
                         disableBoard();
-                        firstMove = false;
+                        firstMoveOrAny = false;
                         enableNewSubgame(move.getTileX(), move.getTileY());
                     } else if (mainGame.getIsGameOver()) {
                             setAllButtons(true);
                         String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                         mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
                     } else if (mainGame.isNextMoveAnyMove()) {
+                        firstMoveOrAny = true;
                         setButtonsforAny();
                         disableOldSubgame(move.getGameX(), move.getGameY());
                     } else {
