@@ -1,5 +1,7 @@
 package olsonworks.UltimateTicTacToe;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class SubBoard {
         mIsWon = checkWin();
         if (mIsWon) {
             winner = (move.isPlayer1Turn() ? 1 : 2);
+            Log.d("GAME MOVE:","player " + (move.isPlayer1Turn() ? 1 : 2) + " just won tile " + move.getGameX() + "," + move.getGameY());
         }
         return true;
     }

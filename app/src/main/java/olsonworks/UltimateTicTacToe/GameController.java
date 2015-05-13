@@ -80,7 +80,7 @@ public class GameController {
     }
 
     //should we change this to undoLastMove() so that we know it isn't just a getter, but actually undoes the move too?
-    public Move getLastMove() {
+    public Move undoLastMove() {
         mMoveHistory.remove(mMoveHistory.size() - 1);
         Move mUndoMove = mMoveHistory.get(mMoveHistory.size() - 1);
         return mUndoMove;
@@ -102,9 +102,18 @@ public class GameController {
         return mGameBoard.listNotWonGames();
     }
 
+    public boolean isLastMoveGameWinning(){
+        Move lastMove = getLastMove();
+        return (mGameBoard.isSubGameWon(lastMove.getGameX(),lastMove.getGameX()));
+    }
+
 
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);
+    }
+
+    public Move getLastMove(){
+        return mMoveHistory.get(mMoveHistory.size()-1);
     }
 
     public void logBoard(Board board){

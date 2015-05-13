@@ -85,6 +85,10 @@ public class Board {
         return availableGames;
     }
 
+    //returns true if game has been won
+    public boolean  isSubGameWon(int gameX, int gameY){
+        return mGames[gameX][gameY].isWon();
+    }
 
     //will return a list of all available moves, but I have to remember how lists are implemented first...
     public List listAvailableMoves(){

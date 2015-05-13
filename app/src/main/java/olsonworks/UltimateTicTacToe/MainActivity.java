@@ -67,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
         B.animate().rotationYBy(180).setDuration(300);
         disableOldSubgame(move.getTileX(), move.getTileY());
         enableNewSubgame(move.getGameX(), move.getGameY());
-        move = mainGame.getLastMove();
+        move = mainGame.undoLastMove();
         mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
     }
 
