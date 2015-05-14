@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
         firstMoveOrAny = true;
         mainGame = new GameController(0);
         move = new Move();
-        setAllButtons(false);
+        SetBoardForNewOrWonGame(false);
         setUpButtonsForOnClick();
     }
 
@@ -131,40 +131,62 @@ public class MainActivity extends ActionBarActivity {
 
                 // Grab the button and set it to O or X
 
-                    Button B = (Button) view;
-                    B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
-                    B.startAnimation(animScale);
-                    B.animate().rotationYBy(180).setDuration(300);
-                    B.setEnabled(false);
+                Button B = (Button) view;
+                B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
+                B.startAnimation(animScale);
+                B.animate().rotationYBy(180).setDuration(300);
+                B.setEnabled(false);
 
-                    // Display the move
-                    mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + mainGame.isPlayer1Turn());
-                    mainGame.takeTurn(new Move(move));
+                // Display the move
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + mainGame.isPlayer1Turn());
+                mainGame.takeTurn(new Move(move));
 
-                    if (firstMoveOrAny) {
-                        disableBoard();
-                        firstMoveOrAny = false;
-                        enableNewSubgame(move.getTileX(), move.getTileY());
-                    } else if (mainGame.getIsGameOver()) {
-                            setAllButtons(true);
-                        String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
-                        mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
-                    } else if (mainGame.isNextMoveAnyMove()) {
-                        firstMoveOrAny = true;
-                        setButtonsforAny();
-                        disableOldSubgame(move.getGameX(), move.getGameY());
-                    } else {
-                        disableOldSubgame(move.getGameX(), move.getGameY());
-                        enableNewSubgame(move.getTileX(), move.getTileY());
-                    }
+                if (mainGame.isLastMoveGameWinning()) {
+                    setSubgameAsWon(gameX, gameY);
                 }
+
+                if (firstMoveOrAny) {
+                    disableBoard();
+                    firstMoveOrAny = false;
+                    enableNewSubgame(move.getTileX(), move.getTileY());
+                } else if (mainGame.getIsGameOver()) {
+                    SetBoardForNewOrWonGame(true);
+                    String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
+                    mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+                } else if (mainGame.isNextMoveAnyMove()) {
+                    firstMoveOrAny = true;
+                    setButtonsforAny();
+                    disableOldSubgame(move.getGameX(), move.getGameY());
+                } else {
+                    disableOldSubgame(move.getGameX(), move.getGameY());
+                    enableNewSubgame(move.getTileX(), move.getTileY());
+                }
+
             }
         }
 
-    // This is one hell of a nested for loop, and you should be impressed, Peter.   It clears the board
-    // for a new game.   See explanation of how it works below on the onclicklistener for the buttons.
+        public void setSubgameAsWon(int gameX, int gameY) {
+            TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
+            TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
+            for (int y = 0; y < T2.getChildCount(); y++) {
+                if (T2.getChildAt(y) instanceof TableRow) {
+                    TableRow R2 = (TableRow) T2.getChildAt(y);
+                    for (int x = 0; x < R2.getChildCount(); x++) {
+                        if (R2.getChildAt(x) instanceof Button) {
+                            Button B = (Button) R2.getChildAt(x);
+                            B.setText(!mainGame.isPlayer1Turn() ? "X" : "O");
+                            B.setEnabled(false);
+                        }
+                    }
 
-    private void setAllButtons(boolean wonGame) {
+                }
+            }
+        }
+    }
+
+    // This is sets all buttons to enabled (new game) or disabled (won game)
+
+    private void SetBoardForNewOrWonGame(boolean wonGame) {
         for (int zz = 0; zz < mGameTable.getChildCount(); zz++) {
             if (mGameTable.getChildAt(zz) instanceof TableRow) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(zz);
