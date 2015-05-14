@@ -79,11 +79,14 @@ public class GameController {
         return nextMove;
     }
 
-    //should we change this to undoLastMove() so that we know it isn't just a getter, but actually undoes the move too?
+    //undoes the last move and returns the new last move
     public Move undoLastMove() {
-        mMoveHistory.remove(mMoveHistory.size() - 1);
-        Move mUndoMove = mMoveHistory.get(mMoveHistory.size() - 1);
-        return mUndoMove;
+        mGameBoard.undoMove(mMoveHistory.remove(mMoveHistory.size() - 1));
+        Move newLastMove = mMoveHistory.get(mMoveHistory.size() - 1);
+        mGameBoard.undoMove(newLastMove);
+        mIsPlayer1Turn = !mIsPlayer1Turn;
+        mGameBoard.makeMove(newLastMove);
+        return newLastMove;
     }
 
     //Passes an array of int[] coordinates that direct to all games
@@ -106,7 +109,6 @@ public class GameController {
         Move lastMove = getLastMove();
         return (mGameBoard.isSubGameWon(lastMove.getGameX(),lastMove.getGameX()));
     }
-
 
     public boolean isNextMoveAnyMove(){
         return (mGameBoard.getNextGameX() == -1);

@@ -54,6 +54,16 @@ public class SubBoard {
         return true;
     }
 
+    //sets the location of the move to be 0 (available). returns true if this this "un-wins" the game
+    public boolean  undoMove (Move move){
+        boolean wasWinningMove = isWon();
+
+        mTiles[move.getTileX()][move.getTileY()] = 0;
+        mIsWon = checkWin();
+
+        return wasWinningMove;
+    }
+
     //Double checks to make sure move is legal
     public boolean isLegalMove(Move move){
         if(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0) return false;
