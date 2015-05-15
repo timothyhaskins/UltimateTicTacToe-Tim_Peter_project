@@ -142,7 +142,7 @@ public class Board {
         }
         //check diagonals
         if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) {return true;}
-        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[2][0].getWinner()) {return true;}
+        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner()) {return true;}
 
         return false;
     }
