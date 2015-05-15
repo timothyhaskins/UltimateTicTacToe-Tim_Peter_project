@@ -89,6 +89,10 @@ public class GameController {
         return newLastMove;
     }
 
+    public boolean checkIfAllowUndo() {
+        return (mMoveHistory.size() > 1);
+    }
+
     //Passes an array of int[] coordinates that direct to all games
     public List<int []> listAvailableGames(){
         if(mGameBoard.getNextGameY()==-1){
