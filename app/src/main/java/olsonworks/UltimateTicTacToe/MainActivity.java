@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + mainGame.isPlayer1Turn());
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + mainGame.isPlayer1Turn());
                 mainGame.takeTurn(new Move(move));
 
                 if (mainGame.isLastMoveGameWinning()) {
