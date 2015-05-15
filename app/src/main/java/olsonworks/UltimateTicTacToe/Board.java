@@ -57,8 +57,8 @@ public class Board {
         return new int[]{mNextGameX, mNextGameY};
     }
 
-    public void undoMove(Move move){
-
+    public Boolean undoMove(Move move){
+        return mGames[move.getGameX()][move.getGameY()].undoMove(move);
     }
 
     //Make sure it is a legal move
