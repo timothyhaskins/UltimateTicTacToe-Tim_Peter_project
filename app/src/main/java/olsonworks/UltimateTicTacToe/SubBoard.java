@@ -88,7 +88,7 @@ public class SubBoard {
         }
         //check diagonals
         if(mTiles[0][0] !=0 && mTiles[0][0] == mTiles[1][1] && mTiles[0][0] == mTiles[2][2]) {return true;}
-        if(mTiles[2][0] !=0 && mTiles[2][0] == mTiles[1][1] && mTiles[2][0] == mTiles[2][0]) {return true;}
+        if(mTiles[2][0] !=0 && mTiles[2][0] == mTiles[1][1] && mTiles[2][0] == mTiles[0][2]) {return true;}
 
         return false;
     }
