@@ -107,7 +107,7 @@ public class GameController {
 
     public boolean isLastMoveGameWinning(){
         Move lastMove = getLastMove();
-        return (mGameBoard.isSubGameWon(lastMove.getGameX(),lastMove.getGameX()));
+        return (mGameBoard.isSubGameWon(lastMove.getGameX(),lastMove.getGameY()));
     }
 
     public boolean isNextMoveAnyMove(){
