@@ -32,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
     TextView mMoveCounter;
     @InjectView(R.id.new_game_button)
     Button mNewGameButton;
+    @InjectView(R.id.undo_button)
+    Button mUndoButton;
 
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        mUndoButton.setEnabled(false);
         setUpButtonsForOnClick();
     }
 
@@ -48,6 +51,7 @@ public class MainActivity extends ActionBarActivity {
         Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
         Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
         mMoveCounter.setText("HERE WE GOOOOOO!");
+        mUndoButton.setEnabled(false);
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMoveOrAny = true;
@@ -60,18 +64,28 @@ public class MainActivity extends ActionBarActivity {
     // This will undo 1 move right now
 
     public void undoMove(View view) {
-        // if mainGame.mMoveHistory
-        TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
-        TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
-        TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
-        Button B = (Button) R2.getChildAt(move.getTileX());
-        B.setText("");
-        B.setEnabled(false);
-        B.animate().rotationYBy(180).setDuration(300);
-        disableOldSubgame(move.getTileX(), move.getTileY());
-        enableNewSubgame(move.getGameX(), move.getGameY());
-        move = mainGame.undoLastMove();
-        mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
+        //   Need a method to be passed to check to see if history is one move
+        if (mainGame.checkIfAllowUndo()) {
+            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+            TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
+            TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
+            Button B = (Button) R2.getChildAt(move.getTileX());
+            B.setText("");
+            B.setEnabled(false);
+            B.animate().rotationYBy(180).setDuration(300);
+            disableOldSubgame(move.getTileX(), move.getTileY());
+            enableNewSubgame(move.getGameX(), move.getGameY());
+            move = mainGame.undoLastMove();
+            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
+        }
+        else {
+            mUndoButton.setEnabled(false);
+            firstMoveOrAny = true;
+            mainGame = new GameController(0);
+            move = new Move();
+            SetBoardForNewOrWonGame(false);
+            setUpButtonsForOnClick();
+        }
     }
 
     /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
@@ -143,6 +157,7 @@ public class MainActivity extends ActionBarActivity {
                 // Display the move
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + mainGame.isPlayer1Turn());
                 mainGame.takeTurn(new Move(move));
+                mUndoButton.setEnabled(true);
 
                 if (mainGame.isLastMoveGameWinning()) {
                     setSubgameAsWon(gameX, gameY);
