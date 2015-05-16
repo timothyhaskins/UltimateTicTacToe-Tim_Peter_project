@@ -58,7 +58,7 @@
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game00"
+        android:id="@+id/game00"
         android:layout_alignParentEnd="false"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false"
@@ -72,62 +72,62 @@
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game01"
-        android:layout_alignTop="@+id/Game00"
-        android:layout_toRightOf="@+id/Game00"
-        android:layout_toLeftOf="@+id/Game02"/>
+        android:id="@+id/game10"
+        android:layout_alignTop="@+id/game00"
+        android:layout_toRightOf="@+id/game00"
+        android:layout_toLeftOf="@+id/game20"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game02"
-        android:layout_alignTop="@+id/Game01"
+        android:id="@+id/game20"
+        android:layout_alignTop="@+id/game10"
         android:layout_alignRight="@+id/totalboard"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game10"
-        android:layout_below="@+id/Game00"
+        android:id="@+id/game01"
+        android:layout_below="@+id/game00"
         android:layout_marginTop="25dp"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game11"
-        android:layout_alignLeft="@+id/Game01"
-        android:layout_alignRight="@+id/Game01"
-        android:layout_alignTop="@+id/Game10"/>
+        android:id="@+id/game11"
+        android:layout_alignLeft="@+id/game10"
+        android:layout_alignRight="@+id/game10"
+        android:layout_alignTop="@+id/game01"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game12"
-        android:layout_alignLeft="@+id/Game02"
-        android:layout_alignTop="@+id/Game11"/>
+        android:id="@+id/game21"
+        android:layout_alignLeft="@+id/game20"
+        android:layout_alignTop="@+id/game11"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game20"
-        android:layout_alignLeft="@+id/Game10"
+        android:id="@+id/game02"
+        android:layout_alignLeft="@+id/game01"
         android:layout_alignBottom="@+id/totalboard"
         android:layout_marginBottom="20dp"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game21"
-        android:layout_alignBottom="@+id/Game20"
-        android:layout_alignLeft="@+id/Game11"
-        android:layout_alignRight="@+id/Game11"/>
+        android:id="@+id/game12"
+        android:layout_alignBottom="@+id/game02"
+        android:layout_alignLeft="@+id/game11"
+        android:layout_alignRight="@+id/game11"/>
 
     <ImageView
         android:layout_width="105dp"
         android:layout_height="105dp"
-        android:id="@+id/Game22"
-        android:layout_alignLeft="@+id/Game12"
-        android:layout_alignBottom="@+id/Game21"/>
+        android:id="@+id/game22"
+        android:layout_alignLeft="@+id/game21"
+        android:layout_alignBottom="@+id/game12"/>
 
     <TableLayout
         android:layout_width="match_parent"

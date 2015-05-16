@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
     private String buttonText;
     public Move move = new Move();
     public GameController mainGame = new GameController();
-
+    public static List<gameList> gameViewList;
 
     // Butterknife
     @InjectView(R.id.totalboard)
@@ -34,23 +35,23 @@ public class MainActivity extends ActionBarActivity {
     Button mNewGameButton;
     @InjectView(R.id.undo_button)
     Button mUndoButton;
-    @InjectView(R.id.Game00)
+    @InjectView(R.id.game00)
     ImageView mGame00;
-    @InjectView(R.id.Game01)
+    @InjectView(R.id.game10)
     ImageView mGame01;
-    @InjectView(R.id.Game02)
+    @InjectView(R.id.game20)
     ImageView mGame02;
-    @InjectView(R.id.Game10)
+    @InjectView(R.id.game01)
     ImageView mGame10;
-    @InjectView(R.id.Game11)
+    @InjectView(R.id.game11)
     ImageView mGame11;
-    @InjectView(R.id.Game12)
+    @InjectView(R.id.game21)
     ImageView mGame12;
-    @InjectView(R.id.Game20)
+    @InjectView(R.id.game02)
     ImageView mGame20;
-    @InjectView(R.id.Game21)
+    @InjectView(R.id.game12)
     ImageView mGame21;
-    @InjectView(R.id.Game22)
+    @InjectView(R.id.game22)
     ImageView mGame22;
 
     @Override
@@ -58,11 +59,25 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        createGameViewList();
         mUndoButton.setEnabled(false);
         setUpButtonsForOnClick();
     }
 
     // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
+
+    public void createGameViewList(){
+        gameViewList = new ArrayList<gameList>();
+        gameViewList.add(new gameList(0, 0, mGame00));
+        gameViewList.add(new gameList(1, 0, mGame10));
+        gameViewList.add(new gameList(2, 0, mGame20));
+        gameViewList.add(new gameList(0, 1, mGame01));
+        gameViewList.add(new gameList(1, 1, mGame11));
+        gameViewList.add(new gameList(2, 1, mGame21));
+        gameViewList.add(new gameList(0, 2, mGame02));
+        gameViewList.add(new gameList(1, 2, mGame12));
+        gameViewList.add(new gameList(2, 2, mGame22));
+    }
 
     public void newGame(View view) {
         Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
@@ -74,21 +89,17 @@ public class MainActivity extends ActionBarActivity {
         firstMoveOrAny = true;
         mainGame = new GameController(0);
         move = new Move();
+        createGameViewList();
         resetGameViews();
         setBoardForNewOrWonGame(false);
         setUpButtonsForOnClick();
     }
 
     public void resetGameViews() {
-        mGame00.setVisibility(View.INVISIBLE);
-        mGame01.setVisibility(View.INVISIBLE);
-        mGame02.setVisibility(View.INVISIBLE);
-        mGame10.setVisibility(View.INVISIBLE);
-        mGame11.setVisibility(View.INVISIBLE);
-        mGame12.setVisibility(View.INVISIBLE);
-        mGame20.setVisibility(View.INVISIBLE);
-        mGame21.setVisibility(View.INVISIBLE);
-        mGame22.setVisibility(View.INVISIBLE);
+        for (int i = 0; i < gameViewList.size(); i++) {
+            gameList list = gameViewList.get(i);
+            list.getImageViewResource().setVisibility(View.INVISIBLE);
+        }
     }
 
     public void undoMove(View view) {
@@ -188,7 +199,7 @@ public class MainActivity extends ActionBarActivity {
                 mUndoButton.setEnabled(true);
 
                 if (mainGame.isLastMoveGameWinning()) {
-                    setSubgameImageViewAsWon(gameX, gameY);
+                    setSubgameImageViewAsWon(move.getGameX(), move.getGameY());
                 }
 
                 if (firstMoveOrAny) {
@@ -213,55 +224,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
         public void setSubgameImageViewAsWon(int gameX, int gameY) {
-            String WonGame = Integer.toString(gameY) + Integer.toString(gameX);
             setSubgameAsWon(gameX, gameY);
             if (mainGame.isPlayer1Turn()) {
-                switch (WonGame) {
-                    case "00":
-                        mGame00.setVisibility(View.VISIBLE);
-                        mGame00.setImageResource(R.drawable.o);
-                        mGame00.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "01":
-                        mGame01.setVisibility(View.VISIBLE);
-                        mGame01.setImageResource(R.drawable.o);
-                        mGame01.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "02":
-                        mGame02.setVisibility(View.VISIBLE);
-                        mGame02.setImageResource(R.drawable.o);
-                        mGame02.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "10":
-                        mGame10.setVisibility(View.VISIBLE);
-                        mGame10.setImageResource(R.drawable.o);
-                        mGame10.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "11":
-                        mGame11.setVisibility(View.VISIBLE);
-                        mGame11.setImageResource(R.drawable.o);
-                        mGame11.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "12":
-                        mGame12.setVisibility(View.VISIBLE);
-                        mGame12.setImageResource(R.drawable.o);
-                        mGame12.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "20":
-                        mGame20.setVisibility(View.VISIBLE);
-                        mGame20.setImageResource(R.drawable.o);
-                        mGame20.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "21":
-                        mGame21.setVisibility(View.VISIBLE);
-                        mGame21.setImageResource(R.drawable.o);
-                        mGame21.animate().rotationYBy(180).setDuration(300);
-                        break;
-                    case "22":
-                        mGame22.setVisibility(View.VISIBLE);
-                        mGame22.setImageResource(R.drawable.o);
-                        mGame22.animate().rotationYBy(180).setDuration(300);
-                        break;
+                for (int i = 0; i < gameViewList.size(); i++) {
+                    gameList list = gameViewList.get(i);
+                    if (list.getGameX() == gameY && list.getGameY() == gameX) {
+                        list.getImageViewResource().setVisibility(View.VISIBLE);
+                        list.getImageViewResource().setImageResource(R.drawable.o);
+                        list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                    }
                 }
             }
         }
@@ -389,6 +360,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         }
+
     }
 
 
