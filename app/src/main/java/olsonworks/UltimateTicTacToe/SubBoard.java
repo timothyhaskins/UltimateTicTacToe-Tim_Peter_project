@@ -55,7 +55,7 @@ public class SubBoard {
     }
 
     //sets the location of the move to be 0 (available). returns true if this this "un-wins" the game
-    public boolean  undoMove (Move move){
+    public boolean undoMove (Move move){
         boolean wasWinningMove = isWon();
 
         mTiles[move.getTileX()][move.getTileY()] = 0;

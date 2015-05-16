@@ -55,13 +55,89 @@
         android:onClick="newGame"
         android:width="150dp"/>
 
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game00"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignTop="@+id/totalboard"
+        android:layout_alignLeft="@+id/totalboard"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="5dp"
+        />
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game01"
+        android:layout_alignTop="@+id/Game00"
+        android:layout_toRightOf="@+id/Game00"
+        android:layout_toLeftOf="@+id/Game02"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game02"
+        android:layout_alignTop="@+id/Game01"
+        android:layout_alignRight="@+id/totalboard"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game10"
+        android:layout_below="@+id/Game00"
+        android:layout_marginTop="25dp"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game11"
+        android:layout_alignLeft="@+id/Game01"
+        android:layout_alignRight="@+id/Game01"
+        android:layout_alignTop="@+id/Game10"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game12"
+        android:layout_alignLeft="@+id/Game02"
+        android:layout_alignTop="@+id/Game11"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game20"
+        android:layout_alignLeft="@+id/Game10"
+        android:layout_alignBottom="@+id/totalboard"
+        android:layout_marginBottom="20dp"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game21"
+        android:layout_alignBottom="@+id/Game20"
+        android:layout_alignLeft="@+id/Game11"
+        android:layout_alignRight="@+id/Game11"/>
+
+    <ImageView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:id="@+id/Game22"
+        android:layout_alignLeft="@+id/Game12"
+        android:layout_alignBottom="@+id/Game21"/>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/move_counter"
         android:id="@+id/totalboard"
         android:showDividers="middle|beginning|end"
-        android:layout_below="@+id/new_game_button">
+        android:layout_below="@+id/new_game_button"
+        android:layout_marginTop="25dp">
+
         <TableRow
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +146,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:weightSum="3">
+
             <TableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,7 +157,8 @@
                 android:clickable="false"
                 android:focusable="false"
                 android:measureWithLargestChild="false"
-                android:weightSum="0">
+                android:weightSum="0"
+                android:layout_column="1">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -103,6 +181,7 @@
                         style="@style/TinyButtons"
                         android:id="@+id/button_0_2"
                         android:layout_column="3"/>
+
                 </TableRow>
 
                 <TableRow
@@ -146,6 +225,7 @@
                         android:id="@+id/button_0_8"
                         android:layout_column="3"/>
                 </TableRow>
+
             </TableLayout>
             <TableLayout
                 android:layout_width="wrap_content"
@@ -153,7 +233,7 @@
                 android:id="@+id/game_board_1"
                 android:focusableInTouchMode="true"
                 android:layout_weight="1"
-                >
+                android:layout_column="2">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -240,7 +320,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_2"
-                >
+                android:layout_column="3">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -323,6 +403,7 @@
                         android:layout_height="wrap_content"/>
                 </TableRow>
             </TableLayout>
+
         </TableRow>
         <TableRow
             android:layout_width="wrap_content"
@@ -335,7 +416,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_3"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_column="1">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -422,7 +504,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_4"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_column="2">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -509,7 +592,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_5"
-                >
+                android:layout_column="3">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -606,7 +689,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_6"
                 android:layout_marginTop="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_column="1">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -693,7 +777,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_7"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:layout_column="2">
 
                 <TableRow
                     android:layout_width="wrap_content"
@@ -780,7 +865,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/game_board_8"
-                >
+                android:layout_column="3">
 
                 <TableRow
                     android:layout_width="wrap_content"
