@@ -20,7 +20,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends ActionBarActivity {
 
-    private boolean firstMoveOrAny = true;
+    private boolean firstMove = true;
     private String buttonText;
     public Move move = new Move();
     public GameController mainGame = new GameController();
@@ -64,7 +64,8 @@ public class MainActivity extends ActionBarActivity {
         setUpButtonsForOnClick();
     }
 
-    // Ok, changed up how I coded this and set the "START A NEW GAME" button to call this method directly
+    // Creates an ArrayList that links to all of the views in order to allow for
+    // a "won square" graphic.
 
     public void createGameViewList(){
         gameViewList = new ArrayList<gameList>();
@@ -79,6 +80,17 @@ public class MainActivity extends ActionBarActivity {
         gameViewList.add(new gameList(2, 2, mGame22));
     }
 
+    // Resets the "won" graphics.
+
+    public void resetGameViews() {
+        for (int i = 0; i < gameViewList.size(); i++) {
+            gameList list = gameViewList.get(i);
+            list.getImageViewResource().setVisibility(View.INVISIBLE);
+        }
+    }
+
+    // Starts with a fresh board.
+
     public void newGame(View view) {
         Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
         Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
@@ -86,20 +98,12 @@ public class MainActivity extends ActionBarActivity {
         mUndoButton.setEnabled(false);
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
-        firstMoveOrAny = true;
+        firstMove = true;
         mainGame = new GameController(0);
         move = new Move();
-        createGameViewList();
         resetGameViews();
         setBoardForNewOrWonGame(false);
         setUpButtonsForOnClick();
-    }
-
-    public void resetGameViews() {
-        for (int i = 0; i < gameViewList.size(); i++) {
-            gameList list = gameViewList.get(i);
-            list.getImageViewResource().setVisibility(View.INVISIBLE);
-        }
     }
 
     public void undoMove(View view) {
@@ -118,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
             mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
         } else {
             mUndoButton.setEnabled(false);
-            firstMoveOrAny = true;
+            firstMove = true;
             mainGame = new GameController(0);
             move = new Move();
             setBoardForNewOrWonGame(false);
@@ -198,22 +202,21 @@ public class MainActivity extends ActionBarActivity {
                 mainGame.takeTurn(new Move(move));
                 mUndoButton.setEnabled(true);
 
+                // Marks a game as won
                 if (mainGame.isLastMoveGameWinning()) {
                     setSubgameImageViewAsWon(move.getGameX(), move.getGameY());
                 }
 
-                if (firstMoveOrAny) {
+                if (firstMove) {
                     setBoardForNewOrWonGame(true);
-                    firstMoveOrAny = false;
+                    firstMove = false;
                     enableNewSubgame(move.getTileX(), move.getTileY());
                 } else if (mainGame.getIsGameOver()) {
                     setBoardForNewOrWonGame(true);
                     String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                     mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
                 } else if (mainGame.isNextMoveAnyMove()) {
-                    firstMoveOrAny = true;
                     setButtonsforAny();
-                    disableOldSubgame(move.getGameX(), move.getGameY());
                 } else {
                     disableOldSubgame(move.getGameX(), move.getGameY());
                     enableNewSubgame(move.getTileX(), move.getTileY());
@@ -224,7 +227,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
         public void setSubgameImageViewAsWon(int gameX, int gameY) {
-            setSubgameAsWon(gameX, gameY);
+            setSubgameButtonsAsWon(gameX, gameY);
             if (mainGame.isPlayer1Turn()) {
                 for (int i = 0; i < gameViewList.size(); i++) {
                     gameList list = gameViewList.get(i);
@@ -237,7 +240,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
-        public void setSubgameAsWon(int gameX, int gameY) {
+        public void setSubgameButtonsAsWon(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
             TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
             for (int y = 0; y < T2.getChildCount(); y++) {

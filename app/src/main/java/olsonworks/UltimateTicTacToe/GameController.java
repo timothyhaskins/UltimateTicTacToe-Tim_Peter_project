@@ -123,7 +123,7 @@ public class GameController {
     }
 
     public void logBoard(Board board){
-        String output = "";
+  /*      String output = "";
         int[][][][] boardSpace = board.indexBoard();
         Log.d("GAME MOVE:", "new move");
         Log.d("GAME MOVE:", "-------------");
@@ -149,7 +149,7 @@ public class GameController {
                 Log.d("GAME MOVE:",output);
             }
             Log.d("GAME MOVE:", "-------------");
-        }
+        }*/
     }
 
     public Board getGameBoard() {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">test project</string>
+    <string name="app_name">Ultimate Tic Tac Toe</string>
     <string name="bottom_textview">WOOT!  UTT!</string>
     <string name="game_title">Ultimate Tic Tac Toe!</string>
     <string name="action_settings">Settings</string>

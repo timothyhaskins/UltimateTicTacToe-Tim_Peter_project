@@ -56,8 +56,7 @@
         android:width="150dp"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game00"
         android:layout_alignParentEnd="false"
         android:layout_alignParentLeft="false"
@@ -70,61 +69,53 @@
         />
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game10"
         android:layout_alignTop="@+id/game00"
         android:layout_toRightOf="@+id/game00"
         android:layout_toLeftOf="@+id/game20"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game20"
         android:layout_alignTop="@+id/game10"
         android:layout_alignRight="@+id/totalboard"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game01"
         android:layout_below="@+id/game00"
         android:layout_marginTop="25dp"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game11"
         android:layout_alignLeft="@+id/game10"
         android:layout_alignRight="@+id/game10"
         android:layout_alignTop="@+id/game01"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game21"
         android:layout_alignLeft="@+id/game20"
         android:layout_alignTop="@+id/game11"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game02"
         android:layout_alignLeft="@+id/game01"
         android:layout_alignBottom="@+id/totalboard"
         android:layout_marginBottom="20dp"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game12"
         android:layout_alignBottom="@+id/game02"
         android:layout_alignLeft="@+id/game11"
         android:layout_alignRight="@+id/game11"/>
 
     <ImageView
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        style="@style/gameViewMobile"
         android:id="@+id/game22"
         android:layout_alignLeft="@+id/game21"
         android:layout_alignBottom="@+id/game12"/>

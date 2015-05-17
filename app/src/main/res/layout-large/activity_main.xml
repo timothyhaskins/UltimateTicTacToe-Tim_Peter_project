@@ -5,9 +5,8 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-
     <Button
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NEW GAME"
         android:id="@+id/new_game_button"
@@ -15,8 +14,22 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="30sp"
-        android:onClick="newGame"/>
+        android:textSize="20sp"
+        android:onClick="newGame"
+        android:width="300dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Undo"
+        android:id="@+id/undo_button"
+        android:textSize="20sp"
+        android:layout_above="@+id/totalboard"
+        android:layout_alignRight="@+id/totalboard"
+        android:layout_alignEnd="@+id/totalboard"
+        android:width="300dp"
+        android:onClick="undoMove"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -41,6 +54,74 @@
         android:textSize="30sp"
         android:singleLine="false"
         android:textStyle="bold"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game00"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignTop="@+id/totalboard"
+        android:layout_alignLeft="@+id/totalboard"
+        android:layout_marginTop="75dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game10"
+        android:layout_alignTop="@+id/game00"
+        android:layout_toRightOf="@+id/game00"
+        android:layout_marginLeft="40dp"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game20"
+        android:layout_alignTop="@+id/game10"
+        android:layout_alignRight="@+id/totalboard"
+        android:layout_marginRight="20dp"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game01"
+        android:layout_below="@+id/game00"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="15dp"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game11"
+        android:layout_alignLeft="@+id/game10"
+        android:layout_alignRight="@+id/game10"
+        android:layout_alignTop="@+id/game01"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game21"
+        android:layout_alignLeft="@+id/game20"
+        android:layout_alignTop="@+id/game11"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game02"
+        android:layout_alignLeft="@+id/game01"
+        android:layout_alignBottom="@+id/totalboard"
+        android:layout_marginBottom="70dp"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game12"
+        android:layout_alignBottom="@+id/game02"
+        android:layout_alignLeft="@+id/game11"
+        android:layout_alignRight="@+id/game11"/>
+
+    <ImageView
+        style="@style/gameViewTablet"
+        android:id="@+id/game22"
+        android:layout_alignLeft="@+id/game21"
+        android:layout_alignBottom="@+id/game12"/>
+
 
     <TableLayout
         android:layout_width="match_parent"
