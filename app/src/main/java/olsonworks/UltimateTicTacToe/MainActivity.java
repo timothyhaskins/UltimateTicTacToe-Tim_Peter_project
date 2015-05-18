@@ -217,6 +217,7 @@ public class MainActivity extends ActionBarActivity {
                     mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
                 } else if (mainGame.isNextMoveAnyMove()) {
                     setButtonsforAny();
+                    firstMove = true;
                 } else {
                     disableOldSubgame(move.getGameX(), move.getGameY());
                     enableNewSubgame(move.getTileX(), move.getTileY());
