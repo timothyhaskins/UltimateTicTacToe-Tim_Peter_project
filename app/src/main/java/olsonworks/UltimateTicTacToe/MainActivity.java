@@ -228,17 +228,21 @@ public class MainActivity extends ActionBarActivity {
 
         public void setSubgameImageViewAsWon(int gameX, int gameY) {
             setSubgameButtonsAsWon(gameX, gameY);
-            if (mainGame.isPlayer1Turn()) {
-                for (int i = 0; i < gameViewList.size(); i++) {
-                    gameList list = gameViewList.get(i);
-                    if (list.getGameX() == gameY && list.getGameY() == gameX) {
-                        list.getImageViewResource().setVisibility(View.VISIBLE);
+            for (int i = 0; i < gameViewList.size(); i++) {
+                gameList list = gameViewList.get(i);
+                if (list.getGameX() == gameY && list.getGameY() == gameX) {
+                    list.getImageViewResource().setVisibility(View.VISIBLE);
+                    if (mainGame.isPlayer1Turn()) {
                         list.getImageViewResource().setImageResource(R.drawable.o);
+                        list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                    } else {
+                        list.getImageViewResource().setImageResource(R.drawable.x);
                         list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
                     }
                 }
             }
         }
+
 
         public void setSubgameButtonsAsWon(int gameX, int gameY) {
             TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
@@ -249,19 +253,14 @@ public class MainActivity extends ActionBarActivity {
                     for (int x = 0; x < R2.getChildCount(); x++) {
                         if (R2.getChildAt(x) instanceof Button) {
                             Button B = (Button) R2.getChildAt(x);
-                            if (!mainGame.isPlayer1Turn()) {
-                                B.setText("X");
-                                B.setEnabled(false);
-                            } else {
-                                B.setVisibility(View.INVISIBLE);
-                                B.setEnabled(false);
-                            }
+                            B.setVisibility(View.INVISIBLE);
+                            B.setEnabled(false);
                         }
                     }
                 }
-
             }
         }
+
 
         // This is sets all buttons to enabled (new game) or disabled (won game)
 
