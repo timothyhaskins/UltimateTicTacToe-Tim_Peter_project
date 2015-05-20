@@ -116,6 +116,7 @@ public class MainActivity extends ActionBarActivity {
             B.setText("");
             B.setEnabled(false);
             B.animate().rotationYBy(180).setDuration(300);
+            setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
             disableOldSubgame(move.getTileX(), move.getTileY());
             enableNewSubgame(move.getGameX(), move.getGameY());
             move = mainGame.undoLastMove();
@@ -160,10 +161,10 @@ public class MainActivity extends ActionBarActivity {
 
     private class makeMove implements View.OnClickListener {
 
-        private int tileX = 0;
-        private int tileY = 0;
-        private int gameX = 0;
-        private int gameY = 0;
+        private int tileX;
+        private int tileY;
+        private int gameX;
+        private int gameY;
 
         // This grabs the coordinates.
         public makeMove(int tileX, int tileY, int gameX, int gameY) {
@@ -198,13 +199,19 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + mainGame.isPlayer1Turn());
+                String currentPlayer;
+                if(!mainGame.isPlayer1Turn()) {
+                    currentPlayer = "X";
+                } else {
+                    currentPlayer = "O";
+                }
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + currentPlayer);
                 mainGame.takeTurn(new Move(move));
                 mUndoButton.setEnabled(true);
 
                 // Marks a game as won
                 if (mainGame.isLastMoveGameWinning()) {
-                    setSubgameImageViewAsWon(move.getGameX(), move.getGameY());
+                    setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
                 }
 
                 if (mainGame.isNextMoveAnyMove()) {
@@ -227,24 +234,28 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void setSubgameImageViewAsWon(int gameX, int gameY) {
+    public void setSubgameImageViewAsWon(int gameX, int gameY, boolean won) {
         for (int i = 0; i < gameViewList.size(); i++) {
             gameList list = gameViewList.get(i);
             if (list.getGameX() == gameY && list.getGameY() == gameX) {
                 list.getImageViewResource().setVisibility(View.VISIBLE);
-                if (mainGame.isPlayer1Turn()) {
-                    list.getImageViewResource().setImageResource(R.drawable.o);
-                    list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                if (won) {
+                    if (mainGame.isPlayer1Turn()) {
+                        list.getImageViewResource().setImageResource(R.drawable.o);
+                        list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                    } else {
+                        list.getImageViewResource().setImageResource(R.drawable.x);
+                        list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                    }
                 } else {
-                    list.getImageViewResource().setImageResource(R.drawable.x);
-                    list.getImageViewResource().animate().rotationYBy(180).setDuration(300);
+                    list.getImageViewResource().setVisibility(View.INVISIBLE);
                 }
             }
         }
-        setSubgameButtonsAsWon(gameX, gameY);
+        setSubgameButtonsAsWon(gameX, gameY, won);
     }
 
-    public void setSubgameButtonsAsWon(int gameX, int gameY) {
+    public void setSubgameButtonsAsWon(int gameX, int gameY, boolean won) {
         TableRow R1 = (TableRow) mGameTable.getChildAt(gameY);
         TableLayout T2 = (TableLayout) R1.getChildAt(gameX);
         for (int y = 0; y < T2.getChildCount(); y++) {
@@ -253,8 +264,17 @@ public class MainActivity extends ActionBarActivity {
                 for (int x = 0; x < R2.getChildCount(); x++) {
                     if (R2.getChildAt(x) instanceof Button) {
                         Button B = (Button) R2.getChildAt(x);
-                        B.setVisibility(View.INVISIBLE);
-                        B.setEnabled(false);
+                        if (won) {
+                            B.setVisibility(View.INVISIBLE);
+                            B.setEnabled(false);
+                        } else {
+                            B.setVisibility(View.VISIBLE);
+                            if (B.getText() == "") {
+                                B.setEnabled(true);
+                            } else {
+                                B.setEnabled(false);
+                            }
+                        }
                     }
                 }
             }

@@ -17,9 +17,9 @@
     <style name="BiggerButtons" parent="android:Widget.Button.Small">
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
-        <item name="android:width">70dp</item>
-        <item name="android:height">70dp</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:width">80dp</item>
+        <item name="android:height">80dp</item>
+        <item name="android:textSize">40dp</item>
     </style>
 
     <style name="gameViewMobile">
