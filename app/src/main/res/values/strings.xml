@@ -3,4 +3,9 @@
     <string name="bottom_textview">WOOT!  UTT!</string>
     <string name="game_title">Ultimate Tic Tac Toe!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="welcome_message">Welcome to Ultimate Tic Tac Toe!</string>
+    <string name="one_player">Player vs. the Computer</string>
+    <string name="two_player">Player vs. Player (local)</string>
+    <string name="two_player_internet">Player vs. Player (internet)</string>
 </resources>
