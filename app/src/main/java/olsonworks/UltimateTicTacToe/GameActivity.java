@@ -1,5 +1,6 @@
 package olsonworks.UltimateTicTacToe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -21,9 +22,13 @@ public class GameActivity extends ActionBarActivity {
 
     private boolean firstMove = true;
     private String buttonText;
+    private String mPlayer1Name;
+    private String mPlayer2Name;
+    private String mCurrentPlayerName;
     public Move move = new Move();
     public GameController mainGame = new GameController();
     public static List<gameList> gameViewList;
+
 
     // Butterknife
     @InjectView(R.id.totalboard)
@@ -59,6 +64,9 @@ public class GameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ButterKnife.inject(this);
+        Intent intent = getIntent();
+        mPlayer1Name = intent.getStringExtra("player1name");
+        mPlayer2Name = intent.getStringExtra("player2name");
         createGameViewList();
         mUndoButton.setEnabled(false);
         setUpButtonsForOnClick();
@@ -199,17 +207,18 @@ public class GameActivity extends ActionBarActivity {
 
                 Button B = (Button) view;
                 B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
+                if (!mainGame.isPlayer1Turn()) {
+                    mCurrentPlayerName = mPlayer1Name;
+                    mPlayerID.setImageResource(R.drawable.x);
+                } else {
+                    mCurrentPlayerName = mPlayer2Name;
+                    mPlayerID.setImageResource(R.drawable.o);
+                }
                 B.startAnimation(animScale);
                 B.animate().rotationYBy(180).setDuration(300);
                 B.setEnabled(false);
 
-                // Display the move
-                if(mainGame.isPlayer1Turn()) {
-                    mPlayerID.setImageResource(R.drawable.o);
-                } else {
-                    mPlayerID.setImageResource(R.drawable.x);
-                }
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: ");
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
                 mainGame.takeTurn(new Move(move));
                 mUndoButton.setEnabled(true);
 

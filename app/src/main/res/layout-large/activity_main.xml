@@ -53,4 +53,26 @@
         android:layout_marginTop="50dp"
         android:textSize="35dp"/>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/player1name"
+        android:layout_below="@+id/button_2playerint"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter player 1 name..."
+        android:textSize="40dp"
+        android:background="@color/button_material_light"
+        android:layout_marginTop="40dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/player2name"
+        android:hint="Enter Player 2 name..."
+        android:textSize="40dp"
+        android:background="@color/background_material_light"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/player1name"/>
+
 </RelativeLayout>
