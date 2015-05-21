@@ -15,8 +15,6 @@ public class Board {
     //Which subGame you must play in next, -1 if any
     private int mNextGameX;
     private int mNextGameY;
-    private int[] mWonGames = new int[3];
-    private ArrayList mWonGamesList = new ArrayList();
 
     //Create new blank Board
     public Board(){
@@ -46,11 +44,11 @@ public class Board {
             if(mGames[move.getTileX()][move.getTileY()].isWon()){
                 mNextGameX = -1;
                 mNextGameY = -1;
-            }else{
+            } else {
                 mNextGameX = move.getTileX();
                 mNextGameY = move.getTileY();
             }
-        }else{
+        } else {
             Log.d("GAME MOVE:","Illegal move");
         }
 
@@ -86,7 +84,7 @@ public class Board {
     }
 
     //returns true if game has been won
-    public boolean  isSubGameWon(int gameX, int gameY){
+    public boolean isSubGameWon(int gameX, int gameY){
         return mGames[gameX][gameY].isWon();
     }
 
@@ -127,7 +125,6 @@ public class Board {
                 }
             }
         }
-
         return stateSpace;
     }
 
@@ -143,16 +140,8 @@ public class Board {
         //check diagonals
         if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) {return true;}
         if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner()) {return true;}
-
         return false;
     }
-     /* public addWonGame() {
-        mWonGames[0] = move.getTileX();
-        mWonGames[1] = move.getTileY();
-        mWonGames[2] = winner;
-        mWonGamesList.add(0, mWonGames);
-    }
-    */
 
     //Getters and setters
     public SubBoard[][] getGames() {

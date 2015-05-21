@@ -53,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
     ImageView mGame21;
     @InjectView(R.id.game22)
     ImageView mGame22;
+    @InjectView(R.id.playerID) ImageView mPlayerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +121,12 @@ public class MainActivity extends ActionBarActivity {
             disableOldSubgame(move.getTileX(), move.getTileY());
             enableNewSubgame(move.getGameX(), move.getGameY());
             move = mainGame.undoLastMove();
-            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX() + "," + move.isPlayer1Turn());
+            if(!mainGame.isPlayer1Turn()) {
+                mPlayerID.setImageResource(R.drawable.o);
+            } else {
+                mPlayerID.setImageResource(R.drawable.x);
+            }
+            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX());
         } else {
             mUndoButton.setEnabled(false);
             firstMove = true;
@@ -199,13 +205,12 @@ public class MainActivity extends ActionBarActivity {
                 B.setEnabled(false);
 
                 // Display the move
-                String currentPlayer;
-                if(!mainGame.isPlayer1Turn()) {
-                    currentPlayer = "X";
-                } else {
-                    currentPlayer = "O";
-                }
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + currentPlayer);
+                if(mainGame.isPlayer1Turn()) {
+                        mPlayerID.setImageResource(R.drawable.o);
+                    } else {
+                        mPlayerID.setImageResource(R.drawable.x);
+                    }
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: ");
                 mainGame.takeTurn(new Move(move));
                 mUndoButton.setEnabled(true);
 
@@ -213,23 +218,21 @@ public class MainActivity extends ActionBarActivity {
                 if (mainGame.isLastMoveGameWinning()) {
                     setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
                 }
-
                 if (mainGame.isNextMoveAnyMove()) {
                     setButtonsforAny();
-                    firstMove = true;}
-                else if (firstMove) {
-                    setBoardForNewOrWonGame(true);
-                    firstMove = false;
-                    enableNewSubgame(move.getTileX(), move.getTileY());
+                    firstMove = true;
                 } else if (mainGame.getIsGameOver()) {
                     setBoardForNewOrWonGame(true);
                     String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                     mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+                } else if (firstMove) {
+                    setBoardForNewOrWonGame(true);
+                    firstMove = false;
+                    enableNewSubgame(move.getTileX(), move.getTileY());
                 } else {
                     disableOldSubgame(move.getGameX(), move.getGameY());
                     enableNewSubgame(move.getTileX(), move.getTileY());
                 }
-
             }
         }
     }

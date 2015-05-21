@@ -15,7 +15,7 @@ public class SubBoard {
     //declaration of variables
     private int[][] mTiles = new int[3][3];
     private boolean mIsWon;
-    private int winner;
+    private int mWinner;
 
     //What to do when a new SubBoard is created with no inputs (blank)
     public SubBoard(){
@@ -34,7 +34,7 @@ public class SubBoard {
     public SubBoard(SubBoard reference){
         mTiles = reference.getTiles();
         mIsWon = reference.isWon();
-        winner = reference.getWinner();
+        mWinner = reference.getWinner();
     }
 
     //The only thing it should really have to do (returns false if that is an illegal move):
@@ -48,7 +48,7 @@ public class SubBoard {
         //check for win.
         mIsWon = checkWin();
         if (mIsWon) {
-            winner = (move.isPlayer1Turn() ? 1 : 2);
+            mWinner = (move.isPlayer1Turn() ? 1 : 2);
             Log.d("GAME MOVE:","player " + (move.isPlayer1Turn() ? 1 : 2) + " just won tile " + move.getGameX() + "," + move.getGameY());
         }
         return true;
@@ -132,12 +132,11 @@ public class SubBoard {
     }
 
     public int getWinner() {
-        return winner;
+        return mWinner;
     }
 
     public void setWinner(int winner) {
-        this.winner = winner;
+        this.mWinner = winner;
     }
-
 
 }
