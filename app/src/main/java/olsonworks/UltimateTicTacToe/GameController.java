@@ -96,7 +96,7 @@ public class GameController {
     //Passes an array of int[] coordinates that direct to all games
     public List<int []> listAvailableGames(){
         if(mGameBoard.getNextGameY()==-1){
-            return  listNotWonGames();
+            return mGameBoard.listAvailableGames();
         }else {
             List<int[]> availableMoves = new ArrayList<int[]>();
             availableMoves.add(new int[]{mGameBoard.getNextGameX(),getGameBoard().getNextGameY()});
@@ -105,8 +105,8 @@ public class GameController {
     }
 
     //Passes the request on to the Board, as it is what can actually answer the question
-    public List<int[]> listNotWonGames(){
-        return mGameBoard.listNotWonGames();
+    public List<int[]> listWonGames(){
+        return mGameBoard.listAvailableGames();
     }
 
     public boolean isLastMoveGameWinning(){

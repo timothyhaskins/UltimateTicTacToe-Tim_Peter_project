@@ -41,7 +41,7 @@ public class Board {
         //Makes move, logs if it tries an illegal move
         if (mGames[move.getGameX()][move.getGameY()].makeMove(move)){
             //Checks if this makes a "Freemove", or sets where the next move will be
-            if(mGames[move.getTileX()][move.getTileY()].isWon()){
+            if(mGames[move.getTileX()][move.getTileY()].isFinishedGame()){
                 mNextGameX = -1;
                 mNextGameY = -1;
             } else {
@@ -65,7 +65,7 @@ public class Board {
     }
 
     //Returns a list of arrays that contain the X and Y coordinates for each game that has yet to be won
-    public List<int[]> listNotWonGames(){
+    public List<int[]> listAvailableGames(){
         //Makes the array so that it will only hold int[]s
         List<int[]> availableGames = new ArrayList<int[]>();
 
@@ -73,7 +73,7 @@ public class Board {
         for (int i = 0; i < mGames.length; i++) {
             for (int j = 0; j < mGames[i].length; j++) {
                 //If the game has not been won, then add an int to the array with it's X and Y coordinates
-                if (!mGames[i][j].isWon()){
+                if (!mGames[i][j].isFinishedGame()){
                     //this is a nice way to make a new array and fill it with the values in the same line( with the curly brackets)
                     availableGames.add(new int[]{i, j});
                 }
@@ -81,6 +81,24 @@ public class Board {
         }
         //send back the filled list
         return availableGames;
+    }
+
+    public List<int[]> listWonGames(){
+        //Makes the array so that it will only hold int[]s
+        List<int[]> wonGames = new ArrayList<int[]>();
+
+        //Iterate through the 9 subgames to check if it's been won
+        for (int i = 0; i < mGames.length; i++) {
+            for (int j = 0; j < mGames[i].length; j++) {
+                //If the game has not been won, then add an int to the array with it's X and Y coordinates
+                if (!mGames[i][j].isWon()){
+                    //this is a nice way to make a new array and fill it with the values in the same line( with the curly brackets)
+                    wonGames.add(new int[]{i, j, mGames[i][j].getWinner()});
+                }
+            }
+        }
+        //send back the filled list
+        return wonGames;
     }
 
     //returns true if game has been won

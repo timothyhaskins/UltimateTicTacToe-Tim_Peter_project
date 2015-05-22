@@ -157,6 +157,10 @@ public class SubBoard {
         this.mIsWon = isTied;
     }
 
+    public boolean isFinishedGame(){
+        return (mIsTied || mIsWon);
+    }
+
     public int getWinner() {
         return mWinner;
     }
