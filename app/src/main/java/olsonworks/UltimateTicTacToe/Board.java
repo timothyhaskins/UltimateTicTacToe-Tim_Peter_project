@@ -153,15 +153,15 @@ public class Board {
     public boolean checkWin(){
         //check rows
         for (int y = 0; y < 3; y++) {
-            if(mGames[0][y].isWon() && mGames[0][y].getWinner() == mGames[1][y].getWinner() && mGames[0][y].getWinner() == mGames[2][y].getWinner()) {return true;}
+            if(mGames[0][y].isWon() && mGames[0][y].getWinner() == mGames[1][y].getWinner() && mGames[0][y].getWinner() == mGames[2][y].getWinner()) return true;
         }
         //check columns
         for (int x = 0; x < 3; x++) {
-            if(mGames[x][0].isWon() && mGames[x][0].getWinner() == mGames[x][1].getWinner() && mGames[x][0].getWinner() == mGames[x][2].getWinner()) {return true;}
+            if(mGames[x][0].isWon() && mGames[x][0].getWinner() == mGames[x][1].getWinner() && mGames[x][0].getWinner() == mGames[x][2].getWinner()) return true;
         }
         //check diagonals
-        if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) {return true;}
-        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner()) {return true;}
+        if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) return true;
+        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner()) return true;
         return false;
     }
 
