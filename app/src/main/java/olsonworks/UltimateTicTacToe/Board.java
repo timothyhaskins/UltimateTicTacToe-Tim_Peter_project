@@ -151,18 +151,60 @@ public class Board {
     }
 
     public boolean checkWin(){
-        //check rows
-        for (int y = 0; y < 3; y++) {
-            if(mGames[0][y].isWon() && mGames[0][y].getWinner() == mGames[1][y].getWinner() && mGames[0][y].getWinner() == mGames[2][y].getWinner()) return true;
+        int countAvailableGames = listAvailableGames().size();
+
+        if (countAvailableGames < 7) {
+            //check for Tie win
+            if (countAvailableGames == 0)
+                return true;
+
+            //check rows
+            for (int y = 0; y < 3; y++) {
+                if (mGames[0][y].isWon() && mGames[0][y].getWinner() == mGames[1][y].getWinner() && mGames[0][y].getWinner() == mGames[2][y].getWinner())
+                    return true;
+            }
+            //check columns
+            for (int x = 0; x < 3; x++) {
+                if (mGames[x][0].isWon() && mGames[x][0].getWinner() == mGames[x][1].getWinner() && mGames[x][0].getWinner() == mGames[x][2].getWinner())
+                    return true;
+            }
+            //check diagonals
+            if (mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner())
+                return true;
+            if (mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner())
+                return true;
+
+            return false;
+        }else{
+            return false;
         }
-        //check columns
-        for (int x = 0; x < 3; x++) {
-            if(mGames[x][0].isWon() && mGames[x][0].getWinner() == mGames[x][1].getWinner() && mGames[x][0].getWinner() == mGames[x][2].getWinner()) return true;
+    }
+
+    //returns the player number of the player that has the most number of games won. returns 0 if there is a tie
+    public int getPlayerWithMostWins(){
+        int player1Wins = 0;
+        int player2Wins = 0;
+        //gets the list of all won games
+        List<int[]> wonGames = listWonGames();
+
+        //count up tally of wins attributed to each player
+        for (int i = 0; i < wonGames.size(); i++) {
+            if (wonGames.get(i)[3] == 1){
+                player1Wins++;
+            }else{
+                player2Wins++;
+            }
         }
-        //check diagonals
-        if(mGames[0][0].isWon() && mGames[0][0].getWinner() == mGames[1][1].getWinner() && mGames[0][0].getWinner() == mGames[2][2].getWinner()) return true;
-        if(mGames[2][0].isWon() && mGames[2][0].getWinner() == mGames[1][1].getWinner() && mGames[2][0].getWinner() == mGames[0][2].getWinner()) return true;
-        return false;
+
+        //returns the player number or 0 if there is a tie
+        if (player1Wins>player2Wins){
+            return 1;
+        }else if(player2Wins>player1Wins){
+            return 2;
+        }else{
+            return 0;
+        }
+
     }
 
     //Getters and setters

@@ -109,6 +109,10 @@ public class GameController {
         return mGameBoard.listAvailableGames();
     }
 
+    public int getPlayerWithMostWins(){
+        return mGameBoard.getPlayerWithMostWins();
+    }
+
     public boolean isLastMoveGameWinning(){
         Move lastMove = getLastMove();
         return (mGameBoard.isSubGameWon(lastMove.getGameX(),lastMove.getGameY()));
