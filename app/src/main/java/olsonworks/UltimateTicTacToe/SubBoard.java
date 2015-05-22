@@ -15,6 +15,7 @@ public class SubBoard {
     //declaration of variables
     private int[][] mTiles = new int[3][3];
     private boolean mIsWon;
+    private boolean mIsTied;
     private int mWinner;
 
     //What to do when a new SubBoard is created with no inputs (blank)
@@ -26,6 +27,7 @@ public class SubBoard {
             }
         }
         mIsWon = false;
+        mIsTied = false;
     }
 
     //create a new SubBoard by copying a different SubBoard.
@@ -44,6 +46,12 @@ public class SubBoard {
 
         //Make the intended move
         mTiles[move.getTileX()][move.getTileY()] = (move.isPlayer1Turn() ? 1 : 2);
+
+        //check for tie
+        mIsTied = checkTie();
+        if (mIsTied) {
+            Log.d("GAME MOVE:","subGame just tied");
+        }
 
         //check for win.
         mIsWon = checkWin();
@@ -66,13 +74,13 @@ public class SubBoard {
 
     //Double checks to make sure move is legal
     public boolean isLegalMove(Move move){
-        if(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0) return false;
+        if(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0 || mIsTied ) return false;
         return true;
     }
 
     //Double checks to make sure move is legal
     public boolean isLegalMove(int tileX, int tileY){
-        if(mIsWon || mTiles[tileX][tileY] != 0) return false;
+        if(mIsWon || mTiles[tileX][tileY] != 0 || mIsTied) return false;
         return true;
     }
 
@@ -91,6 +99,18 @@ public class SubBoard {
         if(mTiles[2][0] !=0 && mTiles[2][0] == mTiles[1][1] && mTiles[2][0] == mTiles[0][2]) {return true;}
 
         return false;
+    }
+
+    public boolean checkTie(){
+        int count = 0;
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (mTiles[i][j] == 0) {return false;}
+            }
+        }
+
+        return true;
     }
 
     //will return a list of all available moves, but I have to remember how lists are implemented first...
@@ -129,6 +149,12 @@ public class SubBoard {
 
     public void setWon(boolean won) {
         this.mIsWon = won;
+    }
+
+    public boolean isTied(){ return mIsTied;}
+
+    public void setTied(boolean isTied) {
+        this.mIsWon = isTied;
     }
 
     public int getWinner() {

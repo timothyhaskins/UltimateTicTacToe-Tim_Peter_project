@@ -88,6 +88,10 @@ public class Board {
         return mGames[gameX][gameY].isWon();
     }
 
+    public boolean isSubGameTied(int gameX, int gameY){
+        return mGames[gameX][gameY].isTied();
+    }
+
     //will return a list of all available moves, but I have to remember how lists are implemented first...
     public List listAvailableMoves(){
         List moves = new ArrayList();
