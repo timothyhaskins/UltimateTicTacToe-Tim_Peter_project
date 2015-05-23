@@ -105,7 +105,6 @@ public class GameActivity extends ActionBarActivity {
     }
 
     // Starts with a fresh board.
-
     public void newGame(View view) {
         Animation animTranslate = AnimationUtils.loadAnimation(GameActivity.this, R.anim.translate);
         Animation animAlpha = AnimationUtils.loadAnimation(GameActivity.this, R.anim.alpha);
@@ -135,7 +134,7 @@ public class GameActivity extends ActionBarActivity {
                 setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
                 disableOldSubgame(move.getTileX(), move.getTileY());
                 move = mainGame.undoLastMove();
-     mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
             } else {
                 mUndoButton.setEnabled(false);
                 firstMove = true;
@@ -204,7 +203,6 @@ public class GameActivity extends ActionBarActivity {
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
-                move.setPlayer1Turn(mainGame.isPlayer1Turn());
 
                 // Grab the button and set it to O or X
 
