@@ -14,8 +14,7 @@ public class GameController {
     private Boolean mIsGameOver;
     private int mGameType; //0=PvP, 1=PvE, 2=EvE
     private boolean mIsPlayer1Turn;
-    private AIPlayer mAIPlayer1;
-    private AIPlayer mAIPlayer2;
+    private AIPlayer mAIPlayer;
     private List<Move> mMoveHistory;
 
     public GameController() {
@@ -30,22 +29,19 @@ public class GameController {
     }
 
 
-    public GameController(int type) {
+    public GameController(int gameType, int AIType) {
         //set up game
         mGameBoard = new Board();
         mIsGameOver = false;
         mMoveHistory = new ArrayList<Move>();
 
         //Setup game characteristics
-        mGameType = type;
+        mGameType = gameType;
         mIsPlayer1Turn = true;
 
         //make any AIs that are needed
         if (mGameType > 0){
-            mAIPlayer1 = new AIPlayer(true,0);
-            if (mGameType == 2){
-                mAIPlayer2 = new AIPlayer(false,0);
-            }
+            mAIPlayer = new AIPlayer(true,AIType);
         }
     }
 
@@ -77,6 +73,14 @@ public class GameController {
         }
 
         return nextMove;
+    }
+
+    public Move takeAITurn(){
+        Move AIMove = mAIPlayer.getNextMove(mGameBoard);
+
+        takeTurn(AIMove);
+
+        return AIMove;
     }
 
     //undoes the last move and returns the new last move

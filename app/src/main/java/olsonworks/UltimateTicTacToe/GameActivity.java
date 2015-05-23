@@ -107,7 +107,7 @@ public class GameActivity extends ActionBarActivity {
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
-        mainGame = new GameController(0);
+        mainGame = new GameController(0,0);
         move = new Move();
         resetGameViews();
         setBoardForNewOrWonGame(false);
@@ -137,7 +137,7 @@ public class GameActivity extends ActionBarActivity {
         } else {
             mUndoButton.setEnabled(false);
             firstMove = true;
-            mainGame = new GameController(0);
+            mainGame = new GameController(0,0);
             move = new Move();
             setBoardForNewOrWonGame(false);
             setUpButtonsForOnClick();

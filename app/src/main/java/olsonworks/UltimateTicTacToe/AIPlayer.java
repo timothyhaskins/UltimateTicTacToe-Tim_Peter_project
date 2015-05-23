@@ -8,7 +8,7 @@ import java.util.List;
 public class AIPlayer {
     private boolean mIsPlayer1;
     private int mPlayerNumber;
-    private int mAIType; //0=random
+    private int mAIType; //0=random 1=stupid etc...
 
     public AIPlayer(boolean isPlayer1, int type){
         mIsPlayer1 = isPlayer1;
@@ -16,8 +16,16 @@ public class AIPlayer {
         mAIType = type;
     }
 
+    public Move getNextMove(Board gameBoard){
+        switch (mAIType) {
+            case 1: return getRandomMove(gameBoard);
+            default: return getRandomMove(gameBoard);
+        }
+
+    }
+
     //get random board move
-    public Move makeRandomMove(Board gameBoard){
+    private Move getRandomMove(Board gameBoard){
         List<Move> moves = gameBoard.listAvailableMoves();
         Move move = moves.get((int) (Math.random() * moves.size()));
 
