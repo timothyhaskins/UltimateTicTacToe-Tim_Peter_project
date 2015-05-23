@@ -96,7 +96,6 @@ public class GameActivity extends ActionBarActivity {
     }
 
     // Resets the "won" graphics.
-
     public void resetGameViews() {
         for (int i = 0; i < gameViewList.size(); i++) {
             gameList list = gameViewList.get(i);
@@ -121,7 +120,6 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void undoMove(View view) {
-        //   Need a method to be passed to check to see if history is one move
            for (int i = 0; i <= mGameType; i++) {
             if (mainGame.checkIfAllowUndo()) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
@@ -134,7 +132,8 @@ public class GameActivity extends ActionBarActivity {
                 setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
                 disableOldSubgame(move.getTileX(), move.getTileY());
                 move = mainGame.undoLastMove();
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
+                        + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
             } else {
                 mUndoButton.setEnabled(false);
                 firstMove = true;
@@ -146,11 +145,7 @@ public class GameActivity extends ActionBarActivity {
         }
     }
 
-    /* Set up these onClickListeners for alllll the gameboard buttons.   Basically it is:
-    // Going TableLayout (whole game) -> TableRow (row of subgames)
-     -> TableLayout (subgame) -> Table Row (row of buttons) -> Button */
-
-
+    // Set up these onClickListeners for alllll the gameboard buttons.
     private void setUpButtonsForOnClick() {
         for (int tileY = 0; tileY < mGameTable.getChildCount(); tileY++) {
             if (mGameTable.getChildAt(tileY) instanceof TableRow) {
@@ -175,7 +170,6 @@ public class GameActivity extends ActionBarActivity {
 
 
     private class makeMove implements View.OnClickListener {
-
         private int tileX;
         private int tileY;
         private int gameX;
@@ -189,10 +183,6 @@ public class GameActivity extends ActionBarActivity {
             this.gameY = gameY;
         }
 
-        /* This puts the X and O on the button and displays the coordinates of the move.
-         It changes the display to X or O depending on whose turn.   Also locks out the button.
-        Finally, switches whose turn it is.   */
-
         @Override
         public void onClick(View view) {
 
@@ -203,6 +193,7 @@ public class GameActivity extends ActionBarActivity {
                 move.setTileY(tileY);
                 move.setGameX(gameX);
                 move.setGameY(gameY);
+                move.setPlayer1Turn(mainGame.isPlayer1Turn());
 
                 // Grab the button and set it to O or X
 
@@ -217,10 +208,9 @@ public class GameActivity extends ActionBarActivity {
                 B.animate().rotationYBy(180).setDuration(300);
                 B.setEnabled(false);
 
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
+                        + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
                 mainGame.takeTurn(new Move(move));
-                mUndoButton.setEnabled(true);
-
                 updateUI(move);
 
                 if (mGameType == 1 && !mainGame.getIsGameOver()) {
@@ -246,6 +236,7 @@ public class GameActivity extends ActionBarActivity {
         } else if (firstMove) {
             setBoardForNewOrWonGame(true);
             firstMove = false;
+            mUndoButton.setEnabled(true);
             enableNewSubgame(move.getTileX(), move.getTileY());
         } else {
             disableOldSubgame(move.getGameX(), move.getGameY());
