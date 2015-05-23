@@ -26,6 +26,9 @@ public class GameController {
         //Setup game characteristics
         mGameType = 0;
         mIsPlayer1Turn = true;
+
+        //create an AI
+        mAIPlayer = new AIPlayer(false,0);
     }
 
 
@@ -40,9 +43,9 @@ public class GameController {
         mIsPlayer1Turn = true;
 
         //make any AIs that are needed
-        if (mGameType > 0){
-            mAIPlayer = new AIPlayer(true,AIType);
-        }
+        //if (mGameType > 0){
+            mAIPlayer = new AIPlayer(false,AIType);
+        //}
     }
 
     public int[] takeTurn(Move move){

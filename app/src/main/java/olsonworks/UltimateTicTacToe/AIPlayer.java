@@ -28,7 +28,7 @@ public class AIPlayer {
     private Move getRandomMove(Board gameBoard){
         List<Move> moves = gameBoard.listAvailableMoves();
         Move move = moves.get((int) (Math.random() * moves.size()));
-
+        move.setPlayer1Turn(mIsPlayer1);
         return move;
     }
 

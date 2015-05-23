@@ -119,10 +119,10 @@ public class Board {
             for (int j = 0; j < 3; j++) {
                 //checks to see if this game is the allowed game, or you have an any move
                 if ((mNextGameX == i && mNextGameY ==j) || mNextGameX == -1) {
-                    for (int x = 0; x < 9; x++) {
-                        for (int y = 0; y < 9; y++) {
+                    for (int x = 0; x < 3; x++) {
+                        for (int y = 0; y < 3; y++) {
                             //it the move legal?
-                            Move newMove = new Move(i, j, x, y, true);
+                            Move newMove = new Move(x, y, i, j, true);
                             if (mGames[i][j].isLegalMove(newMove)) {
                                 //add to list of available moves, with the first digit as game, second digit as tile
                                 moves.add(newMove);
