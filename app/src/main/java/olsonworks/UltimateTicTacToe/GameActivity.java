@@ -67,10 +67,14 @@ public class GameActivity extends ActionBarActivity {
         setContentView(R.layout.activity_game);
         ButterKnife.inject(this);
         Intent intent = getIntent();
-        mPlayer1Name = intent.getStringExtra("player1name");
-        mPlayer2Name = intent.getStringExtra("player2name");
         mGameType = intent.getIntExtra("gameType", 0);
         mAIType = intent.getIntExtra("aiType", 0);
+        mPlayer1Name = intent.getStringExtra("player1Name");
+        if (mAIType == 1) {
+            mPlayer2Name = "Computer";
+        } else {
+            mPlayer2Name = intent.getStringExtra("player2Name");
+        }
         createGameViewList();
         mUndoButton.setEnabled(false);
         setUpButtonsForOnClick();
@@ -246,7 +250,7 @@ public class GameActivity extends ActionBarActivity {
                     enableNewSubgame(move.getTileX(), move.getTileY());
                 }
 
-                if (mGameType == 1) {
+                if (mGameType == 1 && !mainGame.getIsGameOver()) {
                     move = mainGame.takeAITurn();
                     makeAIMove(move);
                 }
@@ -258,14 +262,14 @@ public class GameActivity extends ActionBarActivity {
 
         final Animation animScale = AnimationUtils.loadAnimation(GameActivity.this, R.anim.scale);
 
-        // Button Bit)
+        // Button Bit
         TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
         TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
         TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
         Button B = (Button) R2.getChildAt(move.getTileX());
         B.setText("O");
         B.startAnimation(animScale);
-        B.animate().rotationYBy(180).setDuration(300);
+        B.animate().rotationYBy(180).setDuration(300).setStartDelay(100);
         B.setEnabled(false);
 
         // This should be its own method
