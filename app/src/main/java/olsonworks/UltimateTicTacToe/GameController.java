@@ -57,7 +57,7 @@ public class GameController {
                 nextMove = mGameBoard.makeMove(move);
 
                 //adds the move to the list of moves
-                mMoveHistory.add(move);
+                mMoveHistory.add(new Move(move));
 
                 //checks to see if this won the game
                 mIsGameOver = mGameBoard.checkWin();
