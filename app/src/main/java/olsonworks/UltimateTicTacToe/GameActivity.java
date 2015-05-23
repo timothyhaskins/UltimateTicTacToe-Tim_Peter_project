@@ -24,6 +24,8 @@ public class GameActivity extends ActionBarActivity {
     private String buttonText;
     private String mPlayer1Name;
     private String mPlayer2Name;
+    private int mGameType;
+    private int mAIType;
     private String mCurrentPlayerName;
     public Move move = new Move();
     public GameController mainGame = new GameController();
@@ -67,6 +69,8 @@ public class GameActivity extends ActionBarActivity {
         Intent intent = getIntent();
         mPlayer1Name = intent.getStringExtra("player1name");
         mPlayer2Name = intent.getStringExtra("player2name");
+        mGameType = intent.getIntExtra("gameType", 0);
+        mAIType = intent.getIntExtra("aiType", 0);
         createGameViewList();
         mUndoButton.setEnabled(false);
         setUpButtonsForOnClick();
@@ -107,7 +111,7 @@ public class GameActivity extends ActionBarActivity {
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
-        mainGame = new GameController(0,0);
+        mainGame = new GameController(mGameType,mAIType);
         move = new Move();
         resetGameViews();
         setBoardForNewOrWonGame(false);
@@ -133,7 +137,7 @@ public class GameActivity extends ActionBarActivity {
             } else {
                 mPlayerID.setImageResource(R.drawable.x);
             }
-            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameX());
+            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
         } else {
             mUndoButton.setEnabled(false);
             firstMove = true;
@@ -241,8 +245,50 @@ public class GameActivity extends ActionBarActivity {
                     disableOldSubgame(move.getGameX(), move.getGameY());
                     enableNewSubgame(move.getTileX(), move.getTileY());
                 }
+
+                if (mGameType == 1) {
+                    move = mainGame.takeAITurn();
+                    makeAIMove(move);
+                }
             }
         }
+    }
+
+    public void makeAIMove(Move move){
+
+        final Animation animScale = AnimationUtils.loadAnimation(GameActivity.this, R.anim.scale);
+
+        // Button Bit)
+        TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+        TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
+        TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
+        Button B = (Button) R2.getChildAt(move.getTileX());
+        B.setText("O");
+        B.startAnimation(animScale);
+        B.animate().rotationYBy(180).setDuration(300);
+        B.setEnabled(false);
+
+        // This should be its own method
+
+        if (mainGame.isLastMoveGameWinning()) {
+            setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
+        }
+        if (mainGame.isNextMoveAnyMove()) {
+            setButtonsforAny();
+            firstMove = true;
+        } else if (mainGame.getIsGameOver()) {
+            setBoardForNewOrWonGame(true);
+            String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
+            mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+        } else if (firstMove) {
+            setBoardForNewOrWonGame(true);
+            firstMove = false;
+            enableNewSubgame(move.getTileX(), move.getTileY());
+        } else {
+            disableOldSubgame(move.getGameX(), move.getGameY());
+            enableNewSubgame(move.getTileX(), move.getTileY());
+        }
+
     }
 
     public void setSubgameImageViewAsWon(int gameX, int gameY, boolean won) {

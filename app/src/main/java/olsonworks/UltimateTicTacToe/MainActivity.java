@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,24 +25,33 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
-        mOnePlayerButton.setEnabled(false);
+        Animation animTranslate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
+        Animation animAlpha = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alpha);
+        mOnePlayerButton.startAnimation(animTranslate);
+        mTwoPlayerButton.startAnimation(animTranslate);
+        mTwoPlayerInternetButton.startAnimation(animTranslate);
         mTwoPlayerInternetButton.setEnabled(false);
+    }
 
-
+    public void StartOnePlayer(View view) {
+        String player1Name = mPlayer1Name.getText().toString();
+        startStory(player1Name, "", 1, 1);
     }
 
     public void StartTwoPlayer(View view) {
         String player1Name = mPlayer1Name.getText().toString();
         String player2Name = mPlayer2Name.getText().toString();
-        startStory(player1Name, player2Name);
+        startStory(player1Name, player2Name, 0, 0);
     }
 
-    private void startStory(String player1name, String player2name) {
+    private void startStory(String player1Name, String player2Name, int gameType, int aiType) {
         // Intent = THIS reference to activity, then ref to next activity
         Intent intent = new Intent(MainActivity.this, GameActivity.class);
         // Set up the variable that will be passed, using the key name
-        intent.putExtra("player1name", player1name);
-        intent.putExtra("player2name", player2name);
+        intent.putExtra("player1Name", player1Name);
+        intent.putExtra("player2Name", player2Name);
+        intent.putExtra("gameType", gameType);
+        intent.putExtra("aiType", aiType);
         // Pass the variable
         startActivity(intent);
     }

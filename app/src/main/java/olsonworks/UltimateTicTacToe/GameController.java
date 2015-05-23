@@ -80,9 +80,7 @@ public class GameController {
 
     public Move takeAITurn(){
         Move AIMove = mAIPlayer.getNextMove(mGameBoard);
-
         takeTurn(AIMove);
-
         return AIMove;
     }
 
