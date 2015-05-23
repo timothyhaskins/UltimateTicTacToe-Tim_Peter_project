@@ -234,13 +234,14 @@ public class GameActivity extends ActionBarActivity {
                 if (mainGame.isLastMoveGameWinning()) {
                     setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
                 }
-                if (mainGame.isNextMoveAnyMove()) {
-                    setButtonsforAny();
-                    firstMove = true;
-                } else if (mainGame.getIsGameOver()) {
+
+                if (mainGame.getIsGameOver()) {
                     setBoardForNewOrWonGame(true);
                     String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
                     mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+                } else if (mainGame.isNextMoveAnyMove()) {
+                    setButtonsforAny();
+                    firstMove = true;
                 } else if (firstMove) {
                     setBoardForNewOrWonGame(true);
                     firstMove = false;
