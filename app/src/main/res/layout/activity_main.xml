@@ -60,7 +60,10 @@
         android:hint="Enter player 1 name..."
         android:textSize="20dp"
         android:background="@color/background_material_light"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:visibility="invisible"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -71,6 +74,9 @@
         android:background="@color/background_material_light"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/player1name"/>
+        android:layout_below="@+id/player1name"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

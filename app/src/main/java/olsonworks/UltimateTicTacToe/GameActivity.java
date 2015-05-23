@@ -59,7 +59,6 @@ public class GameActivity extends ActionBarActivity {
     ImageView mGame21;
     @InjectView(R.id.game22)
     ImageView mGame22;
-    @InjectView(R.id.playerID) ImageView mPlayerID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +110,10 @@ public class GameActivity extends ActionBarActivity {
         Animation animTranslate = AnimationUtils.loadAnimation(GameActivity.this, R.anim.translate);
         Animation animAlpha = AnimationUtils.loadAnimation(GameActivity.this, R.anim.alpha);
         mMoveCounter.setText("HERE WE GOOOOOO!");
-        mUndoButton.setEnabled(false);
         mNewGameButton.startAnimation(animTranslate);
         mMoveCounter.startAnimation(animAlpha);
         firstMove = true;
+        mUndoButton.setEnabled(false);
         mainGame = new GameController(mGameType,mAIType);
         move = new Move();
         resetGameViews();
@@ -124,7 +123,7 @@ public class GameActivity extends ActionBarActivity {
 
     public void undoMove(View view) {
         //   Need a method to be passed to check to see if history is one move
-        for (int i = 0; i <= mGameType; i++) {
+           for (int i = 0; i <= mGameType; i++) {
             if (mainGame.checkIfAllowUndo()) {
                 TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
                 TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
@@ -135,18 +134,12 @@ public class GameActivity extends ActionBarActivity {
                 B.animate().rotationYBy(180).setDuration(300);
                 setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
                 disableOldSubgame(move.getTileX(), move.getTileY());
-                enableNewSubgame(move.getGameX(), move.getGameY());
                 move = mainGame.undoLastMove();
-                if (!mainGame.isPlayer1Turn()) {
-                    mPlayerID.setImageResource(R.drawable.o);
-                } else {
-                    mPlayerID.setImageResource(R.drawable.x);
-                }
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
+     mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
             } else {
                 mUndoButton.setEnabled(false);
                 firstMove = true;
-                mainGame = new GameController(0, 0);
+                mainGame = new GameController(mGameType, mAIType);
                 move = new Move();
                 setBoardForNewOrWonGame(false);
                 setUpButtonsForOnClick();
@@ -219,10 +212,8 @@ public class GameActivity extends ActionBarActivity {
                 B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
                 if (!mainGame.isPlayer1Turn()) {
                     mCurrentPlayerName = mPlayer1Name;
-                    mPlayerID.setImageResource(R.drawable.x);
                 } else {
                     mCurrentPlayerName = mPlayer2Name;
-                    mPlayerID.setImageResource(R.drawable.o);
                 }
                 B.startAnimation(animScale);
                 B.animate().rotationYBy(180).setDuration(300);
@@ -232,32 +223,35 @@ public class GameActivity extends ActionBarActivity {
                 mainGame.takeTurn(new Move(move));
                 mUndoButton.setEnabled(true);
 
-                // Marks a game as won
-                if (mainGame.isLastMoveGameWinning()) {
-                    setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
-                }
-
-                if (mainGame.getIsGameOver()) {
-                    setBoardForNewOrWonGame(true);
-                    String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
-                    mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
-                } else if (mainGame.isNextMoveAnyMove()) {
-                    setButtonsforAny();
-                    firstMove = true;
-                } else if (firstMove) {
-                    setBoardForNewOrWonGame(true);
-                    firstMove = false;
-                    enableNewSubgame(move.getTileX(), move.getTileY());
-                } else {
-                    disableOldSubgame(move.getGameX(), move.getGameY());
-                    enableNewSubgame(move.getTileX(), move.getTileY());
-                }
+                updateUI(move);
 
                 if (mGameType == 1 && !mainGame.getIsGameOver()) {
                     move = mainGame.takeAITurn();
                     makeAIMove(move);
                 }
             }
+        }
+    }
+
+    public void updateUI(Move move) {
+        // Marks a game as won
+        if (mainGame.isLastMoveGameWinning()) {
+            setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
+        }
+        if (mainGame.getIsGameOver()) {
+            setBoardForNewOrWonGame(true);
+            String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
+            mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+        } else if (mainGame.isNextMoveAnyMove()) {
+            setButtonsforAny();
+            firstMove = true;
+        } else if (firstMove) {
+            setBoardForNewOrWonGame(true);
+            firstMove = false;
+            enableNewSubgame(move.getTileX(), move.getTileY());
+        } else {
+            disableOldSubgame(move.getGameX(), move.getGameY());
+            enableNewSubgame(move.getTileX(), move.getTileY());
         }
     }
 
@@ -274,28 +268,7 @@ public class GameActivity extends ActionBarActivity {
         B.startAnimation(animScale);
         B.animate().rotationYBy(180).setDuration(300).setStartDelay(100);
         B.setEnabled(false);
-
-        // This should be its own method
-
-        if (mainGame.isLastMoveGameWinning()) {
-            setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
-        }
-        if (mainGame.isNextMoveAnyMove()) {
-            setButtonsforAny();
-            firstMove = true;
-        } else if (mainGame.getIsGameOver()) {
-            setBoardForNewOrWonGame(true);
-            String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
-            mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
-        } else if (firstMove) {
-            setBoardForNewOrWonGame(true);
-            firstMove = false;
-            enableNewSubgame(move.getTileX(), move.getTileY());
-        } else {
-            disableOldSubgame(move.getGameX(), move.getGameY());
-            enableNewSubgame(move.getTileX(), move.getTileY());
-        }
-
+        updateUI(move);
     }
 
     public void setSubgameImageViewAsWon(int gameX, int gameY, boolean won) {

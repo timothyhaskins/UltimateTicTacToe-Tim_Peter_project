@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:text="@string/welcome_message"
-        android:textSize="100dp"
+        android:textSize="90dp"
         android:textStyle="bold"
         android:textColor="#ccffffff"/>
 
@@ -63,7 +63,10 @@
         android:hint="Enter player 1 name..."
         android:textSize="40dp"
         android:background="@color/background_material_light"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:visibility="invisible"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -74,6 +77,9 @@
         android:background="@color/background_material_light"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:layout_below="@+id/player1name"/>
+        android:layout_below="@+id/player1name"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

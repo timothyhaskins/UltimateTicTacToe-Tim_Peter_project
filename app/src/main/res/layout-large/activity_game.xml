@@ -59,7 +59,7 @@
         android:singleLine="false"
         android:textStyle="bold"
         android:layout_alignParentLeft="false"
-        android:layout_toLeftOf="@+id/undo_button"/>
+        />
 
     <ImageView
         style="@style/gameViewTablet"
@@ -934,15 +934,5 @@
             </TableLayout>
         </TableRow>
     </TableLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/playerID"
-        android:layout_below="@+id/game02"
-        android:layout_toRightOf="@+id/game12"
-        android:layout_toEndOf="@+id/game12"
-        android:layout_alignRight="@+id/undo_button"
-        android:layout_alignBottom="@+id/move_counter"/>
 
 </RelativeLayout>
