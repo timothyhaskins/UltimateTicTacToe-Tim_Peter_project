@@ -124,31 +124,33 @@ public class GameActivity extends ActionBarActivity {
 
     public void undoMove(View view) {
         //   Need a method to be passed to check to see if history is one move
-        if (mainGame.checkIfAllowUndo()) {
-            TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
-            TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
-            TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
-            Button B = (Button) R2.getChildAt(move.getTileX());
-            B.setText("");
-            B.setEnabled(false);
-            B.animate().rotationYBy(180).setDuration(300);
-            setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
-            disableOldSubgame(move.getTileX(), move.getTileY());
-            enableNewSubgame(move.getGameX(), move.getGameY());
-            move = mainGame.undoLastMove();
-            if(!mainGame.isPlayer1Turn()) {
-                mPlayerID.setImageResource(R.drawable.o);
+        for (int i = 0; i <= mGameType; i++) {
+            if (mainGame.checkIfAllowUndo()) {
+                TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+                TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
+                TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
+                Button B = (Button) R2.getChildAt(move.getTileX());
+                B.setText("");
+                B.setEnabled(false);
+                B.animate().rotationYBy(180).setDuration(300);
+                setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
+                disableOldSubgame(move.getTileX(), move.getTileY());
+                enableNewSubgame(move.getGameX(), move.getGameY());
+                move = mainGame.undoLastMove();
+                if (!mainGame.isPlayer1Turn()) {
+                    mPlayerID.setImageResource(R.drawable.o);
+                } else {
+                    mPlayerID.setImageResource(R.drawable.x);
+                }
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
             } else {
-                mPlayerID.setImageResource(R.drawable.x);
+                mUndoButton.setEnabled(false);
+                firstMove = true;
+                mainGame = new GameController(0, 0);
+                move = new Move();
+                setBoardForNewOrWonGame(false);
+                setUpButtonsForOnClick();
             }
-            mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX() + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
-        } else {
-            mUndoButton.setEnabled(false);
-            firstMove = true;
-            mainGame = new GameController(0,0);
-            move = new Move();
-            setBoardForNewOrWonGame(false);
-            setUpButtonsForOnClick();
         }
     }
 
