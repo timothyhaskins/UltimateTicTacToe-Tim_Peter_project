@@ -28,14 +28,20 @@ public class SubBoard {
         }
         mIsWon = false;
         mIsTied = false;
+        mWinner = 0;
     }
 
     //create a new SubBoard by copying a different SubBoard.
     // Called just as normally making a new instance, but just with an argument of the SubBoard to be copied.
     // I can see this coming in handy if the AI wants to make dummy games to think through it's moves.
     public SubBoard(SubBoard reference){
-        mTiles = reference.getTiles();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mTiles[i][j] = reference.getTile(i,j);
+            }
+        }
         mIsWon = reference.isWon();
+        mIsTied = reference.isTied();
         mWinner = reference.getWinner();
     }
 
@@ -74,14 +80,12 @@ public class SubBoard {
 
     //Double checks to make sure move is legal
     public boolean isLegalMove(Move move){
-        if(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0 || mIsTied ) return false;
-        return true;
+        return !(mIsWon || mTiles[move.getTileX()][move.getTileY()] != 0 || mIsTied);
     }
 
     //Double checks to make sure move is legal
     public boolean isLegalMove(int tileX, int tileY){
-        if(mIsWon || mTiles[tileX][tileY] != 0 || mIsTied) return false;
-        return true;
+        return !(mIsWon || mTiles[tileX][tileY] != 0 || mIsTied);
     }
 
     //check for win. This might not be easy to make elegant. There really must be a mathy way to do this

@@ -30,10 +30,17 @@ public class Board {
     }
 
     //Create new board as copy of incoming Board
-    public Board(Board template){
-        setGames(template.getGames());
-        mNextGameX = template.getNextGameX();
-        mNextGameY = template.getNextGameY();
+    public Board(Board reference){
+        mGames = new SubBoard[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                mGames[i][j] = new SubBoard(reference.getSubGame(i,j));
+            }
+        }
+
+        mNextGameX = reference.getNextGameX();
+        mNextGameY = reference.getNextGameY();
     }
 
     //This makes the actual moves, and returns the next SubBoard that must be played in as a 2d array(x,y). Returns -1.-1 for "Freemove"
@@ -208,8 +215,12 @@ public class Board {
     }
 
     //Getters and setters
-    public SubBoard[][] getGames() {
+    public SubBoard[][] getSubGames() {
         return mGames;
+    }
+
+    public SubBoard getSubGame(int gameX, int gameY){
+        return new SubBoard(mGames[gameX][gameY]);
     }
 
     public void setGames(SubBoard[][] games) {

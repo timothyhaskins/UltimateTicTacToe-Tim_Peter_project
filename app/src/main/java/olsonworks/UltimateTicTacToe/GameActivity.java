@@ -69,7 +69,7 @@ public class GameActivity extends ActionBarActivity {
         mGameType = intent.getIntExtra("gameType", 0);
         mAIType = intent.getIntExtra("aiType", 0);
         mPlayer1Name = intent.getStringExtra("player1Name");
-        if (mAIType == 1) {
+        if (mAIType >= 1) {
             mPlayer2Name = "Computer";
         } else {
             mPlayer2Name = intent.getStringExtra("player2Name");
