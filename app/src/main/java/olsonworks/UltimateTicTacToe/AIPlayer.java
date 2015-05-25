@@ -25,11 +25,7 @@ public class AIPlayer {
         switch (mAIType) {
             case 0: return new Move(getRandomMove(gameBoard));
             case 1: return new Move(getBestMove(gameBoard,mPlayerNumber,1));
-            case 2: return new Move(getBestMove(gameBoard,mPlayerNumber,2));
-            case 3: return new Move(getBestMove(gameBoard,mPlayerNumber,3));
-            case 4: return new Move(getBestMove(gameBoard,mPlayerNumber,4));
-            case 5: return new Move(getBestMove(gameBoard,mPlayerNumber,5));
-            default: return new Move(getBestMove(gameBoard,mPlayerNumber,2));
+            default: return new Move(getBestMove(gameBoard,mPlayerNumber,mAIType));
         }
 
     }

@@ -36,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
     //the value used below sets the number of turns ahead the AI will look. Anything greater than 2 and it starts to lag between moves
     public void StartOnePlayer(View view) {
         String player1Name = mPlayer1Name.getText().toString();
-        startStory(player1Name, "", 1, 2);
+        startStory(player1Name, "", 1, 3);
     }
 
     public void StartTwoPlayer(View view) {

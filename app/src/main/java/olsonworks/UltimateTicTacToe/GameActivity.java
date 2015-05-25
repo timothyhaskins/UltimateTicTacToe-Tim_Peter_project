@@ -28,7 +28,7 @@ public class GameActivity extends ActionBarActivity {
     private int mAIType;
     private String mCurrentPlayerName;
     public Move move = new Move();
-    public GameController mainGame = new GameController();
+    public GameController mainGame;
     public static List<gameList> gameViewList;
 
 
@@ -68,6 +68,7 @@ public class GameActivity extends ActionBarActivity {
         Intent intent = getIntent();
         mGameType = intent.getIntExtra("gameType", 0);
         mAIType = intent.getIntExtra("aiType", 0);
+        mainGame = new GameController(mGameType,mAIType);
         mPlayer1Name = intent.getStringExtra("player1Name");
         if (mAIType >= 1) {
             mPlayer2Name = "Computer";
