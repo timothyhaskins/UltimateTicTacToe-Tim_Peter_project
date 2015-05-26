@@ -1,4 +1,4 @@
-package olsonworks.UltimateTicTacToe;
+package nomorecookies.UltimateTicTacToe;
 
 /**
  * Created by Peter Olson on 5/7/2015.

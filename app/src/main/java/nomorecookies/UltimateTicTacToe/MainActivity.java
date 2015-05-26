@@ -1,4 +1,4 @@
-package olsonworks.UltimateTicTacToe;
+package nomorecookies.UltimateTicTacToe;
 
 import android.content.Intent;
 import android.os.Bundle;

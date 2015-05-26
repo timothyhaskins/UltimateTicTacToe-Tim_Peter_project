@@ -10,7 +10,7 @@
         <item name="android:minWidth">0dp</item>
         <item name="android:width">35dp</item>
         <item name="android:height">35dp</item>
-        <item name="android:textSize">15dp</item>
+        <item name="android:textSize">17dp</item>
      </style>
 
 
@@ -28,8 +28,8 @@
     </style>
 
     <style name="gameViewTablet">
-        <item name="android:layout_width">220dp</item>
-        <item name="android:layout_height">220dp</item>
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">240dp</item>
     </style>
 
 </resources>

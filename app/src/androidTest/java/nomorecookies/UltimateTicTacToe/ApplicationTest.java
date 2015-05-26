@@ -1,4 +1,4 @@
-package olsonworks.UltimateTicTacToe;
+package nomorecookies.UltimateTicTacToe;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package olsonworks.UltimateTicTacToe;
+package nomorecookies.UltimateTicTacToe;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -122,28 +122,28 @@ public class GameActivity extends ActionBarActivity {
 
     public void undoMove(View view) {
            for (int i = 0; i <= mGameType; i++) {
-            if (mainGame.checkIfAllowUndo()) {
-                TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
-                TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
-                TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
-                Button B = (Button) R2.getChildAt(move.getTileX());
-                B.setText("");
-                B.setEnabled(false);
-                B.animate().rotationYBy(180).setDuration(300);
-                setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
-                disableOldSubgame(move.getTileX(), move.getTileY());
-                move = mainGame.undoLastMove();
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
-                        + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
-            } else {
-                mUndoButton.setEnabled(false);
-                firstMove = true;
-                mainGame = new GameController(mGameType, mAIType);
-                move = new Move();
-                setBoardForNewOrWonGame(false);
-                setUpButtonsForOnClick();
-            }
-        }
+               if (mainGame.checkIfAllowUndo()) {
+                   TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+                   TableLayout T2 = (TableLayout) R1.getChildAt(move.getGameX());
+                   TableRow R2 = (TableRow) T2.getChildAt(move.getTileY());
+                   Button B = (Button) R2.getChildAt(move.getTileX());
+                   B.setText("");
+                   B.setEnabled(false);
+                   B.animate().rotationYBy(180).setDuration(300);
+                   setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), false);
+                   disableOldSubgame(move.getTileX(), move.getTileY());
+                   move = mainGame.undoLastMove();
+                   mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
+                           + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
+               } else {
+                   mUndoButton.setEnabled(false);
+                   firstMove = true;
+                   mainGame = new GameController(mGameType, mAIType);
+                   move = new Move();
+                   setBoardForNewOrWonGame(false);
+                   setUpButtonsForOnClick();
+               }
+           }
     }
 
     // Set up these onClickListeners for alllll the gameboard buttons.
@@ -227,18 +227,23 @@ public class GameActivity extends ActionBarActivity {
         if (mainGame.isLastMoveGameWinning()) {
             setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
         }
+        // Checks to see if the game is won, if so locks out the board and says who is the winner
         if (mainGame.getIsGameOver()) {
             setBoardForNewOrWonGame(true);
+            mUndoButton.setEnabled(false);
             String mWinnerString = (!mainGame.isPlayer1Turn() ? "X" : "O");
             mMoveCounter.setText("GAME IS WON BY " + mWinnerString);
+            // Checks to see if the move is an any
         } else if (mainGame.isNextMoveAnyMove()) {
             setButtonsforAny();
             firstMove = true;
+            // Checks to see if this was the first move of the game, triggers method appropriately
         } else if (firstMove) {
             setBoardForNewOrWonGame(true);
             firstMove = false;
             mUndoButton.setEnabled(true);
             enableNewSubgame(move.getTileX(), move.getTileY());
+            // Normal move
         } else {
             disableOldSubgame(move.getGameX(), move.getGameY());
             enableNewSubgame(move.getTileX(), move.getTileY());
