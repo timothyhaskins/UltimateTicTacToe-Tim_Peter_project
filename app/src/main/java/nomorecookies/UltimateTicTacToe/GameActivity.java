@@ -1,5 +1,7 @@
 package nomorecookies.UltimateTicTacToe;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -170,7 +172,7 @@ public class GameActivity extends ActionBarActivity {
     }
 
 
-    private class makeMove implements View.OnClickListener {
+    public class makeMove implements View.OnClickListener {
         private int tileX;
         private int tileY;
         private int gameX;
@@ -196,31 +198,54 @@ public class GameActivity extends ActionBarActivity {
                 move.setGameY(gameY);
                 move.setPlayer1Turn(mainGame.isPlayer1Turn());
 
+
+                if (!mainGame.isPlayer1Turn()) {
+                    mCurrentPlayerName = "X";
+                } else {
+                    mCurrentPlayerName = "O";
+                }
+
+                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
+                        + "," + move.getGameY() + "," + " Current turn: " + mCurrentPlayerName);
+
                 // Grab the button and set it to O or X
 
                 Button B = (Button) view;
                 B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
-                if (!mainGame.isPlayer1Turn()) {
-                    mCurrentPlayerName = mPlayer1Name;
-                } else {
-                    mCurrentPlayerName = mPlayer2Name;
-                }
-                B.startAnimation(animScale);
-                B.animate().rotationYBy(180).setDuration(300);
                 B.setEnabled(false);
-
-                mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
-                        + "," + move.getGameY() + "," + " Next turn: " + mCurrentPlayerName);
                 mainGame.takeTurn(new Move(move));
                 updateUI(move);
-
-                if (mGameType == 1 && !mainGame.getIsGameOver()) {
-                    move = mainGame.takeAITurn();
-                    makeAIMove(move);
+                //if (mGameType == 1 && !mainGame.getIsGameOver()) {
+                // RunComputerTurn(); }
+                    B.startAnimation(animScale);
+                    B.animate().rotationYBy(180).setDuration(300).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            if (mGameType == 1 && !mainGame.getIsGameOver()) {
+                                move = mainGame.takeAITurn();
+                                makeAIMove(move);
+                            }
+                        }
+                    });
+                }
                 }
             }
+       // }
+
+
+        public void RunComputerTurn() {
+                Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    move = mainGame.takeAITurn();
+                }
+            };
+            Thread myThread = new Thread(runnable);
+            myThread.start();
         }
-    }
+
+
 
     public void updateUI(Move move) {
         // Marks a game as won
@@ -261,7 +286,7 @@ public class GameActivity extends ActionBarActivity {
         Button B = (Button) R2.getChildAt(move.getTileX());
         B.setText("O");
         B.startAnimation(animScale);
-        B.animate().rotationYBy(180).setDuration(300).setStartDelay(100);
+        B.animate().rotationYBy(180).setDuration(300);
         B.setEnabled(false);
         updateUI(move);
     }
