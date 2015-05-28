@@ -1,5 +1,8 @@
 package nomorecookies.UltimateTicTacToe;
 
+import android.util.Log;
+
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -11,6 +14,7 @@ public class AIPlayer {
     private int mAIType; //0=random 1=stupid etc...
     private int[][] mTileValues;
     private int [][][] mWinRoutes;
+    private Hashtable mTileAdvantageValues;
 
     public AIPlayer(boolean isPlayer1, int type){
         mIsPlayer1 = isPlayer1;
@@ -19,6 +23,7 @@ public class AIPlayer {
 
         mTileValues = new int[][]{{2,3,2},{3,4,3},{2,3,2}};
         mWinRoutes = new int[][][]{{{0,0},{0,1},{0,2}},{{1,0},{1,1},{1,2}},{{2,0},{2,1},{2,2}},{{0,0},{1,0},{2,0}},{{0,1},{1,1},{2,1}},{{0,2},{1,2},{2,2}},{{0,0},{1,1},{2,2}},{{0,2},{1,1},{2,1}}};
+        mTileAdvantageValues = new Hashtable();
     }
 
     public Move getNextMove(Board gameBoard){
@@ -87,8 +92,8 @@ public class AIPlayer {
         Board newBoard = new Board(board);
         newBoard.makeMove(move);
 
-        //returns 100 if this would be a game winning move
-        if(newBoard.checkWin()) return 100;
+        //returns 1000 if this would be a game winning move
+        if(newBoard.checkWin()) return 10000;
 
         //get value of subGame if it would be won (default value of game x 10)
         if (newBoard.isSubGameWon(move.getGameX(), move.getGameY())){
@@ -110,14 +115,36 @@ public class AIPlayer {
 
     //returns the win potential for the player/win potential for the opponent
     public float getWinLossPotentialRatio(int player, SubBoard subBoard){
-        float targetPlayerPotential = getWinPotential(player,subBoard);
-        float opponentPotential = getWinPotential((player == 1 ? 2 : 1),subBoard);
+        float winLossPotentialRatio;
 
-        if (opponentPotential == 0) {
-            return 5;
-        }else {
-            return targetPlayerPotential / opponentPotential;
+        if (mTileAdvantageValues.containsKey(subBoard.getTileHash())) {
+            //get WinLossPotentialRatio from the stored hashTable if it has already been calculated
+            winLossPotentialRatio = (float)mTileAdvantageValues.get(subBoard.getTileHash());
+            if (player == 1){
+                winLossPotentialRatio = (winLossPotentialRatio/1);
+                Log.d("GAME MOVE","Reading Hash: ");
+            }
+        }else{
+            //get your own winPotential, then get the opponents WinPotential
+            float targetPlayerPotential = getWinPotential(player, subBoard);
+            float opponentPotential = getWinPotential((player == 1 ? 2 : 1), subBoard);
+
+            //if the Opponent is incapable of winning this game, give yourself a 5, otherwise your Win/Loss Potential is your WinPotential/Opponent WinPotential
+            if (opponentPotential == 0) {
+                winLossPotentialRatio = 25;
+            } else {
+                winLossPotentialRatio = (targetPlayerPotential / opponentPotential);
+            }
+
+            //store winLossPotentialRatio to each of the 4 rotational versions of the subBoard in the HashTable
+            int[] subBoardHashes = subBoard.getTileHashWithRotations();
+            for (int rotationNum = 0; rotationNum < 4; rotationNum++) {
+                mTileAdvantageValues.put(subBoardHashes[rotationNum],(player==1?(winLossPotentialRatio/1):(winLossPotentialRatio)));
+            }
+            Log.d("GAME MOVE","Storing Hash: ");
         }
+
+        return winLossPotentialRatio;
     }
 
     //returns the win potential for the player in questions ((1 move to wins) + (2 move to wins)/2 + (3 move to wins)/3)

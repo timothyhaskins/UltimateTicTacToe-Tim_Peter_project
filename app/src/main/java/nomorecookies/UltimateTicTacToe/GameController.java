@@ -76,7 +76,7 @@ public class GameController {
     }
 
     public Move takeAITurn(){
-        Move AIMove = mAIPlayer.getNextMove(mGameBoard);
+        Move AIMove = mAIPlayer.getNextMove(new Board(mGameBoard));
         takeTurn(AIMove);
         return AIMove;
     }

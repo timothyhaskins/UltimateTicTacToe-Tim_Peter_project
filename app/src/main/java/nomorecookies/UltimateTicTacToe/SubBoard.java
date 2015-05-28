@@ -139,6 +139,53 @@ public class SubBoard {
         return mTiles[tileX][tileY];
     }
 
+    public int getTileHash(){
+        int hashCode = 0;
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                hashCode = (hashCode*10) + mTiles[x][y];
+            }
+        }
+        return hashCode;
+    }
+
+    public int[] getTileHashWithRotations(){
+        int hashCode[] = new int[4];
+
+        //get normal hashCode
+        hashCode[0] = 0;
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                hashCode[0] = (hashCode[0]*10) + mTiles[x][y];
+            }
+        }
+        //get hash code rotated 90o clockwise
+        hashCode[1] = 0;
+        for (int x = 0; x < 3; x++) {
+            for (int y = 2; y >= 0; y--) {
+                hashCode[1] = (hashCode[1]*10) + mTiles[x][y];
+            }
+        }
+
+        //get hash code rotated 180o clockwise
+        hashCode[2] = 0;
+        for (int y = 2; y >= 0; y--) {
+            for (int x = 2; x >= 0; x--) {
+                hashCode[2] = (hashCode[2]*10) + mTiles[x][y];
+            }
+        }
+
+        //get hash code rotated 270o clockwise
+        hashCode[3] = 0;
+        for (int x = 2; x >= 0; x--) {
+            for (int y = 0; y > 3; y++) {
+                hashCode[3] = (hashCode[3]*10) + mTiles[x][y];
+            }
+        }
+
+        return hashCode;
+    }
+
     public void setTiles(int[][] mTiles) {
         for (int i = 0; i < mTiles.length; i++) {
             for (int j = 0; j < mTiles[0].length; j++) {

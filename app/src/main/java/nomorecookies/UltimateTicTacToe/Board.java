@@ -220,7 +220,7 @@ public class Board {
     }
 
     public SubBoard getSubGame(int gameX, int gameY){
-        return new SubBoard(mGames[gameX][gameY]);
+        return mGames[gameX][gameY];
     }
 
     public void setGames(SubBoard[][] games) {
