@@ -199,7 +199,7 @@ public class GameActivity extends ActionBarActivity {
                 move.setPlayer1Turn(mainGame.isPlayer1Turn());
 
 
-                if (!mainGame.isPlayer1Turn()) {
+                if (mainGame.isPlayer1Turn()) {
                     mCurrentPlayerName = "X";
                 } else {
                     mCurrentPlayerName = "O";
@@ -211,8 +211,8 @@ public class GameActivity extends ActionBarActivity {
                 // Grab the button and set it to O or X
 
                 Button B = (Button) view;
-                B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
-                B.setEnabled(false);
+                // B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
+                //B.setEnabled(false);
                 mainGame.takeTurn(new Move(move));
                 updateUI(move);
                 //if (mGameType == 1 && !mainGame.getIsGameOver()) {
@@ -224,7 +224,7 @@ public class GameActivity extends ActionBarActivity {
                             super.onAnimationEnd(animation);
                             if (mGameType == 1 && !mainGame.getIsGameOver()) {
                                 move = mainGame.takeAITurn();
-                                makeAIMove(move);
+                                updateUI(move);
                             }
                         }
                     });
@@ -248,6 +248,22 @@ public class GameActivity extends ActionBarActivity {
 
 
     public void updateUI(Move move) {
+
+        final Animation animScale = AnimationUtils.loadAnimation(GameActivity.this, R.anim.scale);
+
+        // Button Bit
+        TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
+        TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
+        TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
+        Button B = (Button) R2.getChildAt(move.getTileX());
+        B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
+
+        if (mGameType == 1 && !mainGame.getIsGameOver()) {
+            B.startAnimation(animScale);
+            B.animate().rotationYBy(180).setDuration(300);
+            B.setEnabled(false);
+        }
+
         // Marks a game as won
         if (mainGame.isLastMoveGameWinning()) {
             setSubgameImageViewAsWon(move.getGameX(), move.getGameY(), true);
@@ -275,21 +291,6 @@ public class GameActivity extends ActionBarActivity {
         }
     }
 
-    public void makeAIMove(Move move){
-
-        final Animation animScale = AnimationUtils.loadAnimation(GameActivity.this, R.anim.scale);
-
-        // Button Bit
-        TableRow R1 = (TableRow) mGameTable.getChildAt(move.getGameY());
-        TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
-        TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
-        Button B = (Button) R2.getChildAt(move.getTileX());
-        B.setText("O");
-        B.startAnimation(animScale);
-        B.animate().rotationYBy(180).setDuration(300);
-        B.setEnabled(false);
-        updateUI(move);
-    }
 
     public void setSubgameImageViewAsWon(int gameX, int gameY, boolean won) {
         for (int i = 0; i < gameViewList.size(); i++) {
