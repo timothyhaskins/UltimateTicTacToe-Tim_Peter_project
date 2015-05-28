@@ -208,28 +208,27 @@ public class GameActivity extends ActionBarActivity {
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
                         + "," + move.getGameY() + "," + " Current turn: " + mCurrentPlayerName);
 
-
                 mainGame.takeTurn(new Move(move));
-                updateUI(move);
                 //if (mGameType == 1 && !mainGame.getIsGameOver()) {
                 // RunComputerTurn(); }
                 Button B = (Button) view;
+                B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
+                updateUI(move);
                 B.startAnimation(animScale);
+                B.setEnabled(false);
                 B.animate().rotationYBy(180).setDuration(300).setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
+
                             if (mGameType == 1 && !mainGame.getIsGameOver()) {
                                 move = mainGame.takeAITurn();
-                                updateUI(move);
-                            }
+                                updateUI(move);}
                         }
                     });
                 }
-                }
             }
-       // }
-
+        }
 
         public void RunComputerTurn() {
                 Runnable runnable = new Runnable() {
@@ -253,9 +252,9 @@ public class GameActivity extends ActionBarActivity {
         TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
         TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
         Button B = (Button) R2.getChildAt(move.getTileX());
-        B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
 
         if (mGameType == 1 && !mainGame.getIsGameOver()) {
+            B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
             B.startAnimation(animScale);
             B.animate().rotationYBy(180).setDuration(300);
             B.setEnabled(false);
