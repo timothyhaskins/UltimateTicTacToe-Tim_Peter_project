@@ -208,17 +208,14 @@ public class GameActivity extends ActionBarActivity {
                 mMoveCounter.setText(move.getTileX() + "," + move.getTileY() + "," + move.getGameX()
                         + "," + move.getGameY() + "," + " Current turn: " + mCurrentPlayerName);
 
-                // Grab the button and set it to O or X
 
-                Button B = (Button) view;
-                // B.setText(mainGame.isPlayer1Turn() ? "X" : "O");
-                //B.setEnabled(false);
                 mainGame.takeTurn(new Move(move));
                 updateUI(move);
                 //if (mGameType == 1 && !mainGame.getIsGameOver()) {
                 // RunComputerTurn(); }
-                    B.startAnimation(animScale);
-                    B.animate().rotationYBy(180).setDuration(300).setListener(new AnimatorListenerAdapter() {
+                Button B = (Button) view;
+                B.startAnimation(animScale);
+                B.animate().rotationYBy(180).setDuration(300).setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
