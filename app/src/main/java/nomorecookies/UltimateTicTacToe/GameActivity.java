@@ -1,7 +1,5 @@
 package nomorecookies.UltimateTicTacToe;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -209,23 +207,25 @@ public class GameActivity extends ActionBarActivity {
                         + "," + move.getGameY() + "," + " Current turn: " + mCurrentPlayerName);
 
                 mainGame.takeTurn(new Move(move));
-                //if (mGameType == 1 && !mainGame.getIsGameOver()) {
-                // RunComputerTurn(); }
-                Button B = (Button) view;
-                B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
+
                 updateUI(move);
+                Button B = (Button) view;
                 B.startAnimation(animScale);
-                B.setEnabled(false);
-                B.animate().rotationYBy(180).setDuration(300).setListener(new AnimatorListenerAdapter() {
+                B.animate().rotationYBy(180).setDuration(300);
+                if (mGameType == 1 && !mainGame.getIsGameOver()) {
+                    move = mainGame.takeAITurn();
+                    updateUI(move);
+                }
+
+                        /*.setListener(new AnimatorListenerAdapter() {
                         @Override
                         public void onAnimationEnd(Animator animation) {
                             super.onAnimationEnd(animation);
-
                             if (mGameType == 1 && !mainGame.getIsGameOver()) {
                                 move = mainGame.takeAITurn();
                                 updateUI(move);}
                         }
-                    });
+                    });*/
                 }
             }
         }
@@ -252,12 +252,12 @@ public class GameActivity extends ActionBarActivity {
         TableLayout T1 = (TableLayout) R1.getChildAt(move.getGameX());
         TableRow R2 = (TableRow) T1.getChildAt(move.getTileY());
         Button B = (Button) R2.getChildAt(move.getTileX());
+        B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
+        B.setEnabled(false);
 
-        if (mGameType == 1 && !mainGame.getIsGameOver()) {
-            B.setText(mainGame.isPlayer1Turn() ? "O" : "X");
+        if (mGameType == 1) {
             B.startAnimation(animScale);
             B.animate().rotationYBy(180).setDuration(300);
-            B.setEnabled(false);
         }
 
         // Marks a game as won
